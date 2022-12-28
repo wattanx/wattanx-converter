@@ -3,8 +3,9 @@ import fs from 'fs';
 import { Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
 import { _lifecycleConverter } from './lifecycleConverter';
 import { lifecycleNameMap } from '../../helper';
+import { _dataConverter } from './dataConverter';
 
-test('convert lifecycle', () => {
+test('convert data', () => {
   const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
 
   const project = new Project({
@@ -20,17 +21,21 @@ test('convert lifecycle', () => {
     SyntaxKind.ObjectLiteralExpression
   )[0];
 
-  const lifecycleNode = options
+  const dataNode = options
     ?.getProperties()
-    .find(
-      (x) => Node.isMethodDeclaration(x) && lifecycleNameMap.has(x.getName())
-    );
+    .find((x) => Node.isMethodDeclaration(x) && x.getName() === 'data');
 
-  const props = _lifecycleConverter(lifecycleNode!);
+  const props = _dataConverter(dataNode!);
   expect(props).toEqual([
     {
-      use: 'onMounted',
-      expression: "onMounted(() =>{\n    console.log('mounted');\n  })",
+      use: 'ref',
+      expression: "const firstName = ref('first')",
+      returnNames: ['firstName'],
+    },
+    {
+      use: 'ref',
+      expression: "const lastName = ref('last')",
+      returnNames: ['lastName'],
     },
   ]);
 });

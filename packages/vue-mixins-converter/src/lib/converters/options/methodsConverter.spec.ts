@@ -3,7 +3,7 @@ import fs from 'fs';
 import { Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
 import { _methodsConverter } from './methodsConverter';
 
-test('convert props', () => {
+test('convert methods', () => {
   const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
 
   const project = new Project({
@@ -39,7 +39,7 @@ test('convert props', () => {
   ]);
 });
 
-test('convert props ts', () => {
+test('convert methods ts', () => {
   const mixin = fs
     .readFileSync('src/mixins/MixinSample.ts.txt')
     .toString('utf-8');
