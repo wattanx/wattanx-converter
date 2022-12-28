@@ -59,7 +59,7 @@ export const getMethodExpression = (node: ObjectLiteralElementLike) => {
     if (mapName === 'mapActions') {
       return names.map((x) => {
         if (!Node.isStringLiteral(x)) {
-          return [];
+          return;
         }
         const name = x.getLiteralText();
         return {

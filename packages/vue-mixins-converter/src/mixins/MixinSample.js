@@ -9,17 +9,15 @@ export default {
   computed: {
     ...mapState('user', ['name', 'age']),
     ...mapGetters('user', ['name', 'age']),
+    fullName() {
+      return this.firstName + this.lastName;
+    },
   },
   data() {
     return {
       firstName: 'first',
       lastName: 'last',
     };
-  },
-  computed: {
-    fullName() {
-      return this.firstName + this.lastName;
-    },
   },
   methods: {
     ...mapActions('user', ['setUser']),
