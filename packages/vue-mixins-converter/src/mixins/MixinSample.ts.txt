@@ -1,4 +1,6 @@
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: 'MixinSample',
   props: {
     age: {
@@ -17,14 +19,14 @@ export default {
     };
   },
   computed: {
-    fullName() {
+    fullName(): string {
       return this.firstName + this.lastName;
     },
   },
   methods: {
     ...mapActions('user', ['setUser']),
-    async getInfo() {
+    async getInfo(): Promise<void> {
       await fetch('https://www.google.com/');
     },
   },
-};
+})

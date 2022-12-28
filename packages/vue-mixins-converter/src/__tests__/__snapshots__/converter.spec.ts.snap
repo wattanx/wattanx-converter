@@ -16,7 +16,10 @@ export const useMixins = (props, ctx) => {
         return firstName.value + lastName.value;
     });
     const setUser = () => store.dispatch(\\"user/setUser\\");
-    return { firstName, lastName, name, age, name, age, fullName, setUser };
+    const getInfo = async () => {
+        await fetch(\\"https://www.google.com/\\");
+    };
+    return { firstName, lastName, name, age, name, age, fullName, setUser, getInfo };
 };
 "
 `;

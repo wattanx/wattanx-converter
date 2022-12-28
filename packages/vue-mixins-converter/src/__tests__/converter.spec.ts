@@ -16,29 +16,3 @@ it('convertSrc', () => {
 
   expect(converted).toMatchSnapshot();
 });
-
-it('getInitializerProps', () => {
-  const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
-  const sourceFile = project.createSourceFile('src.tsx', mixin);
-  const exportAssignNode = sourceFile.getFirstChildByKind(
-    SyntaxKind.ExportAssignment
-  );
-  const objectNode = exportAssignNode?.getFirstChildByKindOrThrow(
-    SyntaxKind.ObjectLiteralExpression
-  );
-  const props = objectNode?.getProperty('props');
-  const data = objectNode?.getProperty('data');
-  const computed = objectNode?.getProperty('computed');
-
-  const methods = objectNode
-    ?.getPropertyOrThrow('methods')
-    .getFirstChildByKind(SyntaxKind.ObjectLiteralExpression);
-  methods?.forEachChild((node) => {
-    console.log(node.getKindName());
-  });
-  // methods.map((x) => {
-  //   const spread = x.getProperty(
-  //     (p) => p.getKind() === SyntaxKind.SpreadAssignment
-  //   );
-  // });
-});

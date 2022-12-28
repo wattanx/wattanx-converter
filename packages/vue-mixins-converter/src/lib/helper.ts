@@ -1,4 +1,5 @@
-import ts, { factory } from 'typescript';
+import { Node, PropertyAssignment, ObjectLiteralElementLike } from 'ts-morph';
+import ts from 'typescript';
 
 export type ConvertedExpression = {
   expression: string;
@@ -44,6 +45,17 @@ export const getInitializerProps = (
   if (!ts.isPropertyAssignment(node)) return [];
   if (!ts.isObjectLiteralExpression(node.initializer)) return [];
   return [...node.initializer.properties];
+};
+
+/** returns initializer.getProperties() */
+export const getPropsFromInitializer = (
+  node: PropertyAssignment
+): ObjectLiteralElementLike[] => {
+  const initializer = node.getInitializer();
+  if (!Node.isObjectLiteralExpression(initializer)) {
+    return [];
+  }
+  return initializer.getProperties();
 };
 
 export const storePath = `store`;
@@ -177,10 +189,10 @@ export const getExportStatement = (
   ).statements;
 
   const props = [
-    factory.createParameterDeclaration(
+    ts.factory.createParameterDeclaration(
       undefined,
       undefined,
-      factory.createIdentifier('props'),
+      ts.factory.createIdentifier('props'),
       undefined,
       undefined,
       undefined
@@ -188,31 +200,31 @@ export const getExportStatement = (
   ];
 
   const contextProps = [
-    factory.createParameterDeclaration(
+    ts.factory.createParameterDeclaration(
       undefined,
       undefined,
-      factory.createIdentifier('ctx'),
+      ts.factory.createIdentifier('ctx'),
       undefined,
       undefined,
       undefined
     ),
   ];
 
-  return factory.createVariableStatement(
-    [factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-    factory.createVariableDeclarationList(
+  return ts.factory.createVariableStatement(
+    [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+    ts.factory.createVariableDeclarationList(
       [
-        factory.createVariableDeclaration(
-          factory.createIdentifier(fileName),
+        ts.factory.createVariableDeclaration(
+          ts.factory.createIdentifier(fileName),
           undefined,
           undefined,
-          factory.createArrowFunction(
+          ts.factory.createArrowFunction(
             undefined,
             undefined,
             propNames.length > 0 ? [...props, ...contextProps] : contextProps,
             undefined,
-            factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            factory.createBlock(
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            ts.factory.createBlock(
               [...useStoreStatements, ...getSetupStatements(setupProps)],
               true
             )

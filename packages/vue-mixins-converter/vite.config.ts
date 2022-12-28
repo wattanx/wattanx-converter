@@ -13,4 +13,7 @@ export default defineConfig({
       external: ['typescript', 'ts-morph'],
     },
   },
+  test: {
+    environment: 'node',
+  },
 });
