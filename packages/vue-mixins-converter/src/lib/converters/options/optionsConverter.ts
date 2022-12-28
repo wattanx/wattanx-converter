@@ -70,7 +70,6 @@ const _convertOptions = (
         break;
       case name === 'methods':
         methodsProps.push(...methodsConverter(prop, sourceFile));
-        console.log(methodsProps);
         break;
       case lifecycleNameMap.has(name):
         lifecycleProps.push(...lifecycleConverter(prop, sourceFile));

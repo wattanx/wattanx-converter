@@ -2,7 +2,7 @@
 
 exports[`convertSrc 1`] = `
 "import { useStore } from \\"vuex\\";
-import { toRefs, ref, computed } from \\"@vue/composition-api\\";
+import { toRefs, ref, computed, onMounted } from \\"@vue/composition-api\\";
 export const useMixins = (props, ctx) => {
     const store = useStore();
     const { age } = toRefs(props);
@@ -19,6 +19,9 @@ export const useMixins = (props, ctx) => {
     const getInfo = async () => {
         await fetch(\\"https://www.google.com/\\");
     };
+    onMounted(() => {
+        console.log(\\"mounted\\");
+    });
     return { firstName, lastName, name, age, name, age, fullName, setUser, getInfo };
 };
 "

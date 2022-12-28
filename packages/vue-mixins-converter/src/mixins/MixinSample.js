@@ -27,4 +27,7 @@ export default {
       await fetch('https://www.google.com/');
     },
   },
+  mounted() {
+    console.log('mounted');
+  },
 };
