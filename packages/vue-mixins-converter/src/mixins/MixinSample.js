@@ -28,4 +28,15 @@ export default {
   mounted() {
     console.log('mounted');
   },
+  watch: {
+    age() {
+      console.log('watch');
+    },
+    someObject: {
+      handler(newValue, oldValue) {
+        console.log(newValue, oldValue);
+      },
+      deep: true,
+    },
+  },
 };
