@@ -1,4 +1,4 @@
-import { convertSrc } from './../lib/converter';
+import { convertSrc } from './converter';
 import { it, expect } from 'vitest';
 import fs from 'fs';
 import { ts, Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
