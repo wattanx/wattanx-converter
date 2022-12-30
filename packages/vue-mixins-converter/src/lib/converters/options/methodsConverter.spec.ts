@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest';
 import fs from 'fs';
 import { Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
-import { _methodsConverter } from './methodsConverter';
+import { methodsConverter } from './methodsConverter';
 
 test('convert methods', () => {
   const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
@@ -23,7 +23,7 @@ test('convert methods', () => {
     ?.getProperties()
     .find((x) => Node.isPropertyAssignment(x) && x.getName() === 'methods');
 
-  const props = _methodsConverter(methodsNode!);
+  const props = methodsConverter(methodsNode!);
   expect(props).toEqual([
     {
       expression: "const setUser = () => store.dispatch('user/setUser')",
@@ -61,7 +61,7 @@ test('convert methods ts', () => {
     ?.getProperties()
     .find((x) => Node.isPropertyAssignment(x) && x.getName() === 'methods');
 
-  const props = _methodsConverter(methodsNode!);
+  const props = methodsConverter(methodsNode!);
   expect(props).toEqual([
     {
       expression: "const setUser = () => store.dispatch('user/setUser')",

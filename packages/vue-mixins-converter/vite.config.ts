@@ -13,6 +13,9 @@ export default defineConfig({
       external: ['typescript', 'ts-morph'],
     },
   },
+  esbuild: {
+    minifyIdentifiers: false,
+  },
   test: {
     environment: 'node',
   },

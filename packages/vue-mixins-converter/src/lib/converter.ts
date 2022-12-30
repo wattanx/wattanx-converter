@@ -1,6 +1,7 @@
 import ts from 'typescript';
-import { getNodeByKind } from './helper';
+import { getNodeByKind } from './utils/getNodeByKind';
 import { convertOptionsApi } from './converters/optionsApiConverter';
+import { Project, ScriptTarget } from 'ts-morph';
 
 export type ConverterOptions = {
   input: string;
@@ -15,11 +16,15 @@ export const convertSrc = ({
 }: ConverterOptions): string => {
   const scriptContent = input;
 
-  const sourceFile = ts.createSourceFile(
-    'src.tsx',
-    scriptContent,
-    ts.ScriptTarget.Latest
-  );
+  const project = new Project({
+    compilerOptions: {
+      skipAddingFilesFromTsConfig: true,
+      target: ScriptTarget.Latest,
+    },
+    useInMemoryFileSystem: true,
+  });
+
+  const sourceFile = project.createSourceFile('src.tsx', scriptContent);
 
   const exportAssignNode = getNodeByKind(
     sourceFile,

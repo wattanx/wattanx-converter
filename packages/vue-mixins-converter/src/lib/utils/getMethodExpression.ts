@@ -1,9 +1,12 @@
 import { Node, ObjectLiteralElementLike, SyntaxKind } from 'ts-morph';
-import { lifecycleNameMap } from '../helper';
+import { ConvertedExpression } from '../types';
+import { lifecycleNameMap } from '../../constants/lifecycleNameMap';
 
 export const storePath = `store`;
 
-export const getMethodExpression = (node: ObjectLiteralElementLike) => {
+export const getMethodExpression = (
+  node: ObjectLiteralElementLike
+): ConvertedExpression[] => {
   if (Node.isMethodDeclaration(node)) {
     const async = node
       .getModifiers()
@@ -59,7 +62,9 @@ export const getMethodExpression = (node: ObjectLiteralElementLike) => {
     if (mapName === 'mapActions') {
       return names.map((x) => {
         if (!Node.isStringLiteral(x)) {
-          return;
+          return {
+            expression: '',
+          };
         }
         const name = x.getLiteralText();
         return {

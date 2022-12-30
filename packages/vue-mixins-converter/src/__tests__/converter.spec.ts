@@ -1,5 +1,3 @@
-import { getInitializerProps } from './../lib/helper';
-import { convertOptions } from './../lib/converters/options/optionsConverter';
 import { convertSrc } from './../lib/converter';
 import { it, expect } from 'vitest';
 import fs from 'fs';

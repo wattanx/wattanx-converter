@@ -1,9 +1,7 @@
 import { test, expect } from 'vitest';
 import fs from 'fs';
 import { Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
-import { _lifecycleConverter } from './lifecycleConverter';
-import { lifecycleNameMap } from '../../helper';
-import { _dataConverter } from './dataConverter';
+import { dataConverter } from './dataConverter';
 
 test('convert data', () => {
   const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
@@ -25,7 +23,7 @@ test('convert data', () => {
     ?.getProperties()
     .find((x) => Node.isMethodDeclaration(x) && x.getName() === 'data');
 
-  const props = _dataConverter(dataNode!);
+  const props = dataConverter(dataNode!);
   expect(props).toEqual([
     {
       use: 'ref',

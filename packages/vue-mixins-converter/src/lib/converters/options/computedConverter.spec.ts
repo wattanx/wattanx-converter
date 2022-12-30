@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest';
 import fs from 'fs';
 import { Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
-import { _computedConverter } from './computedConverter';
+import { computedConverter } from './computedConverter';
 
 test('convert computed', () => {
   const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
@@ -23,7 +23,7 @@ test('convert computed', () => {
     ?.getProperties()
     .find((x) => Node.isPropertyAssignment(x) && x.getName() === 'computed');
 
-  const props = _computedConverter(computedNode!);
+  const props = computedConverter(computedNode!);
   expect(props).toEqual([
     {
       use: 'computed',

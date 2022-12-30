@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest';
 import fs from 'fs';
 import { Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
-import { _watchConverter } from './watchConverter';
+import { watchConverter } from './watchConverter';
 
 test('convert watch', () => {
   const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
@@ -23,7 +23,7 @@ test('convert watch', () => {
     ?.getProperties()
     .find((x) => Node.isPropertyAssignment(x) && x.getName() === 'watch');
 
-  const props = _watchConverter(watchNode!);
+  const props = watchConverter(watchNode!);
   expect(props).toEqual([
     {
       use: 'watch',

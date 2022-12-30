@@ -1,32 +1,32 @@
 // Vitest Snapshot v1
 
 exports[`convertSrc 1`] = `
-"import { useStore } from \\"vuex\\";
-import { toRefs, ref, computed, watch, onMounted } from \\"@vue/composition-api\\";
+"import { useStore } from 'vuex';
+import { toRefs, ref, computed, watch, onMounted } from '@vue/composition-api';
 export const useMixins = (props, ctx) => {
     const store = useStore();
     const { age } = toRefs(props);
-    const firstName = ref(\\"first\\");
-    const lastName = ref(\\"last\\");
+    const firstName = ref('first');
+    const lastName = ref('last');
     const name = computed(() => store.state.user.name);
     const age = computed(() => store.state.user.age);
-    const name = computed(() => store.getters[\\"user/name\\"]);
-    const age = computed(() => store.getters[\\"user/age\\"]);
+    const name = computed(() => store.getters['user/name']);
+    const age = computed(() => store.getters['user/age']);
     const fullName = computed(() => {
         return firstName.value + lastName.value;
     });
-    const setUser = () => store.dispatch(\\"user/setUser\\");
+    const setUser = () => store.dispatch('user/setUser');
     const getInfo = async () => {
-        await fetch(\\"https://www.google.com/\\");
+        await fetch('https://www.google.com/');
     };
     watch(age, () => {
-        console.log(\\"watch\\");
+        console.log('watch');
     });
     watch(someObject, (newValue, oldValue) => {
         console.log(newValue, oldValue);
     }, { \\"deep\\": true });
     onMounted(() => {
-        console.log(\\"mounted\\");
+        console.log('mounted');
     });
     return { firstName, lastName, name, age, name, age, fullName, setUser, getInfo };
 };

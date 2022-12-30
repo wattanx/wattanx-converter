@@ -1,8 +1,8 @@
 import { test, expect } from 'vitest';
 import fs from 'fs';
 import { Project, ScriptTarget, SyntaxKind, Node } from 'ts-morph';
-import { _lifecycleConverter } from './lifecycleConverter';
-import { lifecycleNameMap } from '../../helper';
+import { lifecycleConverter } from './lifecycleConverter';
+import { lifecycleNameMap } from '../../../constants/lifecycleNameMap';
 
 test('convert lifecycle', () => {
   const mixin = fs.readFileSync('src/mixins/MixinSample.js').toString('utf-8');
@@ -26,7 +26,7 @@ test('convert lifecycle', () => {
       (x) => Node.isMethodDeclaration(x) && lifecycleNameMap.has(x.getName())
     );
 
-  const props = _lifecycleConverter(lifecycleNode!);
+  const props = lifecycleConverter(lifecycleNode!);
   expect(props).toEqual([
     {
       use: 'onMounted',

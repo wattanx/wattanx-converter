@@ -1,28 +1,53 @@
-import ts from 'typescript';
-import { getExportStatement, getImportStatement } from '../helper';
-import { convertOptions } from './options/optionsConverter';
+import {
+  SourceFile,
+  Node,
+  Project,
+  ScriptTarget,
+  StructureKind,
+  ts,
+  QuoteKind,
+} from 'ts-morph';
+import { getExportStatement } from '../utils/getExportStatement';
+import { optionsConverter } from './options/optionsConverter';
+import { getImportStatement } from '../utils/getImportStatement';
 
 export const convertOptionsApi = (
-  sourceFile: ts.SourceFile,
+  sourceFile: SourceFile,
   fileName: string,
   useNuxt?: boolean
 ) => {
-  const options = convertOptions(sourceFile);
+  const options = optionsConverter(sourceFile);
   if (!options) {
     throw new Error('invalid options');
   }
 
   const { setupProps, propNames } = options;
 
-  const newSrc = ts.factory.createSourceFile(
-    [
-      ...getImportStatement(setupProps,useNuxt),
-      ...sourceFile.statements.filter((state) => !ts.isExportAssignment(state)),
-      getExportStatement(setupProps, propNames, fileName),
-    ],
-    sourceFile.endOfFileToken,
-    sourceFile.flags
+  const project = new Project({
+    compilerOptions: {
+      target: ScriptTarget.Latest,
+      skipAddingFilesFromTsConfig: true,
+    },
+    manipulationSettings: {
+      quoteKind: QuoteKind.Double,
+    },
+    useInMemoryFileSystem: true,
+  });
+
+  const statements = project.createSourceFile('new.tsx');
+
+  statements.addStatements(getImportStatement(setupProps, useNuxt));
+  statements.addStatements(
+    sourceFile
+      .getStatements()
+      .filter((state) => !Node.isExportAssignment(state))
+      .map((x) => x.getFullText())
   );
-  const printer = ts.createPrinter();
-  return printer.printFile(newSrc);
+  statements.addStatements(getExportStatement(setupProps, propNames, fileName));
+
+  statements.formatText({
+    semicolons: ts.SemicolonPreference.Insert,
+  });
+
+  return statements.getFullText();
 };

@@ -1,41 +1,47 @@
-import ts from 'typescript';
-import {
-  ConvertedExpression,
-  getNodeByKind,
-  lifecycleNameMap,
-} from '../../helper';
+import { lifecycleNameMap } from '../../../constants/lifecycleNameMap';
+import { ConvertedExpression } from '../../types';
 import { computedConverter } from './computedConverter';
 import { dataConverter } from './dataConverter';
 import { lifecycleConverter } from './lifecycleConverter';
 import { methodsConverter } from './methodsConverter';
 import { watchConverter } from './watchConverter';
-import { propReader } from './propsReader';
+import { propsReader } from './propsReader';
+import {
+  Node,
+  SourceFile,
+  ObjectLiteralExpression,
+  SyntaxKind,
+  ObjectLiteralElementLike,
+  PropertyAssignment,
+  MethodDeclaration,
+} from 'ts-morph';
+import { getNodeByKind } from '../../utils/getNodeByKind';
 
-export const convertOptions = (sourceFile: ts.SourceFile) => {
+export const optionsConverter = (sourceFile: SourceFile) => {
   const exportAssignNode = getNodeByKind(
     sourceFile,
-    ts.SyntaxKind.ExportAssignment
+    SyntaxKind.ExportAssignment
   );
   if (exportAssignNode) {
     const objectNode = getNodeByKind(
       exportAssignNode,
-      ts.SyntaxKind.ObjectLiteralExpression
+      SyntaxKind.ObjectLiteralExpression
     );
-    if (objectNode && ts.isObjectLiteralExpression(objectNode)) {
+    if (objectNode && Node.isObjectLiteralExpression(objectNode)) {
       return _convertOptions(objectNode, sourceFile);
     }
   }
-  const classNode = getNodeByKind(sourceFile, ts.SyntaxKind.ClassDeclaration);
+  const classNode = getNodeByKind(sourceFile, SyntaxKind.ClassDeclaration);
   if (classNode) {
-    const decoratorNode = getNodeByKind(classNode, ts.SyntaxKind.Decorator);
+    const decoratorNode = getNodeByKind(classNode, SyntaxKind.Decorator);
 
     if (decoratorNode) {
       const objectNode = getNodeByKind(
         decoratorNode,
-        ts.SyntaxKind.ObjectLiteralExpression
+        SyntaxKind.ObjectLiteralExpression
       );
 
-      if (objectNode && ts.isObjectLiteralExpression(objectNode)) {
+      if (objectNode && Node.isObjectLiteralExpression(objectNode)) {
         return _convertOptions(objectNode, sourceFile);
       }
     }
@@ -45,10 +51,10 @@ export const convertOptions = (sourceFile: ts.SourceFile) => {
 };
 
 const _convertOptions = (
-  exportObject: ts.ObjectLiteralExpression,
-  sourceFile: ts.SourceFile
+  exportObject: ObjectLiteralExpression,
+  sourceFile: SourceFile
 ) => {
-  const otherProps: ts.ObjectLiteralElementLike[] = [];
+  const otherProps: ObjectLiteralElementLike[] = [];
   const dataProps: ConvertedExpression[] = [];
   const computedProps: ConvertedExpression[] = [];
   const methodsProps: ConvertedExpression[] = [];
@@ -56,28 +62,29 @@ const _convertOptions = (
   const lifecycleProps: ConvertedExpression[] = [];
   const propNames: string[] = [];
 
-  exportObject.properties.forEach((prop) => {
-    const name = prop.name?.getText(sourceFile) || '';
+  exportObject.getProperties().forEach((prop) => {
+    const name =
+      (prop as PropertyAssignment | MethodDeclaration).getName() || '';
     switch (true) {
       case name === 'data':
-        dataProps.push(...dataConverter(prop, sourceFile));
+        dataProps.push(...dataConverter(prop));
         break;
       case name === 'computed':
-        computedProps.push(...computedConverter(prop, sourceFile));
+        computedProps.push(...computedConverter(prop));
         break;
       case name === 'watch':
-        watchProps.push(...watchConverter(prop, sourceFile));
+        watchProps.push(...watchConverter(prop));
         break;
       case name === 'methods':
-        methodsProps.push(...methodsConverter(prop, sourceFile));
+        methodsProps.push(...methodsConverter(prop));
         break;
       case lifecycleNameMap.has(name):
-        lifecycleProps.push(...lifecycleConverter(prop, sourceFile));
+        lifecycleProps.push(...lifecycleConverter(prop));
         break;
 
       default:
         if (name === 'props') {
-          propNames.push(...propReader(prop, sourceFile));
+          propNames.push(...propsReader(prop));
         }
 
         // 該当しないものはそのままにする
