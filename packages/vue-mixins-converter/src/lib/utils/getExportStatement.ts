@@ -1,5 +1,7 @@
-import { ConvertedExpression } from '../types';
-import { getSetupStatements } from './getSetupStatement';
+import {
+  ConvertedExpression,
+  getSetupStatements,
+} from '@wattanx/vue-composition-converter';
 
 export const getExportStatement = (
   setupProps: ConvertedExpression[],

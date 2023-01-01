@@ -1,5 +1,8 @@
+<script setup lang="ts">
+const showSideNav = ref(false);
+</script>
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>

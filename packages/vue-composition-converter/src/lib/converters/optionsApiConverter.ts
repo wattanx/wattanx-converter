@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2021 Masaya Kazama. All Rights Reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of https://github.com/miyaoka/vue-composition-converter.
+ */
+
 import {
   SourceFile,
   Node,
@@ -6,12 +13,12 @@ import {
   ts,
   QuoteKind,
 } from 'ts-morph';
-import { optionsConverter } from '@wattanx/vue-composition-converter';
-import { getImportStatement, getExportStatement } from '../utils';
+import { getExportStatement } from '../utils/getExportStatement';
+import { optionsConverter } from './options/optionsConverter';
+import { getImportStatement } from '../utils/getImportStatement';
 
 export const convertOptionsApi = (
   sourceFile: SourceFile,
-  fileName: string,
   useNuxt?: boolean
 ) => {
   const options = optionsConverter(sourceFile);
@@ -19,7 +26,7 @@ export const convertOptionsApi = (
     throw new Error('invalid options');
   }
 
-  const { setupProps, propNames } = options;
+  const { setupProps, propNames, otherProps } = options;
 
   const project = new Project({
     compilerOptions: {
@@ -41,7 +48,9 @@ export const convertOptionsApi = (
       .filter((state) => !Node.isExportAssignment(state))
       .map((x) => x.getFullText())
   );
-  statements.addStatements(getExportStatement(setupProps, propNames, fileName));
+  statements.addStatements(
+    getExportStatement(setupProps, propNames, otherProps)
+  );
 
   statements.formatText({
     semicolons: ts.SemicolonPreference.Insert,

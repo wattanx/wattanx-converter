@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import ConvertView from "~~/components/vue-mixins-converter/ConvertView.vue";
+import ConvertView from "~~/components/vue-composition-converter/ConvertView.vue";
 useHead({
-  title: "Vue Mixins Converter",
+  title: "Vue Composition Converter",
 });
 </script>
 

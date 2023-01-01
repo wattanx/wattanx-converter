@@ -1,0 +1,37 @@
+<template>
+  <div>Hello World</div>
+</template>
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'MixinSample',
+  props: {
+    age: {
+      type: Number,
+      required: true,
+    },
+  },
+  computed: {
+    ...mapState('user', ['name', 'age']),
+    ...mapGetters('user', ['name', 'age']),
+  },
+  data() {
+    return {
+      firstName: 'first',
+      lastName: 'last',
+    };
+  },
+  computed: {
+    fullName(): string {
+      return this.firstName + this.lastName;
+    },
+  },
+  methods: {
+    ...mapActions('user', ['setUser']),
+    async getInfo(): Promise<void> {
+      await fetch('https://www.google.com/');
+    },
+  },
+})
+</script>

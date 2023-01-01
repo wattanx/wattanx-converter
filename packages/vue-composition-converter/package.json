@@ -1,5 +1,5 @@
 {
-  "name": "@wattanx/vue-mixins-converter",
+  "name": "@wattanx/vue-composition-converter",
   "version": "0.0.0",
   "main": "./dist/index.mjs",
   "exports": {
@@ -22,8 +22,7 @@
     "@types/jsdom": "^16.2.14",
     "@types/node": "^17.0.35",
     "@types/prettier": "^2.6.0",
-    "@vue/compiler-sfc": "^3.2.33",
-    "@vue/test-utils": "^2.0.0-rc.18",
+    "@vue/compiler-sfc": "^3.2.45",
     "autoprefixer": "^10.4.7",
     "commander": "^9.2.0",
     "concurrently": "^7.6.0",
@@ -36,7 +35,6 @@
     "ts-node": "^10.7.0",
     "typescript": "^4.9.4",
     "vite": "^4.0.3",
-    "vitest": "^0.26.2",
-    "@wattanx/vue-composition-converter": "*"
+    "vitest": "^0.26.2"
   }
 }

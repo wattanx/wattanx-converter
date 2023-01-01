@@ -1,7 +1,6 @@
-import ts from 'typescript';
-import { getNodeByKind } from './utils/getNodeByKind';
+import { Project, ScriptTarget, SyntaxKind } from 'ts-morph';
+import { getNodeByKind } from '@wattanx/vue-composition-converter';
 import { convertOptionsApi } from './converters/optionsApiConverter';
-import { Project, ScriptTarget } from 'ts-morph';
 
 export type ConverterOptions = {
   input: string;
@@ -28,7 +27,7 @@ export const convertSrc = ({
 
   const exportAssignNode = getNodeByKind(
     sourceFile,
-    ts.SyntaxKind.ExportAssignment
+    SyntaxKind.ExportAssignment
   );
   if (exportAssignNode) {
     // optionsAPI
