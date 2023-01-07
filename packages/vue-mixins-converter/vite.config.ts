@@ -12,6 +12,7 @@ export default defineConfig({
     rollupOptions: {
       external: ['typescript', 'ts-morph'],
     },
+    emptyOutDir: false,
   },
   esbuild: {
     minifyIdentifiers: false,
