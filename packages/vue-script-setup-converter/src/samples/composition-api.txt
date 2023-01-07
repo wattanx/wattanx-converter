@@ -1,0 +1,31 @@
+<script>
+import { defineComponent, toRefs, computed, ref } from 'vue';
+
+export default defineComponent({
+  name: 'HelloWorld',
+  emits: {
+    change: null
+  },
+  props: {
+    msg: {
+      type: String,
+      required: true,
+      default: 'HelloWorld'
+    },
+    foo: {
+      type: String
+    }
+  },
+  setup(props, ctx) {
+    const { msg, foo } = toRefs(props);
+    const newMsg = computed(() => msg.value + '- HelloWorld');
+
+    const count = ref(0);
+
+    return {
+      count,
+      newMsg
+    }
+  }
+})
+</script>

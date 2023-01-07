@@ -15,6 +15,13 @@
           >Vue Mixins Converter</NuxtLink
         >
       </li>
+      <li class="relative">
+        <NuxtLink
+          class="flex h-12 items-center overflow-hidden text-ellipsis whitespace-nowrap rounded py-4 px-6 text-sm text-gray-700 transition duration-300 ease-in-out hover:bg-gray-100 hover:text-gray-900"
+          to="/vue-script-setup-converter"
+          >Vue Script Setup Converter</NuxtLink
+        >
+      </li>
     </ul>
   </nav>
 </template>

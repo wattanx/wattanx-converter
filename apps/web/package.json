@@ -9,12 +9,15 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vueuse/core": "^9.10.0",
     "highlight.js": "^11.5.1"
   },
   "devDependencies": {
     "@types/highlight.js": "^10.1.0",
     "@types/prettier": "^2.7.2",
+    "@wattanx/vue-composition-converter": "*",
     "@wattanx/vue-mixins-converter": "*",
+    "@wattanx/vue-script-setup-converter": "*",
     "autoprefixer": "^10.4.13",
     "nuxt": "3.0.0",
     "postcss": "^8.4.20",
