@@ -6,7 +6,7 @@
  */
 
 import { ConvertedExpression } from '../types';
-import { nonNull } from './nonNull';
+import { nonNull } from '@wattanx/converter-utils';
 
 export const getImportStatement = (
   setupProps: ConvertedExpression[],

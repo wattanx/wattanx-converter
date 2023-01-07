@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of https://github.com/miyaoka/vue-composition-converter.
  */
 
-import { getNodeByKind } from './utils/getNodeByKind';
+import { getNodeByKind } from '@wattanx/converter-utils';
 import { convertOptionsApi } from './converters/optionsApiConverter';
 import { Project, ScriptTarget, SyntaxKind } from 'ts-morph';
 import { parse } from '@vue/compiler-sfc';

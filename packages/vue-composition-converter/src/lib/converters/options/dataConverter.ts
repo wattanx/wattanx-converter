@@ -7,7 +7,7 @@
 
 import { ObjectLiteralElementLike, SyntaxKind, Node } from 'ts-morph';
 import { ConvertedExpression } from '../../types';
-import { getNodeByKind } from '../../utils/getNodeByKind';
+import { getNodeByKind } from '@wattanx/converter-utils';
 
 export const dataConverter = (
   node: ObjectLiteralElementLike

@@ -22,7 +22,7 @@ import {
   PropertyAssignment,
   MethodDeclaration,
 } from 'ts-morph';
-import { getNodeByKind } from '../../utils/getNodeByKind';
+import { getNodeByKind } from '@wattanx/converter-utils';
 
 export const optionsConverter = (sourceFile: SourceFile) => {
   const exportAssignNode = getNodeByKind(

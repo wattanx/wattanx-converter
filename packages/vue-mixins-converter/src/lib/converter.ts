@@ -1,5 +1,5 @@
 import { Project, ScriptTarget, SyntaxKind } from 'ts-morph';
-import { getNodeByKind } from '@wattanx/vue-composition-converter';
+import { getNodeByKind } from '@wattanx/converter-utils';
 import { convertOptionsApi } from './converters/optionsApiConverter';
 
 export type ConverterOptions = {

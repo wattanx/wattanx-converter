@@ -1,7 +1,5 @@
-import {
-  ConvertedExpression,
-  nonNull,
-} from '@wattanx/vue-composition-converter';
+import { ConvertedExpression } from '@wattanx/vue-composition-converter';
+import { nonNull } from '@wattanx/converter-utils';
 
 export const getImportStatement = (
   setupProps: ConvertedExpression[],

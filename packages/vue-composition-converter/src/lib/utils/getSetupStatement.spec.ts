@@ -74,5 +74,26 @@ test('get setup statement', () => {
     },
   ]);
 
-  console.log(output);
+  expect(output).toEqual([
+    'const { age } = toRefs(props)',
+    "const firstName = ref('first')",
+    "const lastName = ref('last')",
+    'const name = computed(() => store.state.user.name)',
+    'const age = computed(() => store.state.user.age)',
+    "const name = computed(() => store.getters['user/name'])",
+    "const age = computed(() => store.getters['user/age'])",
+    'const fullName = computed(() => {\n' +
+      '      return firstName.value + lastName.value;\n' +
+      '    })',
+    "const setUser = () => store.dispatch('user/setUser')",
+    'const getInfo = async() =>{\n' +
+      "      await fetch('https://www.google.com/');\n" +
+      '    }',
+    "watch(age, () => {\n      console.log('watch');\n    })",
+    'watch(someObject, (newValue,oldValue) => {\n' +
+      '        console.log(newValue, oldValue);\n' +
+      '      }, {"deep":true} )',
+    "onMounted(() =>{\n    console.log('mounted');\n  })",
+    'return {firstName,lastName,name,age,name,age,fullName,setUser,getInfo}',
+  ]);
 });

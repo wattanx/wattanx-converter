@@ -6,7 +6,7 @@
  */
 
 import { Node, ObjectLiteralElementLike } from 'ts-morph';
-import { nonNull } from '../../utils/nonNull';
+import { nonNull } from '@wattanx/converter-utils';
 import { getPropsFromInitializer } from '../../utils/getPropsFromInitializer';
 import { ConvertedExpression } from '../../types';
 

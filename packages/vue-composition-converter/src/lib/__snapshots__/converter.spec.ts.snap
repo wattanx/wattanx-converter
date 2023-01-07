@@ -10,7 +10,7 @@ export default defineComponent({
             type: Number,
             required: true,
         },
-    }
+    },
     setup(props, ctx) {
         const store = useStore();
         const { age } = toRefs(props);
