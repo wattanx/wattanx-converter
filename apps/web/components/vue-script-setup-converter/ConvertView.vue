@@ -42,7 +42,7 @@ watch(
         <h2>Input: script and composition api</h2>
       </div>
       <textarea
-        class="text-md w-full flex-1 border p-2 leading-5"
+        class="text-md w-full flex-1 border bg-gray-800 p-2 leading-5"
         :class="{ hasError }"
         v-model="input"
       ></textarea>

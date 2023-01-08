@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --gray-900: #1b1b1b;
+}
+
+html {
+  background-color: var(--gray-900);
+  color: white;
+}

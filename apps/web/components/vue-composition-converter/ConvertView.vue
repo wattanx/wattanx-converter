@@ -56,7 +56,7 @@ watch(
         <h2>Input: Vue2 Composition API</h2>
       </div>
       <textarea
-        class="text-md w-full flex-1 border p-2 leading-5"
+        class="text-md w-full flex-1 border bg-gray-800 p-2 leading-5"
         :class="{ hasError }"
         v-model="input"
       ></textarea>
@@ -67,7 +67,7 @@ watch(
         <select
           id="output-type"
           v-model="selectedOutputType"
-          class="rounded-md border-1 border-solid border-borderColor outline outline-2 outline-transparent focus:outline-focused"
+          class="outline-transparent rounded-md border-1 border-solid border-borderColor bg-gray-800 focus:outline-focused"
         >
           <option v-for="key in outputTypeKeys" :key="key" :value="key">
             {{ outputType.get(key) }}
