@@ -19,3 +19,7 @@ https://wattanx-converter.vercel.app/vue-mixins-converter
 https://wattanx-converter.vercel.app/vue-script-setup-converter
 
 [README](/packages/vue-script-setup-converter/README.md)
+
+## Insert Emits Option
+
+[README](/packages/insert-emits-option/README.md)
