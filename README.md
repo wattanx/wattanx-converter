@@ -23,3 +23,7 @@ https://wattanx-converter.vercel.app/vue-script-setup-converter
 ## Insert Emits Option
 
 [README](/packages/insert-emits-option/README.md)
+
+## Nuxt Bridge Migration Tools
+
+[README](/packages/nuxt-bridge-migration-tools/README.md)
