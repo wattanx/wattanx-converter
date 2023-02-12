@@ -4,6 +4,17 @@ A tool to support migration to Nuxt Bridge.
 
 ## Usage
 
+### Migrating from `@nuxtjs/composition-api`
+
+```bash
+npx @wattanx/nuxt-bridge-migration capi-migration <files...>
+```
+
+Perform the following conversions.
+
+- [`@nuxtjs/composition-api` import migration](/#nuxtjscomposition-api-import-migration)
+- [`useStore` migration](/#usestore-migration)
+
 ### `@nuxtjs/composition-api` import migration
 
 Convert `@nuxtjs/composition-api` for bridge.

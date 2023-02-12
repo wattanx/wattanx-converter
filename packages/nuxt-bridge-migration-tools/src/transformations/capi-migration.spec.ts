@@ -1,5 +1,5 @@
 import { applyTransform } from "jscodeshift/src/testUtils";
-import transform from "./capi-convert";
+import transform from "./capi-migration";
 
 test("useStore", () => {
   const source = `import { computed, defineComponent, useStore, useContext } from '@nuxtjs/composition-api';
