@@ -35,3 +35,16 @@ npx @wattanx/nuxt-bridge-migration use-store <files...>
 - const store = useStore();
 + const { $store: store } = useNuxtApp();
 ```
+
+### `useContext` migration
+
+Convert `useContext()` to `useNuxtApp()`
+
+```bash
+npx @wattanx/nuxt-bridge-migration use-context <files...>
+```
+
+```diff
+- const { $axios, $sentry } = useContext();
++ const { $axios, $sentry } = useNuxtApp();
+```

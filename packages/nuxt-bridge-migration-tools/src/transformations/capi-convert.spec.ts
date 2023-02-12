@@ -2,9 +2,10 @@ import { applyTransform } from "jscodeshift/src/testUtils";
 import transform from "./capi-convert";
 
 test("useStore", () => {
-  const source = `import { computed, defineComponent, useStore } from '@nuxtjs/composition-api';
+  const source = `import { computed, defineComponent, useStore, useContext } from '@nuxtjs/composition-api';
 export default defineComponent({
   setup() {
+    const { $axios, $sentry } = useContext();
     const store = useStore();
     const fooGetters = computed(() => store.getters['foo']);
   }
@@ -16,6 +17,8 @@ export default defineComponent({
   setup() {
     const {
       $store: store,
+      $axios,
+      $sentry,
     } = useNuxtApp();
     const fooGetters = computed(() => store.getters['foo']);
   }
