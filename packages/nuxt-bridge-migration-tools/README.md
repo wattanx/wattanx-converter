@@ -12,7 +12,7 @@ Convert `@nuxtjs/composition-api` for bridge.
 npx @wattanx/nuxt-bridge-migration capi-import <files...>
 ```
 
-Path to the target vue file, which can be set with the glob pattern. eg: `src/**/*.vue`
+Path to the target vue file, which can be set with the glob pattern. e.g.: `src/**/*.vue`
 
 - `@nuxtjs/composition-api` -> `#imports`
 - `useContext` -> `useNuxtApp`
