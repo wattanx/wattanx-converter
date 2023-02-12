@@ -9,10 +9,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@vueuse/core": "^9.10.0",
+    "@vueuse/core": "^9.12.0",
     "highlight.js": "^11.5.1"
   },
   "devDependencies": {
+    "@nuxt/content": "^2.4.3",
     "@types/highlight.js": "^10.1.0",
     "@types/prettier": "^2.7.2",
     "@wattanx/vue-composition-converter": "*",
