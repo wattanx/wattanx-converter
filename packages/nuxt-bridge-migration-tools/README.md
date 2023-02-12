@@ -12,8 +12,9 @@ npx @wattanx/nuxt-bridge-migration capi-migration <files...>
 
 Perform the following conversions.
 
-- [`@nuxtjs/composition-api` import migration](/#nuxtjscomposition-api-import-migration)
-- [`useStore` migration](/#usestore-migration)
+- [`@nuxtjs/composition-api` import migration](/packages/nuxt-bridge-migration-tools/README.md#nuxtjscomposition-api-import-migration)
+- [`useStore` migration](/packages/nuxt-bridge-migration-tools/README.md#usestore-migration)
+- [`useContext` migration](/packages/nuxt-bridge-migration-tools/README.md#usecontext-migration)
 
 ### `@nuxtjs/composition-api` import migration
 
