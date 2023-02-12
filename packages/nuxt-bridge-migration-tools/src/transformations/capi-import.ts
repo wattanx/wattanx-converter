@@ -8,8 +8,11 @@ const capiMap = new Map([
   ["useMeta", "useHead"],
 ]);
 
-export const transformAst: ASTTransformation<any> = ({ root, j }, options) => {
-  return root
+export const transformCapiImport: ASTTransformation<any> = (
+  { root, j },
+  options
+) => {
+  root
     .find(j.ImportDeclaration)
     .filter((path) => path.node.source.value === "@nuxtjs/composition-api")
     .forEach((x) => {
@@ -35,5 +38,5 @@ export const transformAst: ASTTransformation<any> = ({ root, j }, options) => {
     });
 };
 
-export default wrap(transformAst);
+export default wrap(transformCapiImport);
 export const parser = "ts";

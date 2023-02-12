@@ -18,7 +18,7 @@ type JSTransformationModule =
       parser?: string | Parser;
     };
 
-type TransformationModule = JSTransformationModule;
+export type TransformationModule = JSTransformationModule;
 
 export default function runTransformation(
   fileInfo: FileInfo,
