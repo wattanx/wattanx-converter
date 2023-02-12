@@ -25,4 +25,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: ["@nuxt/content"],
+  content: {
+    highlight: {
+      theme: "slack-dark",
+    },
+  },
 });

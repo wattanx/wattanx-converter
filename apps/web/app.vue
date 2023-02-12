@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const showSideNav = ref(false);
+import Header from "./components/Header.vue";
 </script>
+
 <template>
+  <Header />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
