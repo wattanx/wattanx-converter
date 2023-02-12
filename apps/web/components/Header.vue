@@ -67,20 +67,22 @@ onClickOutside(modalTarget, closeModal);
           <ArrowUp class="group-data-[state=open]:rotate-180" />
         </div>
 
-        <MenuPortal to="#menu-dropdown">
-          <div
-            class="absolute top-8 left-5 min-w-max rounded-md border-1 border-gray-600 bg-gray-800 p-2 shadow-md"
-            v-if="openModal"
-          >
-            <div v-for="{ title, href } in menu" ref="modalTarget">
-              <NuxtLink
-                class="flex flex-row items-center gap-3 rounded-md p-2 hover:bg-gray-600"
-                :to="href"
-                >{{ title }}<Check v-if="currentMenu === title"
-              /></NuxtLink>
+        <ClientOnly>
+          <MenuPortal to="#menu-dropdown">
+            <div
+              class="absolute top-8 left-5 min-w-max rounded-md border-1 border-gray-600 bg-gray-800 p-2 shadow-md"
+              v-if="openModal"
+            >
+              <div v-for="{ title, href } in menu" ref="modalTarget">
+                <NuxtLink
+                  class="flex flex-row items-center gap-3 rounded-md p-2 hover:bg-gray-600"
+                  :to="href"
+                  >{{ title }}<Check v-if="currentMenu === title"
+                /></NuxtLink>
+              </div>
             </div>
-          </div>
-        </MenuPortal>
+          </MenuPortal>
+        </ClientOnly>
       </Menu>
     </div>
   </header>
