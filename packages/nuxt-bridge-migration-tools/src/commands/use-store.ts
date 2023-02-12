@@ -1,5 +1,5 @@
 import type { Arguments, Argv } from "yargs";
-import capiImport from "../transformations/capi-import";
+import useStore from "../transformations/use-store";
 import { convertTargetFiles } from "../lib/convert-target-files";
 import { executeTransform } from "../handlers/execute-transform";
 
@@ -7,8 +7,8 @@ type Options = {
   targetFilePaths: string[];
 };
 
-export const command = "capi-import [targetFilePaths...]";
-export const desc = "Convert import '@nuxtjs/composition-api'.";
+export const command = "use-store [targetFilePaths...]";
+export const desc = "Convert `useStore` to `useNuxtApp().$store`.";
 
 export const builder = (yargs: Argv<Options>): Argv<Options> =>
   yargs.positional("targetFilePaths", {
@@ -24,5 +24,5 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
 
   const targetFiles = await convertTargetFiles(targetFilePaths);
 
-  executeTransform(targetFiles, capiImport);
+  executeTransform(targetFiles, useStore);
 };
