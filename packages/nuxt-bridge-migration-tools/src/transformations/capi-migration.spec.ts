@@ -1,18 +1,21 @@
 import { applyTransform } from "jscodeshift/src/testUtils";
 import transform from "./capi-migration";
 
-test("useStore", () => {
-  const source = `import { computed, defineComponent, useStore, useContext } from '@nuxtjs/composition-api';
+test("capi migration", () => {
+  const source = `import { computed, defineComponent, useStore, useContext, useMeta } from '@nuxtjs/composition-api';
 export default defineComponent({
   setup() {
     const { $axios, $sentry } = useContext();
     const store = useStore();
     const fooGetters = computed(() => store.getters['foo']);
+    useMeta({
+      title: "wattanx-converter",
+    })
   }
 });
 `;
 
-  const expected = `import { computed, defineComponent, useNuxtApp } from '#imports';
+  const expected = `import { computed, defineComponent, useNuxtApp, useHead } from '#imports';
 export default defineComponent({
   setup() {
     const {
@@ -21,6 +24,9 @@ export default defineComponent({
       $sentry,
     } = useNuxtApp();
     const fooGetters = computed(() => store.getters['foo']);
+    useHead({
+      title: "wattanx-converter",
+    })
   }
 });`;
 
