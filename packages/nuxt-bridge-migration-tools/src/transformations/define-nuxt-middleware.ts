@@ -48,7 +48,10 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
 
         const ctxParams = params[0];
 
-        if (ctxParams.type === "ObjectPattern") {
+        if (
+          ctxParams.type === "ObjectPattern" ||
+          ctxParams.type === "Identifier"
+        ) {
           ctxParams.typeAnnotation = j.typeAnnotation(
             j.genericTypeAnnotation(j.identifier("Context"), null)
           );
