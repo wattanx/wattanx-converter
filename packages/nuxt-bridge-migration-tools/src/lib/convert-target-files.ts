@@ -11,7 +11,8 @@ export const convertTargetFiles = async (targetFilePaths: string[]) => {
 
       const script =
         extension === ".vue" ? descriptor.script?.content ?? "" : fullText;
-      const lang = descriptor.script?.lang ?? "js";
+      const lang = descriptor.script?.lang ?? extension === ".ts" ? "ts" : "js";
+
       return {
         path,
         fullText,

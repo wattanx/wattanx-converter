@@ -72,3 +72,27 @@ npx @wattanx/nuxt-bridge-migration use-meta <files...>
 - useMeta({ title: "wattanx-converter" });
 + useHead({ title: "wattanx-converter" });
 ```
+
+### `defineNuxtMiddleware` migration
+
+Remove defineNuxtMiddleware.
+
+```bash
+npx @wattanx/nuxt-bridge-migration define-nuxt-middleware <files...>
+```
+
+```diff
+- import { defineNuxtMiddleware } from "@nuxtjs/composition-api";
+- export default defineNuxtMiddleware(({ store, redirect }) => {
+-   if (!store.state.authenticated) {
+-     return redirect('/login')
+-   }
+- });
+
++ import type { Context } from '@nuxt/types';
++ export default ({ store, redirect }: Context) => {
++   if (!store.state.authenticated) {
++     return redirect('/login')
++   }
++ };
+```
