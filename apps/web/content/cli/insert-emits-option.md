@@ -18,12 +18,6 @@ npx @wattanx/insert-emits-option <files...>
 
 Path to the target vue file, which can be set with the glob pattern. eg: `src/**/*.vue`
 
-### options
-
-| option              | default         | description            |
-| ------------------- | --------------- | ---------------------- |
-| -t, --tsconfig-path | ./tsconfig.json | Path to tsconfig.json. |
-
 ## Example
 
 ```diff

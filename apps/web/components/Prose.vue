@@ -63,7 +63,7 @@
 }
 
 .contents code:not(pre > *) {
-  @apply mx-1 px-1 text-orange-500;
+  @apply mx-1  rounded-md bg-[#636e7b66] px-1 text-gray-400 shadow-lg;
 }
 
 .contents pre {

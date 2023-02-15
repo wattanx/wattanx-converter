@@ -17,6 +17,7 @@ Perform the following conversions.
 - [@nuxtjs/composition-api import migration](/cli/nuxt-bridge-migration-tools#nuxtjscomposition-api-import-migration)
 - [useStore migration](/cli/nuxt-bridge-migration-tools#usestore-migration)
 - [useContext migration](/cli/nuxt-bridge-migration-tools#usecontext-migration)
+- [useMeta migration](/cli/nuxt-bridge-migration-tools#usemeta-migration)
 
 ### `@nuxtjs/composition-api` import migration
 
@@ -59,4 +60,17 @@ npx @wattanx/nuxt-bridge-migration use-context <files...>
 ```diff
 - const { $axios, $sentry } = useContext();
 + const { $axios, $sentry } = useNuxtApp();
+```
+
+### `useMeta` migration
+
+Convert `useMeta` to `useHead`.
+
+```bash
+npx @wattanx/nuxt-bridge-migration use-meta <files...>
+```
+
+```diff
+- useMeta({ title: "wattanx-converter" });
++ useHead({ title: "wattanx-converter" });
 ```
