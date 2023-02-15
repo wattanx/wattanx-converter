@@ -21,7 +21,9 @@ export const executeTransform = async (
       source: file.script,
     };
     try {
-      const result = runTransformation(fileInfo, transformer, file.lang, {});
+      const result = runTransformation(fileInfo, transformer, file.lang, {
+        lang: file.lang,
+      });
 
       const newText = file.fullText.replace(file.script, result);
 
