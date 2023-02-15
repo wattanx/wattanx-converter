@@ -75,7 +75,7 @@ npx @wattanx/nuxt-bridge-migration use-meta <files...>
 
 ### `defineNuxtMiddleware` migration
 
-Remove defineNuxtMiddleware.
+Remove `defineNuxtMiddleware`.
 
 ```bash
 npx @wattanx/nuxt-bridge-migration define-nuxt-middleware <files...>
