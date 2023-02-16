@@ -111,8 +111,8 @@ npx @wattanx/nuxt-bridge-migration define-nuxt-plugin <files...>
 -   inject('hello', (msg) => console.log('Hello World'));
 - });
 
-+ import type { Context, Inject } from '@nuxt/types';
-+ export default (ctx: Context, inject: Inject) => {
++ import type { Plugin } from '@nuxt/types';
++ export default <Plugin> function(ctx, inject) {
 +   inject('hello', (msg) => console.log('Hello World'));
 + };
 ```
