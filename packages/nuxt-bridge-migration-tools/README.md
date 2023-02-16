@@ -96,3 +96,26 @@ npx @wattanx/nuxt-bridge-migration define-nuxt-middleware <files...>
 +   }
 + };
 ```
+
+### `defineNuxtPlugin` migration
+
+Remove `defineNuxtPlugin`.
+
+```bash
+npx @wattanx/nuxt-bridge-migration define-nuxt-plugin <files...>
+```
+
+```diff
+- import { defineNuxtPlugin } from '@nuxtjs/composition-api';
+- export default defineNuxtPlugin((ctx, inject) => {
+-   inject('hello', (msg) => console.log('Hello World'));
+- });
+
++ import type { Context, Inject } from '@nuxt/types';
++ export default (ctx: Context, inject: Inject) => {
++   inject('hello', (msg) => console.log('Hello World'));
++ };
+```
+
+> ⚠️ New format for nuxt 3 is not supported.
+> https://nuxt.com/docs/bridge/overview#new-plugins-format-optional
