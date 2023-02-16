@@ -19,6 +19,7 @@ import Card from "~~/components/Card.vue";
         title="Vue Script Setup Converter"
         description="This tool converts the vue composition api into a script setup."
         href="/vue-script-setup-converter"
+        experimental
       />
       <Card
         title="Insert Emits Option"

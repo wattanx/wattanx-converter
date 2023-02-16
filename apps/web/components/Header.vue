@@ -53,7 +53,7 @@ onClickOutside(modalTarget, closeModal);
 </script>
 <template>
   <header
-    class="sticky top-[-1px] z-50 mx-auto flex h-14 justify-between bg-gray-900 px-4"
+    class="sticky top-[-1px] z-50 mx-auto flex h-14 justify-between bg-gray-900 px-8"
   >
     <div class="flex flex-row items-center space-x-2">
       <NuxtLink to="/">wattanx converter</NuxtLink>
@@ -85,5 +85,13 @@ onClickOutside(modalTarget, closeModal);
         </ClientOnly>
       </Menu>
     </div>
+    <a
+      class="flex items-center"
+      href="https://github.com/wattanx/wattanx-converter"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img src="/github-mark.svg" width="24" height="22" alt="github link" />
+    </a>
   </header>
 </template>

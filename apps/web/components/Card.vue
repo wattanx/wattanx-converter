@@ -3,6 +3,7 @@ type Props = {
   title: string;
   href: string;
   description: string;
+  experimental?: boolean;
 };
 
 const props = defineProps<Props>();
@@ -10,9 +11,16 @@ const props = defineProps<Props>();
 <template>
   <NuxtLink
     :to="href"
-    class="flex w-[320px] flex-col space-y-6 whitespace-pre-wrap rounded-lg border-none bg-gray-800 p-4 hover:bg-gray-700"
+    class="flex w-[320px] flex-col whitespace-pre-wrap rounded-lg border-none bg-gray-800 p-4 hover:bg-gray-700"
   >
-    <p class="text-xl font-bold">{{ title }}</p>
-    <p class="text-md">{{ description }}</p>
+    <div class="space-y-6">
+      <div>
+        <p class="text-xl font-bold">{{ title }}</p>
+        <span v-if="props.experimental" class="text-orange-500"
+          >experimental</span
+        >
+      </div>
+      <p class="text-md">{{ description }}</p>
+    </div>
   </NuxtLink>
 </template>
