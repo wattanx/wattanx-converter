@@ -1,7 +1,7 @@
 import { BlockStatement } from "jscodeshift";
 import { wrap, ASTTransformation } from "../wrapAstTransformation";
 
-export const convertDefineNuxtMiddleware: ASTTransformation<{
+export const convertDefineNuxtPlugin: ASTTransformation<{
   lang?: string;
 }> = (context, options) => {
   const { root, j } = context;
@@ -10,7 +10,7 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
     specifiers: [
       {
         local: {
-          name: "defineNuxtMiddleware",
+          name: "defineNuxtPlugin",
         },
       },
     ],
@@ -23,7 +23,7 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
   const exportDefaultDeclaration = root.find(j.ExportDefaultDeclaration, {
     declaration: {
       callee: {
-        name: "defineNuxtMiddleware",
+        name: "defineNuxtPlugin",
       },
     },
   });
@@ -32,7 +32,7 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
     importDeclaration.forEach((x) => {
       j(x).replaceWith(
         j.importDeclaration(
-          [j.importSpecifier(j.identifier("Middleware"))],
+          [j.importSpecifier(j.identifier("Plugin"))],
           {
             type: "Literal",
             value: "@nuxt/types",
@@ -60,7 +60,7 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
             j.exportDeclaration(
               true,
               j.tsTypeAssertion(
-                j.tsTypeReference(j.identifier("Middleware"), null),
+                j.tsTypeReference(j.identifier("Plugin"), null),
                 newFunc
               )
             )
@@ -90,5 +90,5 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
   });
 };
 
-export default wrap(convertDefineNuxtMiddleware);
+export default wrap(convertDefineNuxtPlugin);
 export const parser = "ts";

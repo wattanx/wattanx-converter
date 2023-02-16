@@ -91,10 +91,33 @@ npx @wattanx/nuxt-bridge-migration define-nuxt-middleware <files...>
 -   }
 - });
 
-+ import type { Context } from '@nuxt/types';
-+ export default ({ store, redirect }: Context) => {
++ import type { Middleware } from '@nuxt/types';
++ export default <Middleware> function({ store, redirect }) {
 +   if (!store.state.authenticated) {
 +     return redirect('/login')
 +   }
 + };
 ```
+
+### `defineNuxtPlugin` migration
+
+Remove `defineNuxtPlugin`.
+
+```bash
+npx @wattanx/nuxt-bridge-migration define-nuxt-plugin <files...>
+```
+
+```diff
+- import { defineNuxtPlugin } from '@nuxtjs/composition-api';
+- export default defineNuxtPlugin((ctx, inject) => {
+-   inject('hello', (msg) => console.log('Hello World'));
+- });
+
++ import type { Plugin } from '@nuxt/types';
++ export default <Plugin> function(ctx, inject) {
++   inject('hello', (msg) => console.log('Hello World'));
++ };
+```
+
+> ⚠️ New format for nuxt 3 is not supported.
+> https://nuxt.com/docs/bridge/overview#new-plugins-format-optional
