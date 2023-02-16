@@ -1,6 +1,6 @@
-# wattanx converter
+# wattanx-converter
 
-wattanx converter provides a variety of vue converters.
+wattanx-converter provides useful tools for Vue and Nuxt.
 
 ## Vue Composition Converter
 
