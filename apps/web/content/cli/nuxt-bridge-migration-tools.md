@@ -91,8 +91,8 @@ npx @wattanx/nuxt-bridge-migration define-nuxt-middleware <files...>
 -   }
 - });
 
-+ import type { Context } from '@nuxt/types';
-+ export default ({ store, redirect }: Context) => {
++ import type { Middleware } from '@nuxt/types';
++ export default <Middleware> function({ store, redirect }) {
 +   if (!store.state.authenticated) {
 +     return redirect('/login')
 +   }

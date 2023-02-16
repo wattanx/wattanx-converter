@@ -1,3 +1,4 @@
+import { BlockStatement } from "jscodeshift";
 import { wrap, ASTTransformation } from "../wrapAstTransformation";
 
 export const convertDefineNuxtMiddleware: ASTTransformation<{
@@ -19,9 +20,11 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
     return;
   }
 
-  const callExpression = root.find(j.CallExpression, {
-    callee: {
-      name: "defineNuxtMiddleware",
+  const exportDefaultDeclaration = root.find(j.ExportDefaultDeclaration, {
+    declaration: {
+      callee: {
+        name: "defineNuxtMiddleware",
+      },
     },
   });
 
@@ -29,7 +32,7 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
     importDeclaration.forEach((x) => {
       j(x).replaceWith(
         j.importDeclaration(
-          [j.importSpecifier(j.identifier("Context"))],
+          [j.importSpecifier(j.identifier("Middleware"))],
           {
             type: "Literal",
             value: "@nuxt/types",
@@ -39,40 +42,50 @@ export const convertDefineNuxtMiddleware: ASTTransformation<{
       );
     });
 
-    callExpression.forEach((x) => {
-      const argument = x.node.arguments[0];
+    exportDefaultDeclaration.forEach((x) => {
+      const declaration = x.node.declaration;
 
-      if (argument.type === "ArrowFunctionExpression") {
-        const params = argument.params;
-        const body = argument.body;
+      if (declaration.type === "CallExpression") {
+        const argument = declaration.arguments[0];
 
-        const ctxParams = params[0];
+        if (argument.type === "ArrowFunctionExpression") {
+          const params = argument.params;
+          const body = argument.body as BlockStatement;
+          const isAsync = argument.async;
 
-        if (
-          ctxParams.type === "ObjectPattern" ||
-          ctxParams.type === "Identifier"
-        ) {
-          ctxParams.typeAnnotation = j.typeAnnotation(
-            j.genericTypeAnnotation(j.identifier("Context"), null)
+          const newFunc = j.functionExpression(null, params, body);
+          newFunc.async = isAsync;
+
+          j(x).replaceWith(
+            j.exportDeclaration(
+              true,
+              j.tsTypeAssertion(
+                j.tsTypeReference(j.identifier("Middleware"), null),
+                newFunc
+              )
+            )
           );
         }
-
-        j(x).replaceWith(j.arrowFunctionExpression(params, body));
       }
     });
+
     return;
   }
 
   importDeclaration.remove();
 
-  callExpression.forEach((x) => {
+  exportDefaultDeclaration.find(j.CallExpression).forEach((x) => {
     const argument = x.node.arguments[0];
 
     if (argument.type === "ArrowFunctionExpression") {
       const params = argument.params;
       const body = argument.body;
+      const isAsync = argument.async;
 
-      j(x).replaceWith(j.arrowFunctionExpression(params, body));
+      const newFunc = j.arrowFunctionExpression(params, body);
+      newFunc.async = isAsync;
+
+      j(x).replaceWith(newFunc);
     }
   });
 };
