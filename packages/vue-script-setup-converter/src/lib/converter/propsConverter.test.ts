@@ -140,6 +140,53 @@ const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
   expect(formatedText).toBe(expected);
 });
 
+test("type-based defineProps with default function", () => {
+  const source = `<script lang="ts">
+  import { defineComponent, toRefs, computed, ref } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: {
+      foo: {
+        type: Object,
+        default() {
+          return { msg: "Hello World" }
+        }
+      }
+    }
+  })
+  </script>`;
+  const {
+    descriptor: { script },
+  } = parse(source);
+
+  const project = new Project({
+    tsConfigFilePath: "tsconfig.json",
+    compilerOptions: {
+      target: ScriptTarget.Latest,
+    },
+  });
+
+  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
+
+  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
+
+  const props = convertProps(callexpression as CallExpression, "ts");
+
+  const formatedText = prettier.format(props, {
+    parser: "typescript",
+    plugins: [parserTypeScript],
+  });
+
+  const expected = `type Props = { foo?: { msg: string } };
+const props = withDefaults(defineProps<Props>(), {
+  foo: { msg: "Hello World" },
+});
+`;
+
+  expect(formatedText).toBe(expected);
+});
+
 test("custom validator", () => {
   const source = `<script>
   import { defineComponent, toRefs, computed, ref } from 'vue';

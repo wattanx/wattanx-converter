@@ -5,6 +5,8 @@ import {
   PropertyAssignment,
   SyntaxKind,
   Node,
+  ReturnStatement,
+  MethodDeclaration,
 } from "ts-morph";
 import { getOptionsNode } from "../helper";
 
@@ -154,10 +156,22 @@ const convertPropsWithObject = (
 const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
   const property = properties.find((x) => {
     if (!Node.isPropertyAssignment(x)) {
-      throw new Error("props property not found.");
+      return;
     }
     return x.getName() === "type";
   });
+
+  const defaultValue = properties.find((x) => {
+    if (Node.isMethodDeclaration(x)) {
+      return x.getName() === "default";
+    }
+  });
+
+  if (defaultValue) {
+    if (Node.isMethodDeclaration(defaultValue)) {
+      return getPropTypeByDefault(defaultValue) ?? "";
+    }
+  }
 
   if (!property) {
     throw new Error("props property not found.");
@@ -176,18 +190,46 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
   return typeMapping[initializer.getText()];
 };
 
+const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
+  const body = propsNode.getBody();
+  if (Node.isBlock(body)) {
+    const statement = body.getStatement(
+      (x) => x.getKind() === SyntaxKind.ReturnStatement
+    ) as ReturnStatement;
+    const expression = statement.getExpression();
+
+    if (Node.isObjectLiteralExpression(expression)) {
+      return expression.getType().getText();
+    }
+  }
+};
+
 const getPropsOption = (
   type: "required" | "default",
   properties: ObjectLiteralElementLike[]
 ) => {
   const property = properties.find((x) => {
-    if (!Node.isPropertyAssignment(x)) {
-      throw new Error("props property not found.");
+    if (Node.isPropertyAssignment(x) || Node.isMethodDeclaration(x)) {
+      return x.getName() === type;
     }
-    return x.getName() === type;
   });
 
   if (!property) {
+    return;
+  }
+
+  if (Node.isMethodDeclaration(property)) {
+    const body = property.getBody();
+    if (Node.isBlock(body)) {
+      const statement = body.getStatement(
+        (x) => x.getKind() === SyntaxKind.ReturnStatement
+      ) as ReturnStatement;
+      const expression = statement.getExpression();
+
+      if (Node.isObjectLiteralExpression(expression)) {
+        return expression.getText();
+      }
+    }
     return;
   }
 
