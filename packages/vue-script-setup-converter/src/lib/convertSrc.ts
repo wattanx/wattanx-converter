@@ -5,10 +5,9 @@ import {
   Project,
   Node,
   ImportDeclaration,
+  ts,
 } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
 import { getNodeByKind } from "./helper";
 import { convertProps } from "./converter/propsConverter";
 import { convertSetup } from "./converter/setupConverter";
@@ -34,8 +33,6 @@ export const convertSrc = (input: string) => {
     SyntaxKind.ImportDeclaration
   ) as ImportDeclaration;
 
-  const importStatement = importDeclaration.getText() ?? "";
-
   const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
 
   if (!callexpression) {
@@ -53,15 +50,25 @@ export const convertSrc = (input: string) => {
   const emits = convertEmits(callexpression, lang) ?? "";
   const statement = convertSetup(callexpression) ?? "";
 
-  const formatedText = prettier.format(
-    importStatement + props + emits + statement,
-    {
-      parser: "typescript",
-      plugins: [parserTypeScript],
-    }
+  const statements = project.createSourceFile("new.tsx");
+
+  statements.addStatements(
+    sourceFile
+      .getStatements()
+      .filter((state) => !Node.isExportAssignment(state))
+      .map((x) => x.getFullText())
   );
 
-  return formatedText;
+  statements.addStatements(props);
+  statements.addStatements(emits);
+  statements.addStatements(statement);
+
+  statements.formatText({
+    semicolons: ts.SemicolonPreference.Insert,
+    indentSize: 2,
+  });
+
+  return statements.getFullText();
 };
 
 const isDefineComponent = (node: CallExpression) => {
