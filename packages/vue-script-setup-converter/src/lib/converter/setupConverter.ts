@@ -6,13 +6,13 @@ export const convertSetup = (node: CallExpression) => {
   const setupNode = getNodeByKind(node, SyntaxKind.MethodDeclaration);
 
   if (!setupNode) {
-    throw new Error("setup is not found.");
+    return "";
   }
 
   const blockNode = getNodeByKind(setupNode, SyntaxKind.Block);
 
   if (!blockNode) {
-    throw new Error("setup is not found.");
+    return "";
   }
 
   return blockNode

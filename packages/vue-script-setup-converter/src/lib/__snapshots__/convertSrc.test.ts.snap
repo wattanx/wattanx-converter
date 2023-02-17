@@ -1,32 +1,37 @@
 // Vitest Snapshot v1
 
 exports[`lang=js > convert 1`] = `
-"import { defineComponent, toRefs, computed, ref } from \\"vue\\";
+"
+import { defineComponent, toRefs, computed, ref } from 'vue';
 const props = defineProps({
   msg: {
     type: String,
-    default: \\"HelloWorld\\",
-  },
-  foo: {
+    default: 'HelloWorld'
+  }, foo: {
     type: String,
     required: true,
-  },
+  }
 });
 const emit = defineEmits({ change: null });
+
 const { msg, foo } = toRefs(props);
-const newMsg = computed(() => msg.value + \\"- HelloWorld\\");
+const newMsg = computed(() => msg.value + '- HelloWorld');
 
 const count = ref(0);
 "
 `;
 
 exports[`lang=ts > type-base declaration 1`] = `
-"import { defineComponent, toRefs, computed, ref } from \\"vue\\";
-type Props = { msg?: string; foo: string };
-const props = withDefaults(defineProps<Props>(), { msg: \\"HelloWorld\\" });
-const emit = defineEmits<{ (e: \\"change\\", value: number): void }>();
+"
+import { defineComponent, toRefs, computed, ref } from 'vue';
+type Props = {
+  msg?: string;
+  foo: string;
+}; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
+const emit = defineEmits<{ (e: 'change', value: number): void; }>();
+
 const { msg, foo } = toRefs(props);
-const newMsg = computed(() => msg.value + \\"- HelloWorld\\");
+const newMsg = computed(() => msg.value + '- HelloWorld');
 
 const count = ref(0);
 emit(\\"change\\", 124);
