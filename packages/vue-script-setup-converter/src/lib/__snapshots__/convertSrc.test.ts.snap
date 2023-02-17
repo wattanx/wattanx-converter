@@ -5,11 +5,11 @@ exports[`lang=js > convert 1`] = `
 const props = defineProps({
   msg: {
     type: String,
-    required: true,
     default: \\"HelloWorld\\",
   },
   foo: {
     type: String,
+    required: true,
   },
 });
 const emit = defineEmits({ change: null });
@@ -22,7 +22,7 @@ const count = ref(0);
 
 exports[`lang=ts > type-base declaration 1`] = `
 "import { defineComponent, toRefs, computed, ref } from \\"vue\\";
-type Props = { msg: string; foo?: string };
+type Props = { msg?: string; foo: string };
 const props = withDefaults(defineProps<Props>(), { msg: \\"HelloWorld\\" });
 const emit = defineEmits<{ (e: \\"change\\", value: number): void }>();
 const { msg, foo } = toRefs(props);

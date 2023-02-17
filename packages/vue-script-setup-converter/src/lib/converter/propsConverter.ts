@@ -99,7 +99,9 @@ const convertToTypeDefineProps = (props: PropType[]) => {
         return;
       }
       if (x.type === "object") {
-        return `${x.propertyName}${!x.required ? "?" : ""}: ${x.typeValue};`;
+        return `${x.propertyName}${
+          isOptional(x.required, x.defaultValue) ? "?" : ""
+        }: ${x.typeValue};`;
       }
       return `${x.propertyName}?: ${x.typeValue};`;
     })
@@ -224,6 +226,10 @@ const isTrueKeyword = (kind: SyntaxKind) => {
 
 const isFalseKeyword = (kind: number) => {
   return kind === SyntaxKind.FalseKeyword;
+};
+
+const isOptional = (required?: boolean, defaultValue?: string | boolean) => {
+  return !required || defaultValue !== undefined;
 };
 
 const typeMapping: Record<string, string> = {

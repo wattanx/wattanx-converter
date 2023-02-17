@@ -9,11 +9,11 @@ export default defineComponent({
   props: {
     msg: {
       type: String,
-      required: true,
       default: 'HelloWorld'
     },
     foo: {
       type: String
+      required: true,
     }
   },
   setup(props, ctx) {
