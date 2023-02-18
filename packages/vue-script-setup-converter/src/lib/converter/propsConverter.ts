@@ -226,7 +226,10 @@ const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
     ) as ReturnStatement;
     const expression = statement.getExpression();
 
-    if (Node.isObjectLiteralExpression(expression)) {
+    if (
+      Node.isObjectLiteralExpression(expression) ||
+      Node.isArrayLiteralExpression(expression)
+    ) {
       return expression.getType().getText();
     }
   }
@@ -254,7 +257,10 @@ const getPropsOption = (
       ) as ReturnStatement;
       const expression = statement.getExpression();
 
-      if (Node.isObjectLiteralExpression(expression)) {
+      if (
+        Node.isObjectLiteralExpression(expression) ||
+        Node.isArrayLiteralExpression(expression)
+      ) {
         return expression.getText();
       }
     }

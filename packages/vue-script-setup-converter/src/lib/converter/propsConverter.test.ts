@@ -152,6 +152,12 @@ test("type-based defineProps with default function", () => {
         default() {
           return { msg: "Hello World" }
         }
+      },
+      bar: {
+        type: Array,
+        default() {
+          return ["foo", "bar"]
+        }
       }
     }
   })
@@ -178,9 +184,10 @@ test("type-based defineProps with default function", () => {
     plugins: [parserTypeScript],
   });
 
-  const expected = `type Props = { foo?: { msg: string } };
+  const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
 const props = withDefaults(defineProps<Props>(), {
   foo: { msg: "Hello World" },
+  bar: ["foo", "bar"],
 });
 `;
 
@@ -197,6 +204,10 @@ test("type-based defineProps with non primitive", () => {
     props: {
       foo: {
         type: Object as PropType<Foo>,
+        required: true
+      },
+      items: {
+        type: Array as PropType<string[]>,
         required: true
       }
     }
@@ -224,7 +235,7 @@ test("type-based defineProps with non primitive", () => {
     plugins: [parserTypeScript],
   });
 
-  const expected = `type Props = { foo: Foo };
+  const expected = `type Props = { foo: Foo; items: string[] };
 const props = defineProps<Props>();
 `;
 
