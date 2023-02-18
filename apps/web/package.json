@@ -20,7 +20,7 @@
     "@wattanx/vue-mixins-converter": "*",
     "@wattanx/vue-script-setup-converter": "*",
     "autoprefixer": "^10.4.13",
-    "nuxt": "3.0.0",
+    "nuxt": "^3.2.2",
     "postcss": "^8.4.20",
     "prettier": "^2.8.1",
     "tailwindcss": "^3.2.4",
