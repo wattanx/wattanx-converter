@@ -7,6 +7,7 @@ import {
   Node,
   ReturnStatement,
   MethodDeclaration,
+  AsExpression,
 } from "ts-morph";
 import { getOptionsNode } from "../helper";
 
@@ -76,9 +77,22 @@ const convertToDefinePropsForTs = (node: PropertyAssignment) => {
           propertyName: x.getName(),
         };
       }
+
+      if (Node.isAsExpression(propObj)) {
+        const typeValue = getPropTypeValue(propObj) ?? "";
+
+        return {
+          type: "typeOnly",
+          typeValue,
+          propertyName: x.getName(),
+        };
+      }
+
+      const typeText = propObj?.getText() ?? "";
+
       return {
         type: "typeOnly",
-        typeValue: propObj?.getText() ?? "",
+        typeValue: typeMapping[typeText],
         propertyName: x.getName(),
       };
     });
@@ -167,8 +181,6 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
     }
   });
 
-  // TODO: props: { foo: String } convert
-
   if (!property) {
     throw new Error("props property not found.");
   }
@@ -190,16 +202,20 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
   }
 
   if (Node.isAsExpression(initializer)) {
-    const propType = initializer.getTypeNode();
-
-    if (Node.isTypeReference(propType)) {
-      const arg = propType.getTypeArguments()[0];
-
-      return arg.getType().getText();
-    }
+    return getPropTypeValue(initializer) ?? "";
   }
 
   return typeMapping[initializer.getText()];
+};
+
+const getPropTypeValue = (node: AsExpression) => {
+  const propType = node.getTypeNode();
+
+  if (Node.isTypeReference(propType)) {
+    const arg = propType.getTypeArguments()[0];
+
+    return arg.getType().getText();
+  }
 };
 
 const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
