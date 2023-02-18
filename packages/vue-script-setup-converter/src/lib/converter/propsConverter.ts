@@ -290,7 +290,7 @@ const getPropsOption = (
         Node.isObjectLiteralExpression(expression) ||
         Node.isArrayLiteralExpression(expression)
       ) {
-        return expression.getText();
+        return `() => (${expression.getText()})`;
       }
     }
     return;

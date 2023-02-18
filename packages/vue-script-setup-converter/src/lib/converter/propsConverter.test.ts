@@ -186,8 +186,8 @@ test("type-based defineProps with default function", () => {
 
   const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
 const props = withDefaults(defineProps<Props>(), {
-  foo: { msg: "Hello World" },
-  bar: ["foo", "bar"],
+  foo: () => ({ msg: "Hello World" }),
+  bar: () => ["foo", "bar"],
 });
 `;
 
