@@ -8,6 +8,7 @@ import {
   ReturnStatement,
   MethodDeclaration,
   AsExpression,
+  ArrowFunction,
 } from "ts-morph";
 import { getOptionsNode } from "../helper";
 
@@ -176,7 +177,7 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
   });
 
   const defaultValue = properties.find((x) => {
-    if (Node.isMethodDeclaration(x)) {
+    if (Node.isMethodDeclaration(x) || Node.isPropertyAssignment(x)) {
       return x.getName() === "default";
     }
   });
@@ -192,6 +193,14 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
   if (defaultValue) {
     if (Node.isMethodDeclaration(defaultValue)) {
       return getPropTypeByDefault(defaultValue) ?? "";
+    }
+
+    if (Node.isPropertyAssignment(defaultValue)) {
+      const initializer = defaultValue.getInitializer();
+
+      if (Node.isArrowFunction(initializer)) {
+        return getPropTypeByArrowFunction(initializer) ?? "";
+      }
     }
   }
 
@@ -218,6 +227,10 @@ const getPropTypeValue = (node: AsExpression) => {
   }
 };
 
+/**
+ * Extract the type from the default value.
+ * (e.g.) default() { return { foo: "foo" } }
+ */
 const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
   const body = propsNode.getBody();
   if (Node.isBlock(body)) {
@@ -232,6 +245,22 @@ const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
     ) {
       return expression.getType().getText();
     }
+  }
+};
+
+/**
+ * Extract the type from the default value.
+ * (e.g.) default: () => ({ foo: "foo" })
+ */
+const getPropTypeByArrowFunction = (node: ArrowFunction) => {
+  const body = node.getBody();
+
+  if (Node.isArrayLiteralExpression(body)) {
+    return body.getType().getText();
+  }
+
+  if (Node.isParenthesizedExpression(body)) {
+    return body.getExpression().getType().getText();
   }
 };
 
@@ -273,7 +302,7 @@ const getPropsOption = (
 
   const initializer = property.getInitializer();
 
-  if (Node.isIdentifier(property.getInitializer())) {
+  if (Node.isIdentifier(initializer)) {
     if (!initializer) {
       throw new Error("props property not found.");
     }
