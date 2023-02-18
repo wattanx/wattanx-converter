@@ -7,6 +7,8 @@ import {
   Node,
   ReturnStatement,
   MethodDeclaration,
+  AsExpression,
+  ArrowFunction,
 } from "ts-morph";
 import { getOptionsNode } from "../helper";
 
@@ -76,9 +78,22 @@ const convertToDefinePropsForTs = (node: PropertyAssignment) => {
           propertyName: x.getName(),
         };
       }
+
+      if (Node.isAsExpression(propObj)) {
+        const typeValue = getPropTypeValue(propObj) ?? "";
+
+        return {
+          type: "typeOnly",
+          typeValue,
+          propertyName: x.getName(),
+        };
+      }
+
+      const typeText = propObj?.getText() ?? "";
+
       return {
         type: "typeOnly",
-        typeValue: propObj?.getText() ?? "",
+        typeValue: typeMapping[typeText],
         propertyName: x.getName(),
       };
     });
@@ -162,16 +177,10 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
   });
 
   const defaultValue = properties.find((x) => {
-    if (Node.isMethodDeclaration(x)) {
+    if (Node.isMethodDeclaration(x) || Node.isPropertyAssignment(x)) {
       return x.getName() === "default";
     }
   });
-
-  if (defaultValue) {
-    if (Node.isMethodDeclaration(defaultValue)) {
-      return getPropTypeByDefault(defaultValue) ?? "";
-    }
-  }
 
   if (!property) {
     throw new Error("props property not found.");
@@ -181,15 +190,47 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
     throw new Error("props property not found.");
   }
 
+  if (defaultValue) {
+    if (Node.isMethodDeclaration(defaultValue)) {
+      return getPropTypeByDefault(defaultValue) ?? "";
+    }
+
+    if (Node.isPropertyAssignment(defaultValue)) {
+      const initializer = defaultValue.getInitializer();
+
+      if (Node.isArrowFunction(initializer)) {
+        return getPropTypeByArrowFunction(initializer) ?? "";
+      }
+    }
+  }
+
   const initializer = property.getInitializer();
 
   if (!initializer) {
     throw new Error("props property not found.");
   }
 
+  if (Node.isAsExpression(initializer)) {
+    return getPropTypeValue(initializer) ?? "";
+  }
+
   return typeMapping[initializer.getText()];
 };
 
+const getPropTypeValue = (node: AsExpression) => {
+  const propType = node.getTypeNode();
+
+  if (Node.isTypeReference(propType)) {
+    const arg = propType.getTypeArguments()[0];
+
+    return arg.getType().getText();
+  }
+};
+
+/**
+ * Extract the type from the default value.
+ * (e.g.) default() { return { foo: "foo" } }
+ */
 const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
   const body = propsNode.getBody();
   if (Node.isBlock(body)) {
@@ -198,9 +239,28 @@ const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
     ) as ReturnStatement;
     const expression = statement.getExpression();
 
-    if (Node.isObjectLiteralExpression(expression)) {
+    if (
+      Node.isObjectLiteralExpression(expression) ||
+      Node.isArrayLiteralExpression(expression)
+    ) {
       return expression.getType().getText();
     }
+  }
+};
+
+/**
+ * Extract the type from the default value.
+ * (e.g.) default: () => ({ foo: "foo" })
+ */
+const getPropTypeByArrowFunction = (node: ArrowFunction) => {
+  const body = node.getBody();
+
+  if (Node.isArrayLiteralExpression(body)) {
+    return body.getType().getText();
+  }
+
+  if (Node.isParenthesizedExpression(body)) {
+    return body.getExpression().getType().getText();
   }
 };
 
@@ -226,8 +286,11 @@ const getPropsOption = (
       ) as ReturnStatement;
       const expression = statement.getExpression();
 
-      if (Node.isObjectLiteralExpression(expression)) {
-        return expression.getText();
+      if (
+        Node.isObjectLiteralExpression(expression) ||
+        Node.isArrayLiteralExpression(expression)
+      ) {
+        return `() => (${expression.getText()})`;
       }
     }
     return;
@@ -239,7 +302,7 @@ const getPropsOption = (
 
   const initializer = property.getInitializer();
 
-  if (Node.isIdentifier(property.getInitializer())) {
+  if (Node.isIdentifier(initializer)) {
     if (!initializer) {
       throw new Error("props property not found.");
     }
