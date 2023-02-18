@@ -167,11 +167,7 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
     }
   });
 
-  if (defaultValue) {
-    if (Node.isMethodDeclaration(defaultValue)) {
-      return getPropTypeByDefault(defaultValue) ?? "";
-    }
-  }
+  // TODO: props: { foo: String } convert
 
   if (!property) {
     throw new Error("props property not found.");
@@ -181,10 +177,26 @@ const getTypeValue = (properties: ObjectLiteralElementLike[]) => {
     throw new Error("props property not found.");
   }
 
+  if (defaultValue) {
+    if (Node.isMethodDeclaration(defaultValue)) {
+      return getPropTypeByDefault(defaultValue) ?? "";
+    }
+  }
+
   const initializer = property.getInitializer();
 
   if (!initializer) {
     throw new Error("props property not found.");
+  }
+
+  if (Node.isAsExpression(initializer)) {
+    const propType = initializer.getTypeNode();
+
+    if (Node.isTypeReference(propType)) {
+      const arg = propType.getTypeArguments()[0];
+
+      return arg.getType().getText();
+    }
   }
 
   return typeMapping[initializer.getText()];
