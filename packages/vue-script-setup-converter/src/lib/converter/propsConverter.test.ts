@@ -6,6 +6,32 @@ import parserTypeScript from "prettier/parser-typescript";
 import { getNodeByKind } from "../helper";
 import { convertProps } from "./propsConverter";
 
+const parseScript = (input: string, lang: "js" | "ts" = "js") => {
+  const {
+    descriptor: { script },
+  } = parse(input);
+
+  const project = new Project({
+    tsConfigFilePath: "tsconfig.json",
+    compilerOptions: {
+      target: ScriptTarget.Latest,
+    },
+  });
+
+  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
+
+  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
+
+  const props = convertProps(callexpression as CallExpression, lang);
+
+  const formatedText = prettier.format(props, {
+    parser: "typescript",
+    plugins: [parserTypeScript],
+  });
+
+  return formatedText;
+};
+
 const source = `<script>
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
@@ -25,27 +51,7 @@ const source = `<script>
   </script>`;
 
 test("defineProps", () => {
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression);
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source);
 
   const expected = `const props = defineProps({
   msg: {
@@ -59,37 +65,17 @@ test("defineProps", () => {
 });
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
 
 test("type-based defineProps", () => {
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression, "ts");
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source, "ts");
 
   const expected = `type Props = { msg?: string; foo: string };
 const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
 
 test("type-based defineProps with require and default pattern", () => {
@@ -111,33 +97,13 @@ test("type-based defineProps with require and default pattern", () => {
     }
   })
   </script>`;
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression, "ts");
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source, "ts");
 
   const expected = `type Props = { msg?: string; foo: string };
 const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
 
 test("type-based defineProps with default function", () => {
@@ -162,27 +128,7 @@ test("type-based defineProps with default function", () => {
     }
   })
   </script>`;
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression, "ts");
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source, "ts");
 
   const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
 const props = withDefaults(defineProps<Props>(), {
@@ -191,7 +137,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
 
 test("type-based defineProps with default arrow function", () => {
@@ -212,27 +158,7 @@ test("type-based defineProps with default arrow function", () => {
     }
   })
   </script>`;
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression, "ts");
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source, "ts");
 
   const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
 const props = withDefaults(defineProps<Props>(), {
@@ -241,7 +167,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
 
 test("type-based defineProps with non primitive", () => {
@@ -263,33 +189,13 @@ test("type-based defineProps with non primitive", () => {
     }
   })
   </script>`;
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression, "ts");
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source, "ts");
 
   const expected = `type Props = { foo: Foo; items: string[] };
 const props = defineProps<Props>();
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
 
 test("type-based defineProps with non Object", () => {
@@ -305,33 +211,13 @@ test("type-based defineProps with non Object", () => {
     }
   })
   </script>`;
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression, "ts");
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source, "ts");
 
   const expected = `type Props = { msg?: string; foo?: Foo };
 const props = defineProps<Props>();
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
 
 test("custom validator", () => {
@@ -355,27 +241,7 @@ test("custom validator", () => {
     }
   })
   </script>`;
-  const {
-    descriptor: { script },
-  } = parse(source);
-
-  const project = new Project({
-    tsConfigFilePath: "tsconfig.json",
-    compilerOptions: {
-      target: ScriptTarget.Latest,
-    },
-  });
-
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-
-  const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
-
-  const props = convertProps(callexpression as CallExpression);
-
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
+  const output = parseScript(source);
 
   const expected = `const props = defineProps({
   msg: {
@@ -392,5 +258,5 @@ test("custom validator", () => {
 });
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
 });
