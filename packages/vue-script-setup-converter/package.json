@@ -12,7 +12,7 @@
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "concurrently yarn:build:*",
+    "build": "concurrently pnpm:build:*",
     "build:vite": "vite build",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
     "preview": "vite preview",
@@ -26,11 +26,10 @@
   "devDependencies": {
     "@types/prettier": "^2.7.1",
     "@vue/compiler-sfc": "^3.2.40",
+    "@wattanx/converter-utils": "*",
     "concurrently": "^7.6.0",
     "prettier": "^2.7.1",
     "vite": "^4.0.3",
-    "vitest": "^0.26.2",
-    "vue-tsc": "^0.40.4",
-    "@wattanx/converter-utils": "*"
+    "vitest": "^0.26.2"
   }
 }
