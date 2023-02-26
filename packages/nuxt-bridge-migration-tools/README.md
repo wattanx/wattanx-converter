@@ -16,6 +16,7 @@ Perform the following conversions.
 - [`useStore` migration](/packages/nuxt-bridge-migration-tools/README.md#usestore-migration)
 - [`useContext` migration](/packages/nuxt-bridge-migration-tools/README.md#usecontext-migration)
 - [`useMeta` migration](/packages/nuxt-bridge-migration-tools/README.md#usemeta-migration)
+- [`useRoute` migration](/packages/nuxt-bridge-migration-tools/README.md#useroute-migration)
 
 ### `@nuxtjs/composition-api` import migration
 
