@@ -14,7 +14,11 @@ export const transformCapiImport: ASTTransformation<any> = (
 ) => {
   root
     .find(j.ImportDeclaration)
-    .filter((path) => path.node.source.value === "@nuxtjs/composition-api")
+    .filter(
+      (path) =>
+        path.node.source.value === "@nuxtjs/composition-api" ||
+        path.node.source.value === "#imports"
+    )
     .forEach((x) => {
       const specifiersLiteralArray = x.node.specifiers?.map((specifier) => {
         const name = specifier.local?.name ?? "";

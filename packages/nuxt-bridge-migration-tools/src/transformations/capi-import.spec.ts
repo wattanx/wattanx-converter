@@ -2,18 +2,26 @@ import { applyTransform } from "jscodeshift/src/testUtils";
 import transform from "./capi-import";
 
 test("API that does not exist in bridge is being converted.", () => {
+  const source = `import { defineComponent, ref, useContext, useStore, useAsync, useFetch } from '@nuxtjs/composition-api';`;
   const result = applyTransform(
     transform,
     {},
     {
-      source: `import { 
-      defineComponent,
-      ref,
-      useContext,
-      useStore,
-      useAsync,
-      useFetch
-    } from '@nuxtjs/composition-api';`,
+      source,
+    }
+  );
+  expect(result).toBe(
+    `import { defineComponent, ref, useNuxtApp, useLazyAsyncData, useLazyFetch } from '#imports';`
+  );
+});
+
+test("#imports", () => {
+  const source = `import { defineComponent, ref, useContext, useStore, useAsync, useFetch } from '#imports';`;
+  const result = applyTransform(
+    transform,
+    {},
+    {
+      source,
     }
   );
   expect(result).toBe(
