@@ -16,7 +16,7 @@
     "build:vite": "vite build",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest run",
     "test:watch": "vitest"
   },
   "peerDependencies": {
@@ -30,6 +30,6 @@
     "concurrently": "^7.6.0",
     "prettier": "^2.7.1",
     "vite": "^4.0.3",
-    "vitest": "^0.26.2"
+    "vitest": "0.29.1"
   }
 }
