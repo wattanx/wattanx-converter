@@ -2,7 +2,7 @@ import { applyTransform } from "jscodeshift/src/testUtils";
 import transform from "./capi-migration";
 
 test("capi migration", () => {
-  const source = `import { computed, defineComponent, useStore, useContext, useMeta } from '@nuxtjs/composition-api';
+  const source = `import { computed, defineComponent, useStore, useContext, useMeta, useRoute } from '@nuxtjs/composition-api';
 export default defineComponent({
   setup() {
     const { $axios, $sentry } = useContext();
@@ -11,11 +11,13 @@ export default defineComponent({
     useMeta({
       title: "wattanx-converter",
     })
+    const route = useRoute();
+    const path = route.value.path;
   }
 });
 `;
 
-  const expected = `import { computed, defineComponent, useNuxtApp, useHead } from '#imports';
+  const expected = `import { computed, defineComponent, useNuxtApp, useHead, useRoute } from '#imports';
 export default defineComponent({
   setup() {
     const {
@@ -27,6 +29,8 @@ export default defineComponent({
     useHead({
       title: "wattanx-converter",
     })
+    const route = useRoute();
+    const path = route.path;
   }
 });`;
 

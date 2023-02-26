@@ -75,6 +75,20 @@ npx @wattanx/nuxt-bridge-migration use-meta <files...>
 + useHead({ title: "wattanx-converter" });
 ```
 
+### `useRoute` migration.
+
+Removes `value` from the return value of `useRoute`.
+
+```bash
+npx @wattanx/nuxt-bridge-migration use-route <files...>
+```
+
+```diff:bash
+const route = useRoute();
+- const path = route.value.path;
++ const path = route.path;
+```
+
 ### `defineNuxtMiddleware` migration
 
 Remove `defineNuxtMiddleware`.
