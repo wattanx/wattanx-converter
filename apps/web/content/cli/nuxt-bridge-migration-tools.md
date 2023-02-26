@@ -18,6 +18,7 @@ Perform the following conversions.
 - [useStore migration](/cli/nuxt-bridge-migration-tools#usestore-migration)
 - [useContext migration](/cli/nuxt-bridge-migration-tools#usecontext-migration)
 - [useMeta migration](/cli/nuxt-bridge-migration-tools#usemeta-migration)
+- [useRoute migration](/cli/nuxt-bridge-migration-tools#useroute-migration)
 
 ### `@nuxtjs/composition-api` import migration
 
@@ -73,6 +74,20 @@ npx @wattanx/nuxt-bridge-migration use-meta <files...>
 ```diff
 - useMeta({ title: "wattanx-converter" });
 + useHead({ title: "wattanx-converter" });
+```
+
+### `useRoute` migration.
+
+Removes `value` from the return value of `useRoute`.
+
+```bash
+npx @wattanx/nuxt-bridge-migration use-route <files...>
+```
+
+```diff
+const route = useRoute();
+- const path = route.value.path;
++ const path = route.path;
 ```
 
 ### `defineNuxtMiddleware` migration
