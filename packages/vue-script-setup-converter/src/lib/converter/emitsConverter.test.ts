@@ -1,22 +1,15 @@
 import { expect, test } from "vitest";
-import {
-  CallExpression,
-  ScriptTarget,
-  SyntaxKind,
-  Project,
-  Node,
-} from "ts-morph";
+import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import prettier from "prettier";
 import parserTypeScript from "prettier/parser-typescript";
-import optionsApi from "../../samples/composition-api-ts.txt?raw";
 import { getNodeByKind } from "../helper";
 import { convertEmits } from "./emitsConverter";
 
-test("defineProps", () => {
+const parseScript = (input: string, lang: "js" | "ts" = "js") => {
   const {
     descriptor: { script },
-  } = parse(optionsApi);
+  } = parse(input);
 
   const project = new Project({
     tsConfigFilePath: "tsconfig.json",
@@ -29,15 +22,114 @@ test("defineProps", () => {
 
   const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
 
-  const emits = convertEmits(callexpression as CallExpression);
+  const emits = convertEmits(callexpression as CallExpression, lang);
 
   const formatedText = prettier.format(emits, {
     parser: "typescript",
     plugins: [parserTypeScript],
   });
 
-  const expected = `const emit = defineEmits({ change: (value: number) => true });
+  return formatedText;
+};
+
+const source = `<script>
+import { defineComponent, toRefs, computed, ref } from 'vue';
+
+export default defineComponent({
+  name: 'HelloWorld',
+  emits: {
+    change: (value) => true,
+  },
+  setup(props, ctx) {
+    ctx.emit("change", 124);
+
+    return {
+    }
+  }
+})
+</script>`;
+
+test("defineEmits", () => {
+  const output = parseScript(source, "js");
+
+  const expected = `const emit = defineEmits({ change: (value) => true });
 `;
 
-  expect(formatedText).toBe(expected);
+  expect(output).toBe(expected);
+});
+
+test("typed defineEmits", () => {
+  const source = `<script lang="ts">
+import { defineComponent, toRefs, computed, ref } from 'vue';
+
+export default defineComponent({
+  name: 'HelloWorld',
+  emits: {
+    change: (value: number) => true,
+  },
+  setup(props, ctx) {
+    ctx.emit("change", 124);
+
+    return {
+    }
+  }
+})
+</script>`;
+  const output = parseScript(source, "ts");
+
+  const expected = `const emit = defineEmits<{ (e: "change", value: number): void }>();
+`;
+  expect(output).toBe(expected);
+});
+
+test("string array", () => {
+  const source = `<script lang="ts">
+import { defineComponent, toRefs, computed, ref } from 'vue';
+
+export default defineComponent({
+  name: 'HelloWorld',
+  emits: ['change'],
+  setup(props, ctx) {
+    ctx.emit("change", 124);
+
+    return {
+    }
+  }
+})
+</script>`;
+  const output = parseScript(source, "ts");
+
+  const expected = `const emit = defineEmits(["change"]);
+`;
+  expect(output).toBe(expected);
+});
+
+test("validation", () => {
+  const source = `<script lang="ts">
+import { defineComponent, toRefs, computed, ref } from 'vue';
+
+export default defineComponent({
+  name: 'HelloWorld',
+  emits: {
+    change: (value: number) => {
+      return value !== 0;
+    },
+  },
+  setup(props, ctx) {
+    ctx.emit("change", 124);
+
+    return {
+    }
+  }
+})
+</script>`;
+  const output = parseScript(source, "ts");
+
+  const expected = `const emit = defineEmits({
+  change: (value: number) => {
+    return value !== 0;
+  },
+});
+`;
+  expect(output).toBe(expected);
 });
