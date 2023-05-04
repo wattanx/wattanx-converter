@@ -8,16 +8,26 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
-    "test:watch": "turbo run test:watch"
+    "test:watch": "turbo run test:watch",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
+    "@wattanx/vue-composition-converter": "workspace:*",
+    "@wattanx/vue-mixins-converter": "workspace:*",
+    "@wattanx/vue-script-setup-converter": "workspace:*",
+    "autoprefixer": "^10.4.13",
     "eslint-config-custom": "*",
+    "highlight.js": "^11.8.0",
+    "postcss": "^8.4.20",
     "prettier": "latest",
-    "turbo": "latest"
+    "tailwindcss": "^3.2.4",
+    "turbo": "latest",
+    "vitepress": "1.0.0-alpha.75"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "packageManager": "pnpm@7.27.1"
 }
