@@ -1,3 +1,4 @@
 {
-  "buildCommand": ""
+  "buildCommand": "pnpm docs:build",
+  "outputDirectory": "docs/.vuepress/dist"
 }
