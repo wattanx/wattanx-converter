@@ -1,15 +1,10 @@
 import { test, expect } from "vitest";
 import { ScriptTarget, Project } from "ts-morph";
-import { parse } from "@vue/compiler-sfc";
 import prettier from "prettier";
 import parserTypeScript from "prettier/parser-typescript";
 import { convertOptionsStore } from "./options-store-converter";
 
 const parseScript = (input: string) => {
-  const {
-    descriptor: { script },
-  } = parse(input);
-
   const project = new Project({
     tsConfigFilePath: "tsconfig.json",
     compilerOptions: {
@@ -17,11 +12,13 @@ const parseScript = (input: string) => {
     },
   });
 
-  const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
+  const sourceFile = project.createSourceFile("s.tsx", input);
 
   const store = convertOptionsStore(sourceFile.getStatements());
 
-  const formatedText = prettier.format(store, {
+  const defineStore = `export const useSampleStore = defineStore("sample", ${store});`;
+
+  const formatedText = prettier.format(defineStore, {
     parser: "typescript",
     plugins: [parserTypeScript],
   });
@@ -59,18 +56,18 @@ test("options store converter", () => {
 
   const expected = `export const useSampleStore = defineStore("sample", {
   state: () => ({
-    counter: 0
+    counter: 0,
   }),
   getters: {
     getCounter(state) {
-      return state.counter
+      return state.counter;
     },
   },
   actions: {
-    async fetchCounter({ state }) {
+    async fetchCounter() {
       // make request
       const res = { data: 10 };
-      state.counter = res.data;
+      this.counter = res.data;
       return res.data;
     },
   },
