@@ -19,6 +19,7 @@
     "@wattanx/vue-script-setup-converter": "workspace:*",
     "autoprefixer": "^10.4.13",
     "eslint-config-custom": "*",
+    "highlight.js": "^11.8.0",
     "postcss": "^8.4.20",
     "prettier": "latest",
     "tailwindcss": "^3.2.4",

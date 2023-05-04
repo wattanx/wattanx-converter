@@ -19,6 +19,9 @@ importers:
       eslint-config-custom:
         specifier: '*'
         version: link:packages/eslint-config-custom
+      highlight.js:
+        specifier: ^11.8.0
+        version: 11.8.0
       postcss:
         specifier: ^8.4.20
         version: 8.4.23
@@ -2639,7 +2642,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.3.4
+      vite: 4.3.4(@types/node@18.13.0)
       vue: 3.2.47
     dev: true
 
@@ -4365,6 +4368,11 @@ packages:
     dependencies:
       function-bind: 1.1.1
 
+  /highlight.js@11.8.0:
+    resolution: {integrity: sha512-MedQhoqVdr0U6SSnWPzfiadUcDHfN/Wzq25AkXiQv9oiOO/sG0S7XkvpFIqWBl9Yq1UYyYOOVORs5UW2XlPyzg==}
+    engines: {node: '>=12.0.0'}
+    dev: true
+
   /html-encoding-sniffer@3.0.0:
     resolution: {integrity: sha512-oWv4T4yJ52iKrufjnyZPkrN0CH3QnrUqdB6In1g5Fe1mia8GmF36gnfNySxoZtxD5+NmYw1EElVXiBk93UeskA==}
     engines: {node: '>=12'}
@@ -6068,7 +6076,7 @@ packages:
       mlly: 1.1.1
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.1.2(@types/node@18.13.0)
+      vite: 4.3.4(@types/node@18.13.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -6147,7 +6155,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite@4.3.4:
+  /vite@4.3.4(@types/node@18.13.0):
     resolution: {integrity: sha512-f90aqGBoxSFxWph2b39ae2uHAxm5jFBBdnfueNxZAT1FTpM13ccFQExCaKbR2xFW5atowjleRniQ7onjJ22QEg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -6172,6 +6180,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 18.13.0
       esbuild: 0.17.8
       postcss: 8.4.23
       rollup: 3.21.4
@@ -6192,7 +6201,7 @@ packages:
       mark.js: 8.11.1
       minisearch: 6.0.1
       shiki: 0.14.2
-      vite: 4.3.4
+      vite: 4.3.4(@types/node@18.13.0)
       vue: 3.2.47
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -6252,7 +6261,7 @@ packages:
       tinybench: 2.3.1
       tinypool: 0.3.1
       tinyspy: 1.0.2
-      vite: 4.1.2(@types/node@18.13.0)
+      vite: 4.3.4(@types/node@18.13.0)
       vite-node: 0.29.1(@types/node@18.13.0)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
