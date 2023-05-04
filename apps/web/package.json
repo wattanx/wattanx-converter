@@ -5,8 +5,7 @@
   "scripts": {
     "build": "nuxt generate",
     "dev": "nuxt dev",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "preview": "nuxt preview"
   },
   "dependencies": {
     "@vueuse/core": "^9.12.0",

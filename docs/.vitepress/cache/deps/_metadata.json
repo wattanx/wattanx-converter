@@ -1,0 +1,47 @@
+{
+  "hash": "cb02341f",
+  "browserHash": "5eb3166c",
+  "optimized": {
+    "vue": {
+      "src": "../../../../node_modules/.pnpm/vue@3.2.47/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "2e672eab",
+      "needsInterop": false
+    },
+    "prettier": {
+      "src": "../../../../node_modules/.pnpm/prettier@2.8.8/node_modules/prettier/standalone.js",
+      "file": "prettier.js",
+      "fileHash": "188481e0",
+      "needsInterop": true
+    },
+    "prettier/parser-typescript": {
+      "src": "../../../../node_modules/.pnpm/prettier@2.8.8/node_modules/prettier/parser-typescript.js",
+      "file": "prettier_parser-typescript.js",
+      "fileHash": "ba369ce6",
+      "needsInterop": true
+    },
+    "highlight.js/lib/core": {
+      "src": "../../../../node_modules/.pnpm/highlight.js@11.7.0/node_modules/highlight.js/es/core.js",
+      "file": "highlight__js_lib_core.js",
+      "fileHash": "36d693b8",
+      "needsInterop": false
+    },
+    "highlight.js/lib/languages/typescript": {
+      "src": "../../../../node_modules/.pnpm/highlight.js@11.7.0/node_modules/highlight.js/es/languages/typescript.js",
+      "file": "highlight__js_lib_languages_typescript.js",
+      "fileHash": "a76f8983",
+      "needsInterop": false
+    },
+    "ts-morph": {
+      "src": "../../../../node_modules/.pnpm/ts-morph@17.0.1/node_modules/ts-morph/dist/ts-morph.js",
+      "file": "ts-morph.js",
+      "fileHash": "cc514b80",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-HYZYPRER": {
+      "file": "chunk-HYZYPRER.js"
+    }
+  }
+}
