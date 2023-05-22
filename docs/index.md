@@ -22,6 +22,8 @@ features:
     details: Convert mixins to composables.
   - title: Vue Script Setup Converter
     details: Converts the Vue Composition API into a script setup.
+  - title: Vue Pinia Converter（Coming soon）
+    details: Convert from Vuex to Pinia.
   - title: Insert Emits Option
     details: Get the event name from the emit used in script or template and add it to the emits option as an array.
   - title: Nuxt Bridge Migration Tools
