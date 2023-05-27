@@ -13,7 +13,7 @@ A tool to support migration to Nuxt Bridge.
 convert from `@nuxtjs/composition-api` to the capi legacy of `@nuxt/bridge`.
 
 ```bash
-npx @wattanx/nuxt-bridge-migration capi-legacy <files...>
+npx @wattanx/nuxt-bridge-migration@latest capi-legacy <files...>
 ```
 
 ```diff
@@ -32,7 +32,7 @@ const {
 ### Migrating from `@nuxtjs/composition-api`
 
 ```bash
-npx @wattanx/nuxt-bridge-migration capi-migration <files...>
+npx @wattanx/nuxt-bridge-migration@latest capi-migration <files...>
 ```
 
 Perform the following conversions.
@@ -48,7 +48,7 @@ Perform the following conversions.
 Convert `@nuxtjs/composition-api` for bridge.
 
 ```bash
-npx @wattanx/nuxt-bridge-migration capi-import <files...>
+npx @wattanx/nuxt-bridge-migration@latest capi-import <files...>
 ```
 
 Path to the target vue file, which can be set with the glob pattern. e.g.: `src/**/*.vue`
@@ -65,7 +65,7 @@ Path to the target vue file, which can be set with the glob pattern. e.g.: `src/
 Convert `useStore` to `useNuxtApp().$store`
 
 ```bash
-npx @wattanx/nuxt-bridge-migration use-store <files...>
+npx @wattanx/nuxt-bridge-migration@latest use-store <files...>
 ```
 
 ```diff
@@ -78,7 +78,7 @@ npx @wattanx/nuxt-bridge-migration use-store <files...>
 Convert `useContext()` to `useNuxtApp()`
 
 ```bash
-npx @wattanx/nuxt-bridge-migration use-context <files...>
+npx @wattanx/nuxt-bridge-migration@latest use-context <files...>
 ```
 
 ```diff
@@ -91,7 +91,7 @@ npx @wattanx/nuxt-bridge-migration use-context <files...>
 Convert `useMeta` to `useHead`.
 
 ```bash
-npx @wattanx/nuxt-bridge-migration use-meta <files...>
+npx @wattanx/nuxt-bridge-migration@latest use-meta <files...>
 ```
 
 ```diff
@@ -104,7 +104,7 @@ npx @wattanx/nuxt-bridge-migration use-meta <files...>
 Removes `value` from the return value of `useRoute`.
 
 ```bash
-npx @wattanx/nuxt-bridge-migration use-route <files...>
+npx @wattanx/nuxt-bridge-migration@latest use-route <files...>
 ```
 
 ```diff
@@ -118,7 +118,7 @@ const route = useRoute();
 Remove `defineNuxtMiddleware`.
 
 ```bash
-npx @wattanx/nuxt-bridge-migration define-nuxt-middleware <files...>
+npx @wattanx/nuxt-bridge-migration@latest define-nuxt-middleware <files...>
 ```
 
 ```diff
@@ -142,7 +142,7 @@ npx @wattanx/nuxt-bridge-migration define-nuxt-middleware <files...>
 Remove `defineNuxtPlugin`.
 
 ```bash
-npx @wattanx/nuxt-bridge-migration define-nuxt-plugin <files...>
+npx @wattanx/nuxt-bridge-migration@latest define-nuxt-plugin <files...>
 ```
 
 ```diff
