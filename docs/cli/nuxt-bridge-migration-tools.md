@@ -8,6 +8,27 @@ A tool to support migration to Nuxt Bridge.
 
 ## Usage
 
+### Migrating from `@nuxtjs/composition-api` to `@nuxt/bridge` capi legacy
+
+convert from `@nuxtjs/composition-api` to the capi legacy of `@nuxt/bridge`.
+
+```bash
+npx @wattanx/nuxt-bridge-migration capi-legacy <files...>
+```
+
+```diff
+const {
+- $fetch,
+- $fetchState,
++ fetch,
++ fetchState,
+} = useFetch(async () => {
+  ...
+});
+```
+
+[useRoute migration](/cli/nuxt-bridge-migration-tools#useroute-migration)
+
 ### Migrating from `@nuxtjs/composition-api`
 
 ```bash
