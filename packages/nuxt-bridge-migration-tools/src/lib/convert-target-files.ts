@@ -10,7 +10,9 @@ export const convertTargetFiles = async (targetFilePaths: string[]) => {
       const extension = (/\.([^.]*)$/.exec(path) || [])[0];
 
       const script =
-        extension === ".vue" ? descriptor.script?.content ?? "" : fullText;
+        extension === ".vue"
+          ? descriptor.scriptSetup?.content ?? descriptor.script?.content ?? ""
+          : fullText;
       const lang = descriptor.script?.lang ?? extension === ".ts" ? "ts" : "js";
 
       return {
