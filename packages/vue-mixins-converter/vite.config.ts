@@ -19,8 +19,5 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    deps: {
-      inline: ['@wattanx/converter-utils']
-    }
   },
 });
