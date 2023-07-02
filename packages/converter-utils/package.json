@@ -1,12 +1,11 @@
 {
   "name": "@wattanx/converter-utils",
   "version": "0.0.0",
-  "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/index.mjs",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
     }
   },
   "types": "./dist/types/index.d.ts",
