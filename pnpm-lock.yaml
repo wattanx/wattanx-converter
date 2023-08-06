@@ -70,7 +70,7 @@ importers:
         specifier: ^8.2.0
         version: 8.7.1(eslint@8.30.0)
       jsdom:
-        specifier: ^20.0.0
+        specifier: ^20.0.3
         version: 20.0.3
       prettier:
         specifier: ^2.6.2
@@ -202,7 +202,7 @@ importers:
         version: 4.9.5
     devDependencies:
       '@types/jsdom':
-        specifier: ^16.2.14
+        specifier: ^16.2.15
         version: 16.2.15
       '@types/node':
         specifier: ^17.0.35
@@ -229,7 +229,7 @@ importers:
         specifier: ^8.2.0
         version: 8.7.1(eslint@8.30.0)
       jsdom:
-        specifier: ^20.0.0
+        specifier: ^20.0.3
         version: 20.0.3
       prettier:
         specifier: ^2.6.2
@@ -257,7 +257,7 @@ importers:
         version: 4.9.5
     devDependencies:
       '@types/jsdom':
-        specifier: ^16.2.14
+        specifier: ^16.2.15
         version: 16.2.15
       '@types/node':
         specifier: ^17.0.35
@@ -287,7 +287,7 @@ importers:
         specifier: ^8.2.0
         version: 8.7.1(eslint@8.30.0)
       jsdom:
-        specifier: ^20.0.0
+        specifier: ^20.0.3
         version: 20.0.3
       prettier:
         specifier: ^2.6.2
