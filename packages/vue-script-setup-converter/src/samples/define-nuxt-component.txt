@@ -1,0 +1,18 @@
+<script lang="ts">
+import { defineNuxtComponent, useNuxtApp } from '#imports';
+
+export default defineNuxtComponent({
+  name: 'HelloWorld',
+  setup(props, ctx) {
+    const { $client } = useNuxtApp();
+
+    const onSubmit = () => {
+      console.log('onSubmit')
+    }
+
+    return {
+      onSubmit,
+    }
+  }
+})
+</script>

@@ -1,5 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`defineNuxtComponent > convert 1`] = `
+"
+import { defineNuxtComponent, useNuxtApp } from '#imports';
+
+const { $client } = useNuxtApp();
+
+const onSubmit = () => {
+  console.log('onSubmit');
+};
+"
+`;
+
 exports[`lang=js > convert 1`] = `
 "
 import { defineComponent, toRefs, computed, ref } from 'vue';

@@ -4,7 +4,6 @@ import {
   SyntaxKind,
   Project,
   Node,
-  ImportDeclaration,
   ts,
 } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
@@ -27,11 +26,6 @@ export const convertSrc = (input: string) => {
 
   const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
   const lang = script?.lang ?? "js";
-
-  const importDeclaration = getNodeByKind(
-    sourceFile,
-    SyntaxKind.ImportDeclaration
-  ) as ImportDeclaration;
 
   const callexpression = getNodeByKind(sourceFile, SyntaxKind.CallExpression);
 
@@ -76,5 +70,8 @@ const isDefineComponent = (node: CallExpression) => {
     return false;
   }
 
-  return node.getExpression().getText() === "defineComponent";
+  return (
+    node.getExpression().getText() === "defineComponent" ||
+    node.getExpression().getText() === "defineNuxtComponent"
+  );
 };
