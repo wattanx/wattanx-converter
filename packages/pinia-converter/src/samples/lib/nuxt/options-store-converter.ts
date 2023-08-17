@@ -3,8 +3,8 @@ import {
   VariableStatement,
   Node,
   VariableDeclaration,
-  MethodDeclaration,
 } from "ts-morph";
+import { convertGetters } from "../converters/options";
 
 export const convertOptionsStore = (statements: Statement[]) => {
   const state = convertState(statements);
@@ -54,28 +54,6 @@ const convertState = (statements: Statement[]) => {
   }
 };
 
-const convertGetters = (statements: Statement[]) => {
-  const gettersStatement = statements.find((statement) => {
-    if (Node.isVariableStatement(statement)) {
-      const declaration = statement.getDeclarations()[0];
-      return declaration.getName() === "getters";
-    }
-    return false;
-  }) as VariableStatement | undefined;
-
-  if (!gettersStatement) {
-    return null;
-  }
-
-  const initializer = getInitializer(gettersStatement.getDeclarations()[0]);
-
-  if (Node.isObjectLiteralExpression(initializer)) {
-    return initializer;
-  } else {
-    return null;
-  }
-};
-
 const convertActions = (statements: Statement[]) => {
   const actionsStatement = statements.find((statement) => {
     if (Node.isVariableStatement(statement)) {
@@ -97,9 +75,6 @@ const convertActions = (statements: Statement[]) => {
     return null;
   }
 };
-
-// actionsの引数の使っている変数をthisに変換する
-const convertContextToThis = (method: MethodDeclaration) => {};
 
 const getInitializer = (declaration: VariableDeclaration) => {
   return declaration.getInitializerOrThrow();
