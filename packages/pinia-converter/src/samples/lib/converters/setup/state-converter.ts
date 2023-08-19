@@ -5,13 +5,16 @@ import {
   VariableDeclaration,
   SyntaxKind,
 } from "ts-morph";
+import type { ConvertedExpression } from "./types";
 
 type ReactiveState = {
   propertyName: string;
   value: string;
 };
 
-export const convertState = (statements: Statement[]) => {
+export const convertState = (
+  statements: Statement[]
+): ConvertedExpression[] => {
   const stateStatement = statements.find((statement) => {
     if (Node.isVariableStatement(statement)) {
       const declaration = statement.getDeclarations()[0];
@@ -52,10 +55,12 @@ const getInitializer = (declaration: VariableDeclaration) => {
   return declaration.getInitializerOrThrow();
 };
 
-const convertReactiveState = (list: ReactiveState[]) => {
-  return list
-    .map((item) => {
-      return `const ${item.propertyName} = ref(${item.value})`;
-    })
-    .join("\n");
+const convertReactiveState = (list: ReactiveState[]): ConvertedExpression[] => {
+  return list.map((item) => {
+    return {
+      use: "ref",
+      expression: `const ${item.propertyName} = ref(${item.value})`,
+      returnName: item.propertyName,
+    };
+  });
 };

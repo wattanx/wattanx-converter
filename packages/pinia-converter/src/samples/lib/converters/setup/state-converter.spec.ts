@@ -1,7 +1,5 @@
 import { test, expect } from "vitest";
 import { ScriptTarget, Project } from "ts-morph";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
 import { convertState } from "./state-converter";
 
 const parseScript = (input: string) => {
@@ -14,18 +12,7 @@ const parseScript = (input: string) => {
 
   const sourceFile = project.createSourceFile("s.tsx", input);
 
-  const state = convertState(sourceFile.getStatements());
-
-  const defineStore = `export const useSampleStore = defineStore("sample", () => {
-    ${state}
-  });`;
-
-  const formatedText = prettier.format(defineStore, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
-
-  return formatedText;
+  return convertState(sourceFile.getStatements());
 };
 
 const source = `eexport const state = () => ({
@@ -38,11 +25,23 @@ const source = `eexport const state = () => ({
 test("options store converter", () => {
   const output = parseScript(source);
 
-  const expected = `export const useSampleStore = defineStore("sample", () => {
-  const counter = ref(0);
-  const name = ref("John");
-  const age = ref(20);
-});
-`;
-  expect(output).toBe(expected);
+  const expected = [
+    {
+      use: "ref",
+      expression: "const counter = ref(0)",
+      returnName: "counter",
+    },
+    {
+      use: "ref",
+      expression: 'const name = ref("John")',
+      returnName: "name",
+    },
+    {
+      use: "ref",
+      expression: "const age = ref(20)",
+      returnName: "age",
+    },
+  ];
+
+  expect(output).toEqual(expected);
 });
