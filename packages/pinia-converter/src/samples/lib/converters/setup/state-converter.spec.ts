@@ -22,7 +22,7 @@ const source = `eexport const state = () => ({
 })
 `;
 
-test("setup state store converter", () => {
+test("setup state converter", () => {
   const output = parseScript(source);
 
   const expected = [
