@@ -59,7 +59,7 @@ const convertReactiveState = (list: ReactiveState[]): ConvertedExpression[] => {
   return list.map((item) => {
     return {
       use: "ref",
-      expression: `const ${item.propertyName} = ref(${item.value})`,
+      statement: `const ${item.propertyName} = ref(${item.value})`,
       returnName: item.propertyName,
     };
   });
