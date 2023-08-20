@@ -3,3 +3,8 @@ export type ConvertedExpression = {
   returnName?: string;
   statement: string;
 };
+
+export type ConverterMutation = {
+  statements: string[];
+  mutationName: string;
+};
