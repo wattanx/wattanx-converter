@@ -31,6 +31,8 @@ const {
 
 ### Migrating from `@nuxtjs/composition-api`
 
+Convert to nuxt 3 compatible composables in nuxt bridge.
+
 ```bash
 npx @wattanx/nuxt-bridge-migration@latest capi-migration <files...>
 ```
@@ -41,7 +43,6 @@ Perform the following conversions.
 - [useStore migration](/cli/nuxt-bridge-migration-tools#usestore-migration)
 - [useContext migration](/cli/nuxt-bridge-migration-tools#usecontext-migration)
 - [useMeta migration](/cli/nuxt-bridge-migration-tools#usemeta-migration)
-- [useRoute migration](/cli/nuxt-bridge-migration-tools#useroute-migration)
 
 ### `@nuxtjs/composition-api` import migration
 
