@@ -11,7 +11,6 @@ export const convertCapi: ASTTransformation<any> = (context, options) => {
   convertUseStore(context, options);
   convertUseContext(context, options);
   convertUseMeta(context, options);
-  convertUseRoute(context, options);
 };
 
 export default wrap(convertCapi);
