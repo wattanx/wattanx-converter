@@ -122,7 +122,7 @@ const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
 });
 
 describe("type-based", () => {
-  it("type-based defineProps with require and default pattern", () => {
+  it("require and default", () => {
     const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
@@ -150,7 +150,7 @@ const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
     expect(output).toBe(expected);
   });
 
-  it("type-based defineProps with default function", () => {
+  it("default function", () => {
     const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
@@ -184,7 +184,7 @@ const props = withDefaults(defineProps<Props>(), {
     expect(output).toBe(expected);
   });
 
-  it("type-based defineProps with default arrow function", () => {
+  it("default arrow function", () => {
     const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
@@ -214,7 +214,7 @@ const props = withDefaults(defineProps<Props>(), {
     expect(output).toBe(expected);
   });
 
-  it("type-based defineProps with non primitive", () => {
+  it("non primitive", () => {
     const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref, PropType } from 'vue';
   import { Foo } from './Foo';
@@ -242,7 +242,7 @@ const props = defineProps<Props>();
     expect(output).toBe(expected);
   });
 
-  it("type-based defineProps with non Object", () => {
+  it("non Object style", () => {
     const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref, PropType } from 'vue';
   import { Foo } from './Foo';
