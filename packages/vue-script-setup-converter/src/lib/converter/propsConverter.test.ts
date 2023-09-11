@@ -263,4 +263,31 @@ const props = defineProps<Props>();
 
     expect(output).toBe(expected);
   });
+
+  it("default value is boolean", () => {
+    const source = `<script lang="ts">
+  import { defineComponent, toRefs, computed, ref } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: {
+      msg: {
+        type: String,
+        required: true
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      }
+    }
+  })
+  </script>`;
+    const output = parseScript(source, "ts");
+
+    const expected = `type Props = { msg: string; disabled?: boolean };
+const props = withDefaults(defineProps<Props>(), { disabled: false });
+`;
+
+    expect(output).toBe(expected);
+  });
 });
