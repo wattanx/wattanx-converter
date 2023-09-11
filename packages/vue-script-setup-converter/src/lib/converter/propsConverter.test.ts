@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { expect, describe, it } from "vitest";
 import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import prettier from "prettier";
@@ -50,10 +50,11 @@ const source = `<script>
   })
   </script>`;
 
-test("defineProps", () => {
-  const output = parseScript(source);
+describe("basic", () => {
+  it("defineProps", () => {
+    const output = parseScript(source);
 
-  const expected = `const props = defineProps({
+    const expected = `const props = defineProps({
   msg: {
     type: String,
     default: "HelloWorld",
@@ -65,21 +66,64 @@ test("defineProps", () => {
 });
 `;
 
-  expect(output).toBe(expected);
-});
+    expect(output).toBe(expected);
+  });
 
-test("type-based defineProps", () => {
-  const output = parseScript(source, "ts");
+  it("type-based defineProps", () => {
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { msg?: string; foo: string };
+    const expected = `type Props = { msg?: string; foo: string };
 const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
 `;
 
-  expect(output).toBe(expected);
+    expect(output).toBe(expected);
+  });
+
+  it("custom validator", () => {
+    const source = `<script>
+  import { defineComponent, toRefs, computed, ref } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: {
+      msg: {
+        type: String,
+        default: 'HelloWorld'
+      },
+      foo: {
+        type: String,
+        required: true,
+        validator(value) {
+          return ["success", "warning", "danger"].includes(value)
+        }
+      }
+    }
+  })
+  </script>`;
+    const output = parseScript(source);
+
+    const expected = `const props = defineProps({
+  msg: {
+    type: String,
+    default: "HelloWorld",
+  },
+  foo: {
+    type: String,
+    required: true,
+    validator(value) {
+      return ["success", "warning", "danger"].includes(value);
+    },
+  },
+});
+`;
+
+    expect(output).toBe(expected);
+  });
 });
 
-test("type-based defineProps with require and default pattern", () => {
-  const source = `<script lang="ts">
+describe("type-based", () => {
+  it("type-based defineProps with require and default pattern", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
   export default defineComponent({
@@ -97,17 +141,17 @@ test("type-based defineProps with require and default pattern", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { msg?: string; foo: string };
+    const expected = `type Props = { msg?: string; foo: string };
 const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
 `;
 
-  expect(output).toBe(expected);
-});
+    expect(output).toBe(expected);
+  });
 
-test("type-based defineProps with default function", () => {
-  const source = `<script lang="ts">
+  it("type-based defineProps with default function", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
   export default defineComponent({
@@ -128,20 +172,20 @@ test("type-based defineProps with default function", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
+    const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
 const props = withDefaults(defineProps<Props>(), {
   foo: () => ({ msg: "Hello World" }),
   bar: () => ["foo", "bar"],
 });
 `;
 
-  expect(output).toBe(expected);
-});
+    expect(output).toBe(expected);
+  });
 
-test("type-based defineProps with default arrow function", () => {
-  const source = `<script lang="ts">
+  it("type-based defineProps with default arrow function", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
   export default defineComponent({
@@ -158,20 +202,20 @@ test("type-based defineProps with default arrow function", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
+    const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
 const props = withDefaults(defineProps<Props>(), {
   foo: () => ({ msg: "Hello World" }),
   bar: () => ["foo", "bar"],
 });
 `;
 
-  expect(output).toBe(expected);
-});
+    expect(output).toBe(expected);
+  });
 
-test("type-based defineProps with non primitive", () => {
-  const source = `<script lang="ts">
+  it("type-based defineProps with non primitive", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref, PropType } from 'vue';
   import { Foo } from './Foo';
   
@@ -189,17 +233,17 @@ test("type-based defineProps with non primitive", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { foo: Foo; items: string[] };
+    const expected = `type Props = { foo: Foo; items: string[] };
 const props = defineProps<Props>();
 `;
 
-  expect(output).toBe(expected);
-});
+    expect(output).toBe(expected);
+  });
 
-test("type-based defineProps with non Object", () => {
-  const source = `<script lang="ts">
+  it("type-based defineProps with non Object", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref, PropType } from 'vue';
   import { Foo } from './Foo';
   
@@ -211,52 +255,12 @@ test("type-based defineProps with non Object", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { msg?: string; foo?: Foo };
+    const expected = `type Props = { msg?: string; foo?: Foo };
 const props = defineProps<Props>();
 `;
 
-  expect(output).toBe(expected);
-});
-
-test("custom validator", () => {
-  const source = `<script>
-  import { defineComponent, toRefs, computed, ref } from 'vue';
-  
-  export default defineComponent({
-    name: 'HelloWorld',
-    props: {
-      msg: {
-        type: String,
-        default: 'HelloWorld'
-      },
-      foo: {
-        type: String,
-        required: true,
-        validator(value) {
-          return ["success", "warning", "danger"].includes(value)
-        }
-      }
-    }
-  })
-  </script>`;
-  const output = parseScript(source);
-
-  const expected = `const props = defineProps({
-  msg: {
-    type: String,
-    default: "HelloWorld",
-  },
-  foo: {
-    type: String,
-    required: true,
-    validator(value) {
-      return ["success", "warning", "danger"].includes(value);
-    },
-  },
-});
-`;
-
-  expect(output).toBe(expected);
+    expect(output).toBe(expected);
+  });
 });
