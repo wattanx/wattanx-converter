@@ -40,7 +40,7 @@ const convertToDefineProps = (node: PropertyAssignment) => {
   return `const props = defineProps(${child.getFullText()});`;
 };
 
-// 以下 type-based declaration用
+// type-based declaration
 
 type PropType =
   | {
@@ -128,11 +128,13 @@ const convertToTypeDefineProps = (props: PropType[]) => {
 
   const defineProps = `const props = defineProps<Props>();`;
 
-  const hasDefault = props.find((x) => x.type === "object" && x.defaultValue);
+  const hasDefault = props.find(
+    (x) => x.type === "object" && x.defaultValue !== undefined
+  );
 
   const defaultValueParams = props
     .map((x) => {
-      if (x.type === "object" && x.defaultValue) {
+      if (x.type === "object" && x.defaultValue !== undefined) {
         return `${x.propertyName}: ${x.defaultValue}`;
       }
     })
