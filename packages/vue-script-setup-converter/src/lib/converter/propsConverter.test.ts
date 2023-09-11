@@ -214,6 +214,40 @@ const props = withDefaults(defineProps<Props>(), {
     expect(output).toBe(expected);
   });
 
+  it("default arrow function and return", () => {
+    const source = `<script lang="ts">
+  import { defineComponent, toRefs, computed, ref } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: {
+      foo: {
+        type: Object,
+        default: () => {
+          return { msg: "Hello World" }
+        }
+      },
+      bar: {
+        type: Array,
+        default: () => {
+          return ["foo", "bar"]
+        }
+      }
+    }
+  })
+  </script>`;
+    const output = parseScript(source, "ts");
+
+    const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
+const props = withDefaults(defineProps<Props>(), {
+  foo: () => ({ msg: "Hello World" }),
+  bar: () => ["foo", "bar"],
+});
+`;
+
+    expect(output).toBe(expected);
+  });
+
   it("non primitive", () => {
     const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref, PropType } from 'vue';

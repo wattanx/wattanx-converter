@@ -10,7 +10,7 @@ import {
   AsExpression,
   ArrowFunction,
 } from "ts-morph";
-import { getOptionsNode } from "../helper";
+import { getNodeByKind, getOptionsNode } from "../helper";
 
 export const convertProps = (node: CallExpression, lang: string = "js") => {
   const propsNode = getOptionsNode(node, "props");
@@ -257,6 +257,21 @@ const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
 const getPropTypeByArrowFunction = (node: ArrowFunction) => {
   const body = node.getBody();
 
+  if (Node.isBlock(body)) {
+    const statement = body.getStatements()[0];
+
+    if (Node.isReturnStatement(statement)) {
+      const expression = statement.getExpression();
+
+      if (
+        Node.isObjectLiteralExpression(expression) ||
+        Node.isArrayLiteralExpression(expression)
+      ) {
+        return expression.getType().getText();
+      }
+    }
+  }
+
   if (Node.isArrayLiteralExpression(body)) {
     return body.getType().getText();
   }
@@ -313,6 +328,26 @@ const getPropsOption = (
     if (!initializer) {
       throw new Error("props property not found.");
     }
+
+    if (Node.isArrowFunction(initializer)) {
+      const returnStatement = getNodeByKind(
+        initializer,
+        SyntaxKind.ReturnStatement
+      ) as ReturnStatement;
+
+      if (!returnStatement) {
+        return initializer.getText();
+      }
+
+      const expression = returnStatement.getExpression();
+      if (
+        Node.isObjectLiteralExpression(expression) ||
+        Node.isArrayLiteralExpression(expression)
+      ) {
+        return `() => (${expression.getText()})`;
+      }
+    }
+
     if (
       isFalseKeyword(initializer.getKind()) ||
       isTrueKeyword(initializer.getKind())
