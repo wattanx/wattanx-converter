@@ -8,8 +8,9 @@ import {
 import { getOptionsNode } from "../helper";
 
 // ctx.emit('event') -> emit('event')
-export const replaceEmit = (expression: string) => {
-  return expression.replace(/ctx\.(\w+)/g, (_, p1) => p1);
+export const replaceEmit = (expression: string, contextName: string) => {
+  const regex = new RegExp(`${contextName}\\.(\\w+)`, "g");
+  return expression.replace(regex, (_, p1) => p1);
 };
 
 export const convertEmits = (node: CallExpression, lang: string = "js") => {
