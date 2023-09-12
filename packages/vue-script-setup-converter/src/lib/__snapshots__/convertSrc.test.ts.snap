@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`defineNuxtComponent > convert 1`] = `
+exports[`snapshot > defineNuxtComponent 1`] = `
 "
 import { defineNuxtComponent, useNuxtApp } from '#imports';
 
@@ -12,7 +12,7 @@ const onSubmit = () => {
 "
 `;
 
-exports[`lang=js > convert 1`] = `
+exports[`snapshot > lang=js 1`] = `
 "
 import { defineComponent, toRefs, computed, ref } from 'vue';
 const props = defineProps({
@@ -33,7 +33,7 @@ const count = ref(0);
 "
 `;
 
-exports[`lang=ts > type-base declaration 1`] = `
+exports[`snapshot > lang=ts 1`] = `
 "
 import { defineComponent, toRefs, computed, ref } from 'vue';
 type Props = {
