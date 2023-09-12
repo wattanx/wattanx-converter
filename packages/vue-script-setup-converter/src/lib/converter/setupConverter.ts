@@ -12,7 +12,7 @@ export const convertSetup = (node: CallExpression) => {
     return "";
   }
 
-  const contextName = setupNode.getParameters()[1].getName();
+  const contextName = setupNode.getParameters()[1]?.getName() ?? "";
 
   const blockNode = getNodeByKind(setupNode, SyntaxKind.Block);
 
