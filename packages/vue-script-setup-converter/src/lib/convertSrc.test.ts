@@ -95,4 +95,37 @@ export default defineNuxtComponent({
 `);
     expect(output).toMatchSnapshot();
   });
+
+  it("empty setup context", () => {
+    const output = convertSrc(`<script lang="ts">
+import { defineComponent, toRefs, computed } from 'vue';
+
+export default defineComponent({
+  name: 'HelloWorld',
+  props: {
+    msg: {
+      type: String,
+      default: 'HelloWorld'
+    }
+  },
+  setup(props) {
+    const { msg } = toRefs(props);
+    const newMsg = computed(() => msg.value + '- HelloWorld');
+
+    return {
+      newMsg
+    }
+  }
+})
+</script>`);
+    expect(output).toBe(
+      `
+import { defineComponent, toRefs, computed } from 'vue';
+type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
+
+const { msg } = toRefs(props);
+const newMsg = computed(() => msgvalue + '- HelloWorld');
+`
+    );
+  });
 });
