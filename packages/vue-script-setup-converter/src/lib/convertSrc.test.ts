@@ -124,8 +124,39 @@ import { defineComponent, toRefs, computed } from 'vue';
 type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
 
 const { msg } = toRefs(props);
-const newMsg = computed(() => msgvalue + '- HelloWorld');
+const newMsg = computed(() => msg.value + '- HelloWorld');
 `
     );
   });
+
+  it('props no toRefs', () => {
+    const output = convertSrc(`<script lang="ts">
+import { defineComponent, computed } from 'vue';
+
+export default defineComponent({
+  name: 'HelloWorld',
+  props: {
+    msg: {
+      type: String,
+      default: 'HelloWorld'
+    }
+  },
+  setup(props) {
+    const newMsg = computed(() => props.msg + '- HelloWorld');
+
+    return {
+      newMsg
+    }
+  }
+})
+</script>`);
+    expect(output).toBe(
+      `
+import { defineComponent, computed } from 'vue';
+type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
+
+const newMsg = computed(() => props.msg + '- HelloWorld');
+`
+    );
+  })
 });

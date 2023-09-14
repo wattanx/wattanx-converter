@@ -23,6 +23,11 @@ export const convertSetup = (node: CallExpression) => {
   return blockNode
     .forEachChildAsArray()
     .filter((x) => x.getKind() !== SyntaxKind.ReturnStatement)
-    .map((x) => replaceEmit(x.getFullText(), contextName))
+    .map((x) => {
+      if (!contextName) {
+        return x.getFullText();
+      }
+      return replaceEmit(x.getFullText(), contextName)
+    })
     .join("");
 };
