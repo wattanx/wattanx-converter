@@ -26,7 +26,7 @@
     "prettier": "latest",
     "tailwindcss": "^3.2.4",
     "turbo": "latest",
-    "vitepress": "1.0.0-alpha.75"
+    "vitepress": "1.0.0-rc.36"
   },
   "engines": {
     "node": ">=14.0.0"
