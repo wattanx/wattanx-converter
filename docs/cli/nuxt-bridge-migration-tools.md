@@ -6,11 +6,24 @@ title: Nuxt Bridge Migration Tools
 
 A tool to support migration to Nuxt Bridge.
 
+## Upgrade Steps
+
+- [TypeScript](https://nuxt.com/docs/bridge/typescript)
+- [Migrate Legacy Composition API](#migrate-legacy-composition-api)
+  - [docs](https://nuxt.com/docs/bridge/bridge-composition-api)
+- [Plugins and Middleware](https://nuxt.com/docs/bridge/plugins-and-middleware)
+- [Migrate New Composition API](#migrate-new-composition-api)
+  - [docs](https://nuxt.com/docs/bridge/nuxt3-compatible-api)
+- [Meta Tags](https://nuxt.com/docs/bridge/meta)
+- [Runtime Config](https://nuxt.com/docs/bridge/runtime-config)
+- [Nitro](https://nuxt.com/docs/bridge/nitro)
+- [Vite](https://nuxt.com/docs/bridge/vite)
+
 ## Usage
 
-### Migrating from `@nuxtjs/composition-api` to `@nuxt/bridge` capi legacy
+### Migrate Legacy Composition API
 
-convert from `@nuxtjs/composition-api` to the capi legacy of `@nuxt/bridge`.
+convert from `@nuxtjs/composition-api` to the legacy Composition API of `@nuxt/bridge`.
 
 ```bash
 npx @wattanx/nuxt-bridge-migration@latest capi-legacy <files...>
@@ -29,7 +42,7 @@ const {
 
 [useRoute migration](/cli/nuxt-bridge-migration-tools#useroute-migration)
 
-### Migrating from `@nuxtjs/composition-api`
+### Migrate New Composition API
 
 Convert to nuxt 3 compatible composables in nuxt bridge.
 
