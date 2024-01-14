@@ -1,7 +1,7 @@
-import { defineConfig } from "vitepress";
+import type { UserConfig, DefaultTheme } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default {
   title: "wattanx-converter",
   description: "wattanx-converter provides useful tools for Vue and Nuxt.",
   head: [
@@ -93,4 +93,5 @@ export default defineConfig({
       { icon: "github", link: "https://github.com/wattanx/wattanx-converter" },
     ],
   },
-});
+  cleanUrls: true,
+} satisfies UserConfig<DefaultTheme.Config>;
