@@ -19,7 +19,7 @@ import { getImportStatement } from '../utils/getImportStatement';
 
 export const convertOptionsApi = (
   sourceFile: SourceFile,
-  useNuxt?: boolean
+  version?: 'vue2' | 'vue3' | 'nuxt2' | 'nuxt3'
 ) => {
   const options = optionsConverter(sourceFile);
   if (!options) {
@@ -41,7 +41,7 @@ export const convertOptionsApi = (
 
   const statements = project.createSourceFile('new.tsx');
 
-  statements.addStatements(getImportStatement(setupProps, useNuxt));
+  statements.addStatements(getImportStatement(setupProps, version));
   statements.addStatements(
     sourceFile
       .getStatements()

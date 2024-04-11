@@ -10,26 +10,33 @@ import { nonNull } from '@wattanx/converter-utils';
 
 export const getImportStatement = (
   setupProps: ConvertedExpression[],
-  useNuxt?: boolean
+  version?: 'vue2' | 'vue3' | 'nuxt2' | 'nuxt3'
 ) => {
   let usedFunctions = [
     'defineComponent',
     ...new Set(setupProps.map(({ use }) => use).filter(nonNull)),
   ];
 
-  const moduleName = useNuxt ? 'nuxtjs' : 'vue';
-
-  if (useNuxt) {
-    usedFunctions = [...usedFunctions, 'useStore'];
-  }
-
-  const compositionApiImportStatements = `import { ${usedFunctions.join(
-    ','
-  )} } from '@${moduleName}/composition-api'`;
+  const getModuleName = (version?: 'vue2' | 'vue3' | 'nuxt2' | 'nuxt3') => {
+    switch (version) {
+      case 'vue2':
+        return '@vue/composition-api';
+      case 'vue3':
+        return 'vue';
+      case 'nuxt2':
+        return '@nuxtjs/composition-api';
+      case 'nuxt3':
+        return '#imports';
+      default:
+        return 'vue';
+    }
+  };
 
   const vuexImportStatements = `import { useStore } from 'vuex';`;
 
-  return useNuxt
-    ? compositionApiImportStatements
-    : vuexImportStatements + '\n' + compositionApiImportStatements;
+  const compositionApiImportStatements = `import { ${usedFunctions.join(
+    ','
+  )} } from '${getModuleName(version)}'`;
+
+  return vuexImportStatements + '\n' + compositionApiImportStatements;
 };

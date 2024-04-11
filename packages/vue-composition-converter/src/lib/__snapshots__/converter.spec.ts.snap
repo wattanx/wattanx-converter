@@ -2,7 +2,7 @@
 
 exports[`convertSrc 1`] = `
 "import { useStore } from 'vuex';
-import { defineComponent, toRefs, ref, computed, watch, onMounted } from '@vue/composition-api';
+import { defineComponent, toRefs, ref, computed, watch, onMounted } from 'vue';
 export default defineComponent({
     name: 'CompositionApiSample',
     props: {
