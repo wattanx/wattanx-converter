@@ -12,10 +12,13 @@ import { parse } from '@vue/compiler-sfc';
 
 export type ConverterOptions = {
   input: string;
-  useNuxt?: boolean;
+  version?: 'vue2' | 'vue3' | 'nuxt2' | 'nuxt3';
 };
 
-export const convertSrc = ({ input, useNuxt }: ConverterOptions): string => {
+export const convertSrc = ({
+  input,
+  version = 'vue3',
+}: ConverterOptions): string => {
   const {
     descriptor: { script },
   } = parse(input);
@@ -36,7 +39,7 @@ export const convertSrc = ({ input, useNuxt }: ConverterOptions): string => {
   );
   if (exportAssignNode) {
     // optionsAPI
-    return convertOptionsApi(sourceFile, useNuxt);
+    return convertOptionsApi(sourceFile, version);
   }
 
   throw new Error('no convert target');
