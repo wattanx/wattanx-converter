@@ -12,7 +12,7 @@
   },
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "unbuild",
+    "prepack": "unbuild",
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write src"

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "pnpm --filter './packages/**' build",
+    "build": "pnpm --filter './packages/**' prepack",
+    "build:stub": "pnpm --filter './packages/**' prepack --stub",
     "dev": "pnpm build && pnpm docs:dev",
     "lint": "pnpm --filter './packages/**' lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
