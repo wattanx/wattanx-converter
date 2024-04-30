@@ -2,6 +2,7 @@
   "name": "wattanx-converter",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "pnpm --filter './packages/**' prepack",
     "build:stub": "pnpm --filter './packages/**' prepack --stub",
@@ -15,17 +16,21 @@
     "docs:preview": "vitepress preview docs",
     "changelog": "changelogen --release --no-tag --no-commit"
   },
-  "devDependencies": {
+  "dependencies": {
     "@wattanx/vue-composition-converter": "workspace:*",
     "@wattanx/vue-mixins-converter": "workspace:*",
-    "@wattanx/vue-script-setup-converter": "workspace:*",
+    "@wattanx/vue-script-setup-converter": "workspace:*"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.4.26",
     "autoprefixer": "^10.4.13",
     "changelogen": "^0.5.3",
     "eslint-config-custom": "*",
     "highlight.js": "^11.8.0",
-    "postcss": "^8.4.20",
-    "prettier": "latest",
-    "tailwindcss": "^3.2.4",
+    "postcss": "^8.4.38",
+    "prettier": "2.8.8",
+    "tailwindcss": "^3.4.3",
+    "ts-morph": "^16.0.0",
     "vitepress": "1.0.0-rc.36"
   },
   "engines": {
