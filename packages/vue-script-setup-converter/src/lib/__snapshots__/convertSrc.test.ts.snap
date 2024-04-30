@@ -43,6 +43,6 @@ const { msg, foo } = toRefs(props);
 const newMsg = computed(() => msg.value + '- HelloWorld');
 
 const count = ref(0);
-emit(\\"change\\", 124);
+emit("change", 124);
 "
 `;

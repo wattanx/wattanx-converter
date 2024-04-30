@@ -32,7 +32,7 @@ export default defineComponent({
         });
         watch(someObject, (newValue, oldValue) => {
             console.log(newValue, oldValue);
-        }, { \\"deep\\": true });
+        }, { "deep": true });
         onMounted(() => {
             console.log('mounted');
         });
