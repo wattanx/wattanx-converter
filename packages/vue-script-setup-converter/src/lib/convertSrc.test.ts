@@ -1,8 +1,8 @@
-import { expect, describe, it } from "vitest";
-import { convertSrc } from "./convertSrc";
+import { expect, describe, it } from 'vitest';
+import { convertSrc } from './convertSrc';
 
-describe("snapshot", () => {
-  it("lang=js", () => {
+describe('snapshot', () => {
+  it('lang=js', () => {
     const output = convertSrc(`<script>
 import { defineComponent, toRefs, computed, ref } from 'vue';
 
@@ -37,7 +37,7 @@ export default defineComponent({
     expect(output).toMatchSnapshot();
   });
 
-  it("lang=ts", () => {
+  it('lang=ts', () => {
     const output = convertSrc(`<script lang="ts">
 import { defineComponent, toRefs, computed, ref } from 'vue';
 
@@ -73,7 +73,7 @@ export default defineComponent({
     expect(output).toMatchSnapshot();
   });
 
-  it("defineNuxtComponent", () => {
+  it('defineNuxtComponent', () => {
     const output = convertSrc(`<script lang="ts">
 import { defineNuxtComponent, useNuxtApp } from '#imports';
 
@@ -96,7 +96,7 @@ export default defineNuxtComponent({
     expect(output).toMatchSnapshot();
   });
 
-  it("empty setup context", () => {
+  it('empty setup context', () => {
     const output = convertSrc(`<script lang="ts">
 import { defineComponent, toRefs, computed } from 'vue';
 
@@ -118,14 +118,16 @@ export default defineComponent({
   }
 })
 </script>`);
-    expect(output).toBe(
+    expect(output).toMatchInlineSnapshot(
       `
-import { defineComponent, toRefs, computed } from 'vue';
-type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
+      "
+      import { defineComponent, toRefs, computed } from 'vue';
+      type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
 
-const { msg } = toRefs(props);
-const newMsg = computed(() => msg.value + '- HelloWorld');
-`
+      const { msg } = toRefs(props);
+      const newMsg = computed(() => msg.value + '- HelloWorld');
+      "
+    `
     );
   });
 
@@ -150,13 +152,15 @@ export default defineComponent({
   }
 })
 </script>`);
-    expect(output).toBe(
+    expect(output).toMatchInlineSnapshot(
       `
-import { defineComponent, computed } from 'vue';
-type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
+      "
+      import { defineComponent, computed } from 'vue';
+      type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
 
-const newMsg = computed(() => props.msg + '- HelloWorld');
-`
+      const newMsg = computed(() => props.msg + '- HelloWorld');
+      "
+    `
     );
-  })
+  });
 });
