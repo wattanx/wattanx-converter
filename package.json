@@ -2,34 +2,45 @@
   "name": "wattanx-converter",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
+    "build": "pnpm --filter './packages/**' prepack",
+    "build:stub": "pnpm --filter './packages/**' prepack --stub",
+    "dev": "pnpm build && pnpm docs:dev",
+    "lint": "pnpm --filter './packages/**' lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "turbo run test",
-    "test:watch": "turbo run test:watch",
+    "test": "pnpm --filter './packages/**' test",
+    "test:watch": "pnpm --filter './packages/**' test:watch",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "changelog": "changelogen --release --no-tag --no-commit"
   },
-  "devDependencies": {
+  "dependencies": {
     "@wattanx/vue-composition-converter": "workspace:*",
     "@wattanx/vue-mixins-converter": "workspace:*",
-    "@wattanx/vue-script-setup-converter": "workspace:*",
+    "@wattanx/vue-script-setup-converter": "workspace:*"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.4.26",
     "autoprefixer": "^10.4.13",
     "changelogen": "^0.5.3",
     "eslint-config-custom": "*",
     "highlight.js": "^11.8.0",
-    "postcss": "^8.4.20",
-    "prettier": "latest",
-    "tailwindcss": "^3.2.4",
-    "turbo": "latest",
+    "postcss": "^8.4.38",
+    "prettier": "2.8.8",
+    "tailwindcss": "^3.4.3",
+    "ts-morph": "^16.0.0",
     "vitepress": "1.0.0-rc.36"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@8.6.5"
+  "packageManager": "pnpm@8.6.5",
+  "resolutions": {
+    "@wattanx/vue-composition-converter": "workspace:*",
+    "@wattanx/vue-mixins-converter": "workspace:*",
+    "@wattanx/vue-script-setup-converter": "workspace:*",
+    "@wattanx/converter-utils": "workspace:*"
+  }
 }

@@ -1,21 +1,24 @@
 {
   "name": "@wattanx/converter-utils",
   "version": "0.0.0",
-  "main": "./dist/index.mjs",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "default": "./dist/index.mjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
     }
   },
-  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "concurrently pnpm:build:*",
-    "build:vite": "vite build",
+    "prepack": "unbuild",
     "test": "vitest run",
     "test:watch": "vitest",
-    "format": "prettier --write src",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types"
+    "format": "prettier --write src"
   },
   "peerDependencies": {
     "ts-morph": ">=17.0.1",
@@ -33,6 +36,7 @@
     "prettier-plugin-tailwindcss": "^0.1.11",
     "ts-node": "^10.7.0",
     "typescript": "4.9.3",
+    "unbuild": "^2.0.0",
     "vite": "4.3.9",
     "vitest": "0.32.2"
   }
