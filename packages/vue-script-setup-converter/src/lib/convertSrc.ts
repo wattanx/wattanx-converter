@@ -50,7 +50,7 @@ export const convertSrc = (input: string) => {
     sourceFile
       .getStatements()
       .filter((state) => !Node.isExportAssignment(state))
-      .map((x) => x.getFullText())
+      .map((x) => x.getText())
   );
 
   statements.addStatements(props);
