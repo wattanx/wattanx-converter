@@ -1,6 +1,7 @@
 {
   "name": "@wattanx/vue-composition-converter",
   "version": "0.0.0",
+  "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "exports": {
