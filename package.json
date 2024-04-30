@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
+    "build": "pnpm --filter './packages/**' build",
+    "dev": "pnpm build && pnpm docs:dev",
+    "lint": "pnpm --filter './packages/**' lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "turbo run test",
-    "test:watch": "turbo run test:watch",
+    "test": "pnpm --filter './packages/**' test",
+    "test:watch": "pnpm --filter './packages/**' test:watch",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
@@ -25,11 +25,16 @@
     "postcss": "^8.4.20",
     "prettier": "latest",
     "tailwindcss": "^3.2.4",
-    "turbo": "latest",
     "vitepress": "1.0.0-rc.36"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@8.6.5"
+  "packageManager": "pnpm@8.6.5",
+  "resolutions": {
+    "@wattanx/vue-composition-converter": "workspace:*",
+    "@wattanx/vue-mixins-converter": "workspace:*",
+    "@wattanx/vue-script-setup-converter": "workspace:*",
+    "@wattanx/converter-utils": "workspace:*"
+  }
 }
