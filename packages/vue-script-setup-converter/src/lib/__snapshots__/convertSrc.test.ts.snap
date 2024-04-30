@@ -1,8 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`snapshot > defineNuxtComponent 1`] = `
-"
-import { defineNuxtComponent, useNuxtApp } from '#imports';
+"import { defineNuxtComponent, useNuxtApp } from '#imports';
 
 const { $client } = useNuxtApp();
 
@@ -13,8 +12,7 @@ const onSubmit = () => {
 `;
 
 exports[`snapshot > lang=js 1`] = `
-"
-import { defineComponent, toRefs, computed, ref } from 'vue';
+"import { defineComponent, toRefs, computed, ref } from 'vue';
 const props = defineProps({
   msg: {
     type: String,
@@ -34,8 +32,7 @@ const count = ref(0);
 `;
 
 exports[`snapshot > lang=ts 1`] = `
-"
-import { defineComponent, toRefs, computed, ref } from 'vue';
+"import { defineComponent, toRefs, computed, ref } from 'vue';
 type Props = {
   msg?: string;
   foo: string;
