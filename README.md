@@ -2,6 +2,14 @@
 
 wattanx-converter provides useful tools for Vue and Nuxt.
 
+## Delelopment
+
+- Clone repository
+- Ensure you have the latest LTS version of Node.js installed
+- Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable` to enable `pnpm`
+- Install dependencies with `pnpm install`
+- Open playground with `pnpm dev`
+
 ## Vue Composition Converter
 
 https://wattanx-converter.vercel.app/vue-composition-converter
