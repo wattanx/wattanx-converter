@@ -79,6 +79,8 @@ import { defineNuxtComponent, useNuxtApp } from '#imports';
 
 export default defineNuxtComponent({
   name: 'HelloWorld',
+  layout: 'test-layout',
+  middleware: 'test-middleware',
   setup(props, ctx) {
     const { $client } = useNuxtApp();
 

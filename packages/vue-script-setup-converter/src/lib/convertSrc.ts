@@ -8,6 +8,7 @@ import {
 } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import { getNodeByKind } from "./helper";
+import { convertPageMeta } from "./converter/pageMetaConverter";
 import { convertProps } from "./converter/propsConverter";
 import { convertSetup } from "./converter/setupConverter";
 import { convertEmits } from "./converter/emitsConverter";
@@ -40,6 +41,7 @@ export const convertSrc = (input: string) => {
     throw new Error("defineComponent is not found.");
   }
 
+  const pageMeta = convertPageMeta(callexpression, lang) ?? "";
   const props = convertProps(callexpression, lang) ?? "";
   const emits = convertEmits(callexpression, lang) ?? "";
   const statement = convertSetup(callexpression) ?? "";
@@ -52,6 +54,10 @@ export const convertSrc = (input: string) => {
       .filter((state) => !Node.isExportAssignment(state))
       .map((x) => x.getText())
   );
+
+  if (isDefineNuxtComponent(callexpression)) {
+    statements.addStatements(pageMeta);
+  }
 
   statements.addStatements(props);
   statements.addStatements(emits);
@@ -74,4 +80,11 @@ const isDefineComponent = (node: CallExpression) => {
     node.getExpression().getText() === "defineComponent" ||
     node.getExpression().getText() === "defineNuxtComponent"
   );
+};
+
+const isDefineNuxtComponent = (node: CallExpression) => {
+  if (!Node.isIdentifier(node.getExpression())) {
+    return false;
+  }
+  return node.getExpression().getText() === "defineNuxtComponent";
 };
