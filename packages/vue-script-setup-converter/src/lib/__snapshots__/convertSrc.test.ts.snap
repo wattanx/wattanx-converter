@@ -2,6 +2,9 @@
 
 exports[`snapshot > defineNuxtComponent 1`] = `
 "import { defineNuxtComponent, useNuxtApp } from '#imports';
+definePageMeta({
+  name: 'HelloWorld', layout: 'test-layout', middleware: 'test-middleware'
+});
 
 const { $client } = useNuxtApp();
 
