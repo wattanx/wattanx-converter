@@ -2,7 +2,7 @@ import { applyTransform } from "jscodeshift/src/testUtils";
 import transform from "./capi-legacy";
 
 test("capi migration", () => {
-  const source = `import { defineComponent, useRoute, usefetch } from '@nuxtjs/composition-api';
+  const source = `import { defineComponent, useRoute, useFetch } from '@nuxtjs/composition-api';
 export default defineComponent({
   setup() {
     const { $fetch, $fetchState } = useFetch(async () => {
@@ -15,7 +15,7 @@ export default defineComponent({
 });
 `;
 
-  const expected = `import { defineComponent, useRoute, usefetch } from '@nuxtjs/composition-api';
+  const expected = `import { defineComponent, useRoute, useFetch } from '@nuxtjs/composition-api';
 export default defineComponent({
   setup() {
     const {
