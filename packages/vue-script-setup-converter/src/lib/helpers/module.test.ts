@@ -56,7 +56,7 @@ describe("helpers/module", () => {
 
   describe("removeNamedImportIdentifier", () => {
     describe("when importDeclaration includes target namedImport", () => {
-      const source = `<script>import { defineComponent, ref } from 'vue';</script>`;
+      const source = `<script>import { defineComponent, ref } from "vue";</script>`;
 
       it("removes namedImport from importDeclaration", () => {
         const sourceFile = getSourceFile(source);
@@ -65,16 +65,15 @@ describe("helpers/module", () => {
         if (!importDeclaration)
           throw new Error("importDeclaration is not found.");
 
-        removeNamedImportIdentifier(importDeclaration, "defineComponent");
+        const result = removeNamedImportIdentifier(
+          importDeclaration,
+          "defineComponent"
+        );
 
-        expect(importDeclaration.getText()).toBe("import { ref } from 'vue';");
+        expect(result.getText()).toBe('import { ref } from "vue";');
       });
-    });
 
-    describe("when importDeclaration does not include target namedImport", () => {
-      const source = `<script>import { ref } from 'vue';</script>`;
-
-      it("makes no change to importDeclaration", () => {
+      it("makes no change to original  importDeclaration", () => {
         const sourceFile = getSourceFile(source);
         const importDeclaration = sourceFile.getImportDeclaration("vue");
 
@@ -83,7 +82,28 @@ describe("helpers/module", () => {
 
         removeNamedImportIdentifier(importDeclaration, "defineComponent");
 
-        expect(importDeclaration.getText()).toBe("import { ref } from 'vue';");
+        expect(importDeclaration.getText()).toBe(
+          'import { defineComponent, ref } from "vue";'
+        );
+      });
+    });
+
+    describe("when importDeclaration does not include target namedImport", () => {
+      const source = `<script>import { ref } from "vue";</script>`;
+
+      it("makes no change to importDeclaration", () => {
+        const sourceFile = getSourceFile(source);
+        const importDeclaration = sourceFile.getImportDeclaration("vue");
+
+        if (!importDeclaration)
+          throw new Error("importDeclaration is not found.");
+
+        const result = removeNamedImportIdentifier(
+          importDeclaration,
+          "defineComponent"
+        );
+
+        expect(result.getText()).toBe('import { ref } from "vue";');
       });
     });
   });

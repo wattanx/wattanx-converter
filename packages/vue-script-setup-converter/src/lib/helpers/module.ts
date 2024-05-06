@@ -11,14 +11,27 @@ export const hasNamedImportIdentifier = (
   );
 };
 
-// NOTE: This function makes a side effect
 export const removeNamedImportIdentifier = (
   importDeclaration: ImportDeclaration,
   identifier: string
-): void => {
-  importDeclaration.getNamedImports().forEach((namedImport) => {
+): ImportDeclaration => {
+  if (!hasNamedImportIdentifier(importDeclaration, identifier)) {
+    return importDeclaration;
+  }
+
+  const sourceFile = importDeclaration.getSourceFile();
+  const newImportDeclaration = sourceFile.addImportDeclaration({
+    moduleSpecifier: importDeclaration.getModuleSpecifierValue(),
+    namedImports: importDeclaration
+      .getNamedImports()
+      .map((namedImport) => namedImport.getText()),
+  });
+
+  newImportDeclaration.getNamedImports().forEach((namedImport) => {
     if (namedImport.getName() === identifier) {
       namedImport.remove();
     }
   });
+
+  return newImportDeclaration;
 };

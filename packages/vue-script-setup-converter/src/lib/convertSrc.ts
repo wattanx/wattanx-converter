@@ -59,10 +59,12 @@ export const convertSrc = (input: string) => {
       .map((x) => {
         if (x.isKind(SyntaxKind.ImportDeclaration)) {
           if (hasNamedImportIdentifier(x, "defineComponent")) {
-            removeNamedImportIdentifier(x, "defineComponent");
-          }
-          if (hasNamedImportIdentifier(x, "defineNuxtComponent")) {
-            removeNamedImportIdentifier(x, "defineNuxtComponent");
+            return removeNamedImportIdentifier(x, "defineComponent").getText();
+          } else if (hasNamedImportIdentifier(x, "defineNuxtComponent")) {
+            return removeNamedImportIdentifier(
+              x,
+              "defineNuxtComponent"
+            ).getText();
           }
         }
         return x.getText();
