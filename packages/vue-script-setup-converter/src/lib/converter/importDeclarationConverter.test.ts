@@ -3,7 +3,7 @@ import { ScriptTarget, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import prettier from "prettier";
 import parserTypeScript from "prettier/parser-typescript";
-import { convertDefineComponentImport } from "./defineComponentImportConverter";
+import { convertDefineComponentImport } from "./importDeclarationConverter";
 
 const parseScript = (input: string, lang: "js" | "ts" = "js") => {
   const {
