@@ -35,9 +35,9 @@ const parseScript = (input: string, lang: "js" | "ts" = "js") => {
 describe("convertPageMeta", () => {
   describe("basic", () => {
     const source = `<script>
-  import { defineComponent } from 'vue';
+  import { defineNuxtComponent } from '#imports';
   
-  export default defineComponent({
+  export default defineNuxtComponent({
     name: 'HelloWorld',
     layout: 'test-layout',
     middleware: 'test-middleware',
@@ -60,9 +60,9 @@ describe("convertPageMeta", () => {
 
   describe("when middleware is array", () => {
     const source = `<script>
-  import { defineComponent } from 'vue';
+  import { defineNuxtComponent } from '#imports';
   
-  export default defineComponent({
+  export default defineNuxtComponent({
     name: 'HelloWorld',
     layout: 'test-layout',
     middleware: ['test-middleware-1', 'test-middleware-2'],
