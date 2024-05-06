@@ -122,7 +122,7 @@ export default defineComponent({
 </script>`);
     expect(output).toMatchInlineSnapshot(
       `
-      "import { defineComponent, toRefs, computed } from 'vue';
+      "import { toRefs, computed } from 'vue';
       type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
 
       const { msg } = toRefs(props);
@@ -157,7 +157,7 @@ export default defineComponent({
     expect(output).toMatchInlineSnapshot(
       `
       "import type { PropType } from 'vue';
-      import { defineComponent, computed } from 'vue';
+      import { computed } from 'vue';
       type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
 
       const newMsg = computed(() => props.msg + '- HelloWorld');
