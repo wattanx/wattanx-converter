@@ -1,5 +1,5 @@
 import { CallExpression, PropertyAssignment } from "ts-morph";
-import { getOptionsNode } from "../helper";
+import { getOptionsNode } from "../helpers/node";
 
 export const convertPageMeta = (node: CallExpression, lang: string = "js") => {
   const nameNode = getOptionsNode(node, "name");

@@ -7,7 +7,7 @@ import {
   ts,
 } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
-import { getNodeByKind } from "./helper";
+import { getNodeByKind } from "./helpers/node";
 import { hasNamedImportIdentifier } from "./helpers/module";
 import { convertImportDeclaration } from "./converter/importDeclarationConverter";
 import { convertPageMeta } from "./converter/pageMetaConverter";

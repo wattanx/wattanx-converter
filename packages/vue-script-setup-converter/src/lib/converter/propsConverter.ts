@@ -10,7 +10,7 @@ import {
   AsExpression,
   ArrowFunction,
 } from "ts-morph";
-import { getNodeByKind, getOptionsNode } from "../helper";
+import { getNodeByKind, getOptionsNode } from "../helpers/node";
 
 export const convertProps = (node: CallExpression, lang: string = "js") => {
   const propsNode = getOptionsNode(node, "props");
