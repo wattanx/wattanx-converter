@@ -109,8 +109,8 @@ export const getPropertyNode = (
     .filter((x) => x.getKind() === SyntaxKind.PropertyAssignment);
 
   const propsNode = properties.find((x) => {
-    const identifiler = (x as PropertyAssignment).getName();
-    return identifiler === type;
+    const identifier = (x as PropertyAssignment).getName();
+    return identifier === type;
   });
 
   if (!propsNode) {
