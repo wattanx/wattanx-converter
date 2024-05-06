@@ -47,6 +47,23 @@ describe("convertDefineComponentImport", () => {
     });
   });
 
+  describe("when only defineComponent is imported", () => {
+    const source = `<script>
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+  })
+  </script>`;
+
+    it("returns blank", () => {
+      const output = parseScript(source);
+      const expected = "";
+
+      expect(output).toBe(expected);
+    });
+  });
+
   describe("when defineNuxtComponent is imported", () => {
     const source = `<script>
   import { defineNuxtComponent, ref } from '#imports';
@@ -59,6 +76,23 @@ describe("convertDefineComponentImport", () => {
     it("returns import declaration text removed defineNuxtComponent", () => {
       const output = parseScript(source);
       const expected = 'import { ref } from "#imports";\n';
+
+      expect(output).toBe(expected);
+    });
+  });
+
+  describe("when only defineNuxtComponent is imported", () => {
+    const source = `<script>
+  import { defineNuxtComponent } from '#imports';
+  
+  export default defineNuxtComponent({
+    name: 'HelloWorld',
+  })
+  </script>`;
+
+    it("returns blank", () => {
+      const output = parseScript(source);
+      const expected = "";
 
       expect(output).toBe(expected);
     });
