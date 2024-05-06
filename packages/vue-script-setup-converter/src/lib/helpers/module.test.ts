@@ -38,7 +38,7 @@ describe("helpers/module", () => {
     describe("when importDeclaration does not include target namedImport", () => {
       const source = `<script>import { ref } from 'vue';</script>`;
 
-      it("returns true", () => {
+      it("returns false", () => {
         const sourceFile = getSourceFile(source);
         const importDeclaration = sourceFile.getImportDeclaration("vue");
         const result = hasNamedImportIdentifier(
