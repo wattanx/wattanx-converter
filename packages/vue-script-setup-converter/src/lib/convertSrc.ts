@@ -57,12 +57,13 @@ export const convertSrc = (input: string) => {
       .getStatements()
       .filter((state) => !Node.isExportAssignment(state))
       .map((x) => {
-        if (
-          x.isKind(SyntaxKind.ImportDeclaration) &&
-          hasNamedImportIdentifier(x, "defineComponent")
-        ) {
-          removeNamedImportIdentifier(x, "defineComponent");
-          return x.getText();
+        if (x.isKind(SyntaxKind.ImportDeclaration)) {
+          if (hasNamedImportIdentifier(x, "defineComponent")) {
+            removeNamedImportIdentifier(x, "defineComponent");
+          }
+          if (hasNamedImportIdentifier(x, "defineNuxtComponent")) {
+            removeNamedImportIdentifier(x, "defineNuxtComponent");
+          }
         }
         return x.getText();
       })
