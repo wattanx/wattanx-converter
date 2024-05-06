@@ -15,7 +15,7 @@ const onSubmit = () => {
 `;
 
 exports[`snapshot > lang=js 1`] = `
-"import { defineComponent, toRefs, computed, ref } from 'vue';
+"import { toRefs, computed, ref } from 'vue';
 const props = defineProps({
   msg: {
     type: String,
@@ -35,7 +35,7 @@ const count = ref(0);
 `;
 
 exports[`snapshot > lang=ts 1`] = `
-"import { defineComponent, toRefs, computed, ref } from 'vue';
+"import { toRefs, computed, ref } from 'vue';
 type Props = {
   msg?: string;
   foo: string;

@@ -8,6 +8,10 @@ import {
 } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import { getNodeByKind } from "./helper";
+import {
+  hasNamedImportIdentifier,
+  removeNamedImportIdentifier,
+} from "./helpers/module";
 import { convertPageMeta } from "./converter/pageMetaConverter";
 import { convertProps } from "./converter/propsConverter";
 import { convertSetup } from "./converter/setupConverter";
@@ -52,7 +56,16 @@ export const convertSrc = (input: string) => {
     sourceFile
       .getStatements()
       .filter((state) => !Node.isExportAssignment(state))
-      .map((x) => x.getText())
+      .map((x) => {
+        if (
+          x.isKind(SyntaxKind.ImportDeclaration) &&
+          hasNamedImportIdentifier(x, "defineComponent")
+        ) {
+          removeNamedImportIdentifier(x, "defineComponent");
+          return x.getText();
+        }
+        return x.getText();
+      })
   );
 
   if (isDefineNuxtComponent(callexpression)) {
