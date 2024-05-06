@@ -5,7 +5,7 @@ import prettier from "prettier";
 import parserTypeScript from "prettier/parser-typescript";
 import { convertImportDeclaration } from "./importDeclarationConverter";
 
-const parseScript = (input: string, lang: "js" | "ts" = "js") => {
+const parseScript = (input: string) => {
   const {
     descriptor: { script },
   } = parse(input);
