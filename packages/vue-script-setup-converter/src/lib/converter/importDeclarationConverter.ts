@@ -34,6 +34,6 @@ const convertToImportDeclarationText = (
   if (filteredNamedImports.length === 0) return "";
 
   return `import { ${filteredNamedImports.join(
-    ","
+    ", "
   )} } from '${importDeclaration.getModuleSpecifierValue()}';`;
 };
