@@ -10,3 +10,15 @@ export const hasNamedImportIdentifier = (
     })
   );
 };
+
+// NOTE: This function makes a side effect
+export const removeNamedImportIdentifier = (
+  importDeclaration: ImportDeclaration,
+  identifier: string
+): void => {
+  importDeclaration.getNamedImports().forEach((namedImport) => {
+    if (namedImport.getName() === identifier) {
+      namedImport.remove();
+    }
+  });
+};
