@@ -9,7 +9,7 @@ import {
 import { parse } from "@vue/compiler-sfc";
 import { getNodeByKind } from "./helper";
 import { hasNamedImportIdentifier } from "./helpers/module";
-import { convertDefineComponentImport } from "./converter/importDeclarationConverter";
+import { convertImportDeclaration } from "./converter/importDeclarationConverter";
 import { convertPageMeta } from "./converter/pageMetaConverter";
 import { convertProps } from "./converter/propsConverter";
 import { convertSetup } from "./converter/setupConverter";
@@ -43,7 +43,7 @@ export const convertSrc = (input: string) => {
     throw new Error("defineComponent is not found.");
   }
 
-  const defineComponentImport = convertDefineComponentImport(sourceFile) ?? "";
+  const importDeclaration = convertImportDeclaration(sourceFile) ?? "";
   const pageMeta = convertPageMeta(callexpression, lang) ?? "";
   const props = convertProps(callexpression, lang) ?? "";
   const emits = convertEmits(callexpression, lang) ?? "";
@@ -70,7 +70,7 @@ export const convertSrc = (input: string) => {
       })
   );
 
-  statements.addStatements(defineComponentImport);
+  statements.addStatements(importDeclaration);
 
   if (isDefineNuxtComponent(callexpression)) {
     statements.addStatements(pageMeta);

@@ -3,7 +3,7 @@ import { ScriptTarget, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import prettier from "prettier";
 import parserTypeScript from "prettier/parser-typescript";
-import { convertDefineComponentImport } from "./importDeclarationConverter";
+import { convertImportDeclaration } from "./importDeclarationConverter";
 
 const parseScript = (input: string, lang: "js" | "ts" = "js") => {
   const {
@@ -18,8 +18,7 @@ const parseScript = (input: string, lang: "js" | "ts" = "js") => {
   });
 
   const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-  const convertedImportDeclarationText =
-    convertDefineComponentImport(sourceFile);
+  const convertedImportDeclarationText = convertImportDeclaration(sourceFile);
 
   const formatedText = prettier.format(convertedImportDeclarationText, {
     parser: "typescript",
@@ -29,7 +28,7 @@ const parseScript = (input: string, lang: "js" | "ts" = "js") => {
   return formatedText;
 };
 
-describe("convertDefineComponentImport", () => {
+describe("convertImportDeclaration", () => {
   describe("when defineComponent is imported", () => {
     const source = `<script>
   import { defineComponent, ref } from 'vue';

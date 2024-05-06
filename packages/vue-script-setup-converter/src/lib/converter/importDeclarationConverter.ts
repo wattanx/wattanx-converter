@@ -1,7 +1,7 @@
 import type { ImportDeclaration, SourceFile } from "ts-morph";
 import { hasNamedImportIdentifier } from "../helpers/module";
 
-export const convertDefineComponentImport = (sourceFile: SourceFile) => {
+export const convertImportDeclaration = (sourceFile: SourceFile) => {
   let importDeclarationText = "";
 
   sourceFile.getImportDeclarations().forEach((importDeclaration) => {
