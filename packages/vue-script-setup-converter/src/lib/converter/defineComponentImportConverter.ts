@@ -1,26 +1,39 @@
-import type { SourceFile } from "ts-morph";
-import {
-  hasNamedImportIdentifier,
-  removeNamedImportIdentifier,
-} from "../helpers/module";
+import type { ImportDeclaration, SourceFile } from "ts-morph";
+import { hasNamedImportIdentifier } from "../helpers/module";
 
 export const convertDefineComponentImport = (sourceFile: SourceFile) => {
   let importDeclarationText = "";
 
   sourceFile.getImportDeclarations().forEach((importDeclaration) => {
     if (hasNamedImportIdentifier(importDeclaration, "defineComponent")) {
-      importDeclarationText = removeNamedImportIdentifier(
+      importDeclarationText = convertToImportDeclarationText(
         importDeclaration,
         "defineComponent"
-      ).getText();
+      );
     }
     if (hasNamedImportIdentifier(importDeclaration, "defineNuxtComponent")) {
-      importDeclarationText = removeNamedImportIdentifier(
+      importDeclarationText = convertToImportDeclarationText(
         importDeclaration,
         "defineNuxtComponent"
-      ).getText();
+      );
     }
   });
 
   return importDeclarationText;
+};
+
+const convertToImportDeclarationText = (
+  importDeclaration: ImportDeclaration,
+  identifier: string
+) => {
+  const filteredNamedImports = importDeclaration
+    .getNamedImports()
+    .map((namedImport) => namedImport.getText())
+    .filter((text) => text !== identifier);
+
+  if (filteredNamedImports.length === 0) return "";
+
+  return `import { ${filteredNamedImports.join(
+    ","
+  )} } from '${importDeclaration.getModuleSpecifierValue()}';`;
 };
