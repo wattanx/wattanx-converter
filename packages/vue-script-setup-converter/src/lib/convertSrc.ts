@@ -8,10 +8,8 @@ import {
 } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import { getNodeByKind } from "./helper";
-import {
-  hasNamedImportIdentifier,
-  removeNamedImportIdentifier,
-} from "./helpers/module";
+import { hasNamedImportIdentifier } from "./helpers/module";
+import { convertDefineComponentImport } from "./converter/defineComponentImportConverter";
 import { convertPageMeta } from "./converter/pageMetaConverter";
 import { convertProps } from "./converter/propsConverter";
 import { convertSetup } from "./converter/setupConverter";
@@ -45,6 +43,7 @@ export const convertSrc = (input: string) => {
     throw new Error("defineComponent is not found.");
   }
 
+  const defineComponentImport = convertDefineComponentImport(sourceFile) ?? "";
   const pageMeta = convertPageMeta(callexpression, lang) ?? "";
   const props = convertProps(callexpression, lang) ?? "";
   const emits = convertEmits(callexpression, lang) ?? "";
@@ -55,21 +54,23 @@ export const convertSrc = (input: string) => {
   statements.addStatements(
     sourceFile
       .getStatements()
-      .filter((state) => !Node.isExportAssignment(state))
+      .filter((state) => {
+        if (Node.isExportAssignment(state)) return false;
+        if (
+          Node.isImportDeclaration(state) &&
+          (hasNamedImportIdentifier(state, "defineComponent") ||
+            hasNamedImportIdentifier(state, "defineNuxtComponent"))
+        )
+          return false;
+
+        return true;
+      })
       .map((x) => {
-        if (x.isKind(SyntaxKind.ImportDeclaration)) {
-          if (hasNamedImportIdentifier(x, "defineComponent")) {
-            return removeNamedImportIdentifier(x, "defineComponent").getText();
-          } else if (hasNamedImportIdentifier(x, "defineNuxtComponent")) {
-            return removeNamedImportIdentifier(
-              x,
-              "defineNuxtComponent"
-            ).getText();
-          }
-        }
         return x.getText();
       })
   );
+
+  statements.addStatements(defineComponentImport);
 
   if (isDefineNuxtComponent(callexpression)) {
     statements.addStatements(pageMeta);
