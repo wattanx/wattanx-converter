@@ -3,7 +3,7 @@ import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import prettier from "prettier";
 import parserTypeScript from "prettier/parser-typescript";
-import { getNodeByKind } from "../helper";
+import { getNodeByKind } from "../helpers/node";
 import { convertEmits } from "./emitsConverter";
 
 const parseScript = (input: string, lang: "js" | "ts" = "js") => {

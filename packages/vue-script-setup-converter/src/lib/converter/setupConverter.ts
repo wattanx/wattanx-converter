@@ -1,4 +1,4 @@
-import { getNodeByKind } from "./../helper";
+import { getNodeByKind } from "../helpers/node";
 import { CallExpression, SyntaxKind, MethodDeclaration } from "ts-morph";
 import { replaceEmit } from "./emitsConverter";
 
@@ -27,7 +27,7 @@ export const convertSetup = (node: CallExpression) => {
       if (!contextName) {
         return x.getFullText();
       }
-      return replaceEmit(x.getFullText(), contextName)
+      return replaceEmit(x.getFullText(), contextName);
     })
     .join("");
 };

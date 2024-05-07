@@ -1,4 +1,3 @@
-// TODO: Move to helpers/node.ts
 import { SyntaxKind, Node, PropertyAssignment, CallExpression } from "ts-morph";
 
 export const getNodeByKind = (

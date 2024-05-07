@@ -5,7 +5,7 @@ import {
   SyntaxKind,
   ArrowFunction,
 } from "ts-morph";
-import { getOptionsNode } from "../helper";
+import { getOptionsNode } from "../helpers/node";
 
 // ctx.emit('event') -> emit('event')
 export const replaceEmit = (expression: string, contextName: string) => {

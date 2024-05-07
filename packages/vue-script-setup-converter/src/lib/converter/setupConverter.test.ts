@@ -5,7 +5,7 @@ import { parse } from "@vue/compiler-sfc";
 import prettier from "prettier";
 import parserTypeScript from "prettier/parser-typescript";
 import optionsApi from "../../samples/composition-api.txt?raw";
-import { getNodeByKind } from "../helper";
+import { getNodeByKind } from "../helpers/node";
 
 test("setup statements", () => {
   const {
