@@ -24,12 +24,7 @@ const parseScript = (input: string, lang: "js" | "ts" = "js") => {
 
   const emits = convertEmits(callexpression as CallExpression, lang);
 
-  const formatedText = prettier.format(emits, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
-
-  return formatedText;
+  return emits;
 };
 
 const source = `<script>
@@ -52,10 +47,9 @@ export default defineComponent({
 test("defineEmits", () => {
   const output = parseScript(source, "js");
 
-  const expected = `const emit = defineEmits({ change: (value) => true });
-`;
-
-  expect(output).toBe(expected);
+  expect(output).toMatchInlineSnapshot(
+    `"const emit = defineEmits({change: (value) => true});"`
+  );
 });
 
 test("typed defineEmits", () => {
@@ -77,9 +71,7 @@ export default defineComponent({
 </script>`;
   const output = parseScript(source, "ts");
 
-  const expected = `const emit = defineEmits<{ (e: "change", value: number): void }>();
-`;
-  expect(output).toBe(expected);
+  expect(output).toMatchInlineSnapshot(`"const emit = defineEmits<{(e: 'change', value: number): void}>();"`);
 });
 
 test("string array", () => {
@@ -101,7 +93,7 @@ export default defineComponent({
 
   const expected = `const emit = defineEmits(["change"]);
 `;
-  expect(output).toBe(expected);
+  expect(output).toMatchInlineSnapshot(`"const emit = defineEmits(['change']);"`);
 });
 
 test("validation", () => {
@@ -125,11 +117,9 @@ export default defineComponent({
 </script>`;
   const output = parseScript(source, "ts");
 
-  const expected = `const emit = defineEmits({
-  change: (value: number) => {
-    return value !== 0;
-  },
-});
-`;
-  expect(output).toBe(expected);
+  expect(output).toMatchInlineSnapshot(`
+    "const emit = defineEmits({change: (value: number) => {
+          return value !== 0;
+        }});"
+  `);
 });
