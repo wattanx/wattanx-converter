@@ -1,8 +1,6 @@
 import { expect, describe, it } from "vitest";
 import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
 import { getNodeByKind } from "../helpers/node";
 import { convertProps } from "./propsConverter";
 
@@ -24,12 +22,7 @@ const parseScript = (input: string, lang: "js" | "ts" = "js") => {
 
   const props = convertProps(callexpression as CallExpression, lang);
 
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
-
-  return formatedText;
+  return props;
 };
 
 const source = `<script>
@@ -54,29 +47,24 @@ describe("basic", () => {
   it("defineProps", () => {
     const output = parseScript(source);
 
-    const expected = `const props = defineProps({
-  msg: {
-    type: String,
-    default: "HelloWorld",
-  },
-  foo: {
-    type: String,
-    required: true,
-  },
-});
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "const props = defineProps({msg: {
+              type: String,
+              default: 'HelloWorld'
+            },foo: {
+              type: String,
+              required: true
+            }});"
+    `);
   });
 
   it("type-based defineProps", () => {
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { msg?: string; foo: string };
-const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg?: string;
+      foo: string;};const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });"
+    `);
   });
 
   it("custom validator", () => {
@@ -102,22 +90,18 @@ const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
   </script>`;
     const output = parseScript(source);
 
-    const expected = `const props = defineProps({
-  msg: {
-    type: String,
-    default: "HelloWorld",
-  },
-  foo: {
-    type: String,
-    required: true,
-    validator(value) {
-      return ["success", "warning", "danger"].includes(value);
-    },
-  },
-});
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "const props = defineProps({msg: {
+              type: String,
+              default: 'HelloWorld'
+            },foo: {
+              type: String,
+              required: true,
+              validator(value) {
+                return ["success", "warning", "danger"].includes(value)
+              }
+            }});"
+    `);
   });
 });
 
@@ -143,11 +127,10 @@ describe("type-based", () => {
   </script>`;
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { msg?: string; foo: string };
-const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg?: string;
+      foo: string;};const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });"
+    `);
   });
 
   it("default function", () => {
@@ -174,14 +157,10 @@ const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
   </script>`;
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
-const props = withDefaults(defineProps<Props>(), {
-  foo: () => ({ msg: "Hello World" }),
-  bar: () => ["foo", "bar"],
-});
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo?: { msg: string; };
+      bar?: string[];};const props = withDefaults(defineProps<Props>(), { foo: () => ({ msg: "Hello World" }),bar: () => (["foo", "bar"]) });"
+    `);
   });
 
   it("default arrow function", () => {
@@ -204,14 +183,10 @@ const props = withDefaults(defineProps<Props>(), {
   </script>`;
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
-const props = withDefaults(defineProps<Props>(), {
-  foo: () => ({ msg: "Hello World" }),
-  bar: () => ["foo", "bar"],
-});
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo?: { msg: string; };
+      bar?: string[];};const props = withDefaults(defineProps<Props>(), { foo: () => ({ msg: "Hello World" }),bar: () => ["foo", "bar"] });"
+    `);
   });
 
   it("default arrow function and return", () => {
@@ -238,14 +213,10 @@ const props = withDefaults(defineProps<Props>(), {
   </script>`;
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
-const props = withDefaults(defineProps<Props>(), {
-  foo: () => ({ msg: "Hello World" }),
-  bar: () => ["foo", "bar"],
-});
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo?: { msg: string; };
+      bar?: string[];};const props = withDefaults(defineProps<Props>(), { foo: () => ({ msg: "Hello World" }),bar: () => (["foo", "bar"]) });"
+    `);
   });
 
   it("non primitive", () => {
@@ -269,11 +240,10 @@ const props = withDefaults(defineProps<Props>(), {
   </script>`;
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { foo: Foo; items: string[] };
-const props = defineProps<Props>();
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo: Foo;
+      items: string[];};const props = defineProps<Props>();"
+    `);
   });
 
   it("non Object style", () => {
@@ -291,11 +261,10 @@ const props = defineProps<Props>();
   </script>`;
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { msg?: string; foo?: Foo };
-const props = defineProps<Props>();
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg?: string;
+      foo?: Foo;};const props = defineProps<Props>();"
+    `);
   });
 
   it("default value is boolean", () => {
@@ -318,10 +287,9 @@ const props = defineProps<Props>();
   </script>`;
     const output = parseScript(source, "ts");
 
-    const expected = `type Props = { msg: string; disabled?: boolean };
-const props = withDefaults(defineProps<Props>(), { disabled: false });
-`;
-
-    expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg: string;
+      disabled?: boolean;};const props = withDefaults(defineProps<Props>(), { disabled: false });"
+    `);
   });
 });
