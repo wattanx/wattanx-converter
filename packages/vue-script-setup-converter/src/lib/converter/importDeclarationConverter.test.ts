@@ -1,8 +1,6 @@
 import { expect, describe, it } from "vitest";
 import { ScriptTarget, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
 import { convertImportDeclaration } from "./importDeclarationConverter";
 
 const parseScript = (input: string) => {
@@ -20,12 +18,7 @@ const parseScript = (input: string) => {
   const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
   const convertedImportDeclarationText = convertImportDeclaration(sourceFile);
 
-  const formatedText = prettier.format(convertedImportDeclarationText, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
-
-  return formatedText;
+  return convertedImportDeclarationText;
 };
 
 describe("convertImportDeclaration", () => {
@@ -40,9 +33,8 @@ describe("convertImportDeclaration", () => {
 
     it("returns import declaration text removed defineComponent", () => {
       const output = parseScript(source);
-      const expected = 'import { ref } from "vue";\n';
 
-      expect(output).toBe(expected);
+      expect(output).toMatchInlineSnapshot(`"import { ref } from 'vue';"`);
     });
   });
 
@@ -57,9 +49,8 @@ describe("convertImportDeclaration", () => {
 
     it("returns blank", () => {
       const output = parseScript(source);
-      const expected = "";
 
-      expect(output).toBe(expected);
+      expect(output).toBe("");
     });
   });
 
@@ -74,9 +65,8 @@ describe("convertImportDeclaration", () => {
 
     it("returns import declaration text removed defineNuxtComponent", () => {
       const output = parseScript(source);
-      const expected = 'import { ref } from "#imports";\n';
 
-      expect(output).toBe(expected);
+      expect(output).toMatchInlineSnapshot(`"import { ref } from '#imports';"`);
     });
   });
 
@@ -91,9 +81,8 @@ describe("convertImportDeclaration", () => {
 
     it("returns blank", () => {
       const output = parseScript(source);
-      const expected = "";
 
-      expect(output).toBe(expected);
+      expect(output).toBe("");
     });
   });
 });

@@ -1,8 +1,6 @@
 import { expect, test } from "vitest";
 import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
 import { getNodeByKind } from "../helpers/node";
 import { convertEmits } from "./emitsConverter";
 
@@ -71,7 +69,9 @@ export default defineComponent({
 </script>`;
   const output = parseScript(source, "ts");
 
-  expect(output).toMatchInlineSnapshot(`"const emit = defineEmits<{(e: 'change', value: number): void}>();"`);
+  expect(output).toMatchInlineSnapshot(
+    `"const emit = defineEmits<{(e: 'change', value: number): void}>();"`
+  );
 });
 
 test("string array", () => {
@@ -93,7 +93,9 @@ export default defineComponent({
 
   const expected = `const emit = defineEmits(["change"]);
 `;
-  expect(output).toMatchInlineSnapshot(`"const emit = defineEmits(['change']);"`);
+  expect(output).toMatchInlineSnapshot(
+    `"const emit = defineEmits(['change']);"`
+  );
 });
 
 test("validation", () => {
