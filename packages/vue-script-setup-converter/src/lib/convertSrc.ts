@@ -14,6 +14,7 @@ import { convertPageMeta } from "./converter/pageMetaConverter";
 import { convertProps } from "./converter/propsConverter";
 import { convertSetup } from "./converter/setupConverter";
 import { convertEmits } from "./converter/emitsConverter";
+import { convertComponents } from "./converter/componentsConverter";
 
 export const convertSrc = (input: string) => {
   const {
@@ -48,6 +49,7 @@ export const convertSrc = (input: string) => {
   const props = convertProps(callexpression, lang) ?? "";
   const emits = convertEmits(callexpression, lang) ?? "";
   const statement = convertSetup(callexpression) ?? "";
+  const components = convertComponents(callexpression) ?? "";
 
   const statements = project.createSourceFile("new.tsx");
 
@@ -75,6 +77,8 @@ export const convertSrc = (input: string) => {
   if (isDefineNuxtComponent(callexpression)) {
     statements.addStatements(pageMeta);
   }
+
+  statements.addStatements(components);
 
   statements.addStatements(props);
   statements.addStatements(emits);

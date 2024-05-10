@@ -17,7 +17,7 @@ export const getNodeByKind = (
 
 export const getOptionsNode = (
   node: CallExpression,
-  type: "name" | "layout" | "middleware" | "props" | "emits"
+  type: "name" | "layout" | "middleware" | "props" | "emits" | "components"
 ) => {
   const expression = getNodeByKind(node, SyntaxKind.ObjectLiteralExpression);
 
