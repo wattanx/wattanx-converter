@@ -1,8 +1,6 @@
 import { expect, describe, it } from "vitest";
 import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
 import { getNodeByKind } from "../helpers/node";
 import { convertPageMeta } from "./pageMetaConverter";
 
@@ -24,12 +22,7 @@ const parseScript = (input: string, lang: "js" | "ts" = "js") => {
 
   const pageMeta = convertPageMeta(callExpression as CallExpression, lang);
 
-  const formatedText = prettier.format(pageMeta, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
-
-  return formatedText;
+  return pageMeta;
 };
 
 describe("convertPageMeta", () => {
@@ -47,14 +40,11 @@ describe("convertPageMeta", () => {
     it("returns text including definePageMeta", () => {
       const output = parseScript(source);
 
-      const expected = `definePageMeta({
-  name: "HelloWorld",
-  layout: "test-layout",
-  middleware: "test-middleware",
-});
-`;
-
-      expect(output).toBe(expected);
+      expect(output).toMatchInlineSnapshot(`
+        "definePageMeta({
+            name: 'HelloWorld',layout: 'test-layout',middleware: 'test-middleware'
+          });"
+      `);
     });
   });
 
@@ -72,14 +62,11 @@ describe("convertPageMeta", () => {
     it("returns text including definePageMeta", () => {
       const output = parseScript(source);
 
-      const expected = `definePageMeta({
-  name: "HelloWorld",
-  layout: "test-layout",
-  middleware: ["test-middleware-1", "test-middleware-2"],
-});
-`;
-
-      expect(output).toBe(expected);
+      expect(output).toMatchInlineSnapshot(`
+        "definePageMeta({
+            name: 'HelloWorld',layout: 'test-layout',middleware: ['test-middleware-1', 'test-middleware-2']
+          });"
+      `);
     });
   });
 });
