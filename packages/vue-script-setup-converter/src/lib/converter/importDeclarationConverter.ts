@@ -1,41 +1,36 @@
-import type { ImportDeclaration, SourceFile } from "ts-morph";
+import type { SourceFile } from "ts-morph";
 import { genImport } from "knitwork";
-import { hasNamedImportIdentifier } from "../helpers/module";
 
 export const convertImportDeclaration = (sourceFile: SourceFile) => {
-  let importDeclarationText = "";
+  const importDeclarations = sourceFile.getImportDeclarations();
 
-  sourceFile.getImportDeclarations().forEach((importDeclaration) => {
-    if (hasNamedImportIdentifier(importDeclaration, "defineComponent")) {
-      importDeclarationText = convertToImportDeclarationText(
-        importDeclaration,
-        "defineComponent"
+  const vueImportDeclarations = importDeclarations.filter(
+    (importDeclaration) => {
+      if (importDeclaration.isTypeOnly()) return false;
+
+      return ["vue", "#imports"].includes(
+        importDeclaration.getModuleSpecifierValue()
       );
     }
-    if (hasNamedImportIdentifier(importDeclaration, "defineNuxtComponent")) {
-      importDeclarationText = convertToImportDeclarationText(
-        importDeclaration,
-        "defineNuxtComponent"
-      );
-    }
-  });
-
-  return importDeclarationText;
-};
-
-const convertToImportDeclarationText = (
-  importDeclaration: ImportDeclaration,
-  identifier: string
-) => {
-  const filteredNamedImports = importDeclaration
-    .getNamedImports()
-    .map((namedImport) => namedImport.getText())
-    .filter((text) => text !== identifier);
-
-  if (filteredNamedImports.length === 0) return "";
-
-  return genImport(
-    importDeclaration.getModuleSpecifierValue(),
-    filteredNamedImports
   );
+
+  const newVueImportDeclarations = vueImportDeclarations.map(
+    (importDeclaration) => {
+      const namedImports = importDeclaration.getNamedImports();
+
+      const filteredNamedImports = namedImports
+        .map((namedImport) => namedImport.getText())
+        .filter(
+          (text) => !["defineComponent", "defineNuxtComponent"].includes(text)
+        );
+      if (filteredNamedImports.length === 0) return "";
+
+      return genImport(
+        importDeclaration.getModuleSpecifierValue(),
+        filteredNamedImports
+      );
+    }
+  );
+
+  return newVueImportDeclarations.join("\n");
 };
