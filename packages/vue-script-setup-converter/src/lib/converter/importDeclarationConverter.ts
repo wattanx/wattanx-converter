@@ -1,7 +1,13 @@
 import type { SourceFile } from "ts-morph";
-import { genImport } from "knitwork";
 
-export const convertImportDeclaration = (sourceFile: SourceFile) => {
+type ImportMap = {
+  importSpecifiers: string[];
+  moduleSpecifier: string;
+};
+
+export const convertImportDeclaration = (
+  sourceFile: SourceFile
+): ImportMap[] => {
   const importDeclarations = sourceFile.getImportDeclarations();
 
   const vueImportDeclarations = importDeclarations.filter(
@@ -14,23 +20,20 @@ export const convertImportDeclaration = (sourceFile: SourceFile) => {
     }
   );
 
-  const newVueImportDeclarations = vueImportDeclarations.map(
-    (importDeclaration) => {
-      const namedImports = importDeclaration.getNamedImports();
+  if (vueImportDeclarations.length === 0) return [];
 
-      const filteredNamedImports = namedImports
-        .map((namedImport) => namedImport.getText())
-        .filter(
-          (text) => !["defineComponent", "defineNuxtComponent"].includes(text)
-        );
-      if (filteredNamedImports.length === 0) return "";
+  return vueImportDeclarations.map((importDeclaration) => {
+    const namedImports = importDeclaration.getNamedImports();
 
-      return genImport(
-        importDeclaration.getModuleSpecifierValue(),
-        filteredNamedImports
+    const filteredNamedImports = namedImports
+      .map((namedImport) => namedImport.getText())
+      .filter(
+        (text) => !["defineComponent", "defineNuxtComponent"].includes(text)
       );
-    }
-  );
 
-  return newVueImportDeclarations.join("\n");
+    return {
+      importSpecifiers: filteredNamedImports,
+      moduleSpecifier: importDeclaration.getModuleSpecifierValue(),
+    };
+  });
 };

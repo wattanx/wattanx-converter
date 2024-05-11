@@ -15,6 +15,7 @@ import { convertProps } from "./converter/propsConverter";
 import { convertSetup } from "./converter/setupConverter";
 import { convertEmits } from "./converter/emitsConverter";
 import { convertComponents } from "./converter/componentsConverter";
+import { genImport } from "knitwork";
 
 export const convertSrc = (input: string) => {
   const {
@@ -44,14 +45,27 @@ export const convertSrc = (input: string) => {
     throw new Error("defineComponent is not found.");
   }
 
-  const importDeclaration = convertImportDeclaration(sourceFile) ?? "";
+  const importMap = convertImportDeclaration(sourceFile) ?? "";
   const pageMeta = convertPageMeta(callexpression, lang) ?? "";
   const props = convertProps(callexpression, lang) ?? "";
   const emits = convertEmits(callexpression, lang) ?? "";
   const statement = convertSetup(callexpression) ?? "";
   const components = convertComponents(callexpression) ?? "";
 
+  const hasDynamicImport = components.includes("defineAsyncComponent");
+
   const statements = project.createSourceFile("new.tsx");
+
+  if (hasDynamicImport) {
+    importMap[0].importSpecifiers.push("defineAsyncComponent");
+    statements.addStatements(
+      importMap.map((x) => genImport(x.moduleSpecifier, x.importSpecifiers))
+    );
+  } else {
+    statements.addStatements(
+      importMap.map((x) => genImport(x.moduleSpecifier, x.importSpecifiers))
+    );
+  }
 
   statements.addStatements(
     sourceFile
@@ -71,8 +85,6 @@ export const convertSrc = (input: string) => {
         return x.getText();
       })
   );
-
-  statements.addStatements(importDeclaration);
 
   if (isDefineNuxtComponent(callexpression)) {
     statements.addStatements(pageMeta);

@@ -156,13 +156,35 @@ export default defineComponent({
 </script>`);
     expect(output).toMatchInlineSnapshot(
       `
-      "import type { PropType } from 'vue';
-      import { computed } from "vue";
+      "import { computed } from "vue";
+      import type { PropType } from 'vue';
       type Props = { msg?: string; }; const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });
 
       const newMsg = computed(() => props.msg + '- HelloWorld');
       "
     `
     );
+  });
+
+  it("should be converted to defineAsyncComponent", () => {
+    const output = convertSrc(`<script>
+import { defineComponent } from 'vue';
+import HelloWorld from './HelloWorld.vue';
+
+export default defineComponent({
+  components: {
+    HelloWorld,
+    MyComp: () => import('./MyComp.vue'),
+    Foo: () => import('./Foo.vue'),
+  }
+  })
+  </script>`);
+    expect(output).toMatchInlineSnapshot(`
+      "import { defineAsyncComponent } from "vue";
+      import HelloWorld from './HelloWorld.vue';
+      const MyComp = defineAsyncComponent(() => import('./MyComp.vue'));
+      const Foo = defineAsyncComponent(() => import('./Foo.vue'));
+      "
+    `);
   });
 });

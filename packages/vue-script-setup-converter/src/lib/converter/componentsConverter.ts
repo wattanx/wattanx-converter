@@ -1,10 +1,7 @@
-import type {
-  CallExpression,
-  ObjectLiteralElementLike,
-  PropertyAssignment,
-} from "ts-morph";
+import type { CallExpression, PropertyAssignment } from "ts-morph";
 import { Node, SyntaxKind } from "ts-morph";
 import { getOptionsNode } from "../helpers/node";
+import { filterDynamicImport } from "../helpers/module";
 
 export const convertComponents = (node: CallExpression) => {
   const componentsNode = getOptionsNode(node, "components");
@@ -48,14 +45,4 @@ const convertToDefineAsyncComponent = (node: PropertyAssignment) => {
     .join("\n");
 
   return value;
-};
-
-const filterDynamicImport = (
-  property: Node
-): property is PropertyAssignment => {
-  return Node.isPropertyAssignment(property) && hasDynamicImport(property);
-};
-
-const hasDynamicImport = (node: ObjectLiteralElementLike) => {
-  return node.getText().includes("() => import(");
 };
