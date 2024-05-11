@@ -1,4 +1,5 @@
 import type { ImportDeclaration, SourceFile } from "ts-morph";
+import { genImport } from "knitwork";
 import { hasNamedImportIdentifier } from "../helpers/module";
 
 export const convertImportDeclaration = (sourceFile: SourceFile) => {
@@ -33,7 +34,8 @@ const convertToImportDeclarationText = (
 
   if (filteredNamedImports.length === 0) return "";
 
-  return `import { ${filteredNamedImports.join(
-    ", "
-  )} } from '${importDeclaration.getModuleSpecifierValue()}';`;
+  return genImport(
+    importDeclaration.getModuleSpecifierValue(),
+    filteredNamedImports
+  );
 };

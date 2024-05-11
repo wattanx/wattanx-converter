@@ -34,7 +34,7 @@ describe("convertImportDeclaration", () => {
     it("returns import declaration text removed defineComponent", () => {
       const output = parseScript(source);
 
-      expect(output).toMatchInlineSnapshot(`"import { ref } from 'vue';"`);
+      expect(output).toMatchInlineSnapshot(`"import { ref } from "vue";"`);
     });
   });
 
@@ -66,7 +66,7 @@ describe("convertImportDeclaration", () => {
     it("returns import declaration text removed defineNuxtComponent", () => {
       const output = parseScript(source);
 
-      expect(output).toMatchInlineSnapshot(`"import { ref } from '#imports';"`);
+      expect(output).toMatchInlineSnapshot(`"import { ref } from "#imports";"`);
     });
   });
 
