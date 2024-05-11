@@ -56,7 +56,10 @@ export const convertSrc = (input: string) => {
 
   const statements = project.createSourceFile("new.tsx");
 
-  if (hasDynamicImport) {
+  if (
+    hasDynamicImport &&
+    !importMap[0].importSpecifiers.includes("defineAsyncComponent")
+  ) {
     importMap[0].importSpecifiers.push("defineAsyncComponent");
     statements.addStatements(
       importMap.map((x) => genImport(x.moduleSpecifier, x.importSpecifiers))
