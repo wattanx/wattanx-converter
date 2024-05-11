@@ -34,6 +34,14 @@ const convertToDefineAsyncComponent = (node: PropertyAssignment) => {
   const value = filterdProperties
     .map((x) => {
       const propertyName = x.getName();
+      const initializer = x.getInitializer();
+
+      if (!initializer) return "";
+
+      if (initializer.getText().includes("defineAsyncComponent")) {
+        return `const ${propertyName} = ${initializer.getText()}`;
+      }
+
       const arrowFunc = x.getFirstChildByKind(SyntaxKind.ArrowFunction);
       return `const ${propertyName} = defineAsyncComponent(${arrowFunc!.getText()})`;
     })
@@ -42,7 +50,6 @@ const convertToDefineAsyncComponent = (node: PropertyAssignment) => {
   return value;
 };
 
-// dynamicImportのあるPropertyAssignmentのみを抽出
 const filterDynamicImport = (
   property: Node
 ): property is PropertyAssignment => {

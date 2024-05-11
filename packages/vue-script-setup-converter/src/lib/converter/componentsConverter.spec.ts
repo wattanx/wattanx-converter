@@ -48,3 +48,24 @@ test("should be converted to defineAsyncComponent", () => {
   `
   );
 });
+
+test("should be output as is", () => {
+  const source = `<script>
+  import { defineComponent, defineAsyncComponent } from 'vue';
+  import HelloWorld from './HelloWorld.vue';
+
+  export default defineComponent({
+    components: {
+      HelloWorld,
+      MyComp: defineAsyncComponent(() => import('./MyComp.vue')),
+      Foo: defineAsyncComponent(() => import('./Foo.vue')),
+    }
+  })
+  `;
+  const output = parseScript(source);
+
+  expect(output).toMatchInlineSnapshot(`
+    "const MyComp = defineAsyncComponent(() => import('./MyComp.vue'))
+    const Foo = defineAsyncComponent(() => import('./Foo.vue'))"
+  `);
+});
