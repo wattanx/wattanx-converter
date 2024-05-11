@@ -1,5 +1,6 @@
 import { applyTransform } from "jscodeshift/src/testUtils";
 import transform from "./define-nuxt-plugin";
+import { test, expect } from "vitest";
 
 test("js plugin", () => {
   const source = `import { defineNuxtPlugin } from '@nuxtjs/composition-api';
