@@ -50,10 +50,12 @@ describe("convertImportDeclaration", () => {
   })
   </script>`;
 
-    it("returns blank", () => {
+    it("importSpecifiers returns blank", () => {
       const output = parseScript(source);
 
-      expect(output).toEqual([{ importSpecifiers: [], moduleSpecifier: "" }]);
+      expect(output).toEqual([
+        { importSpecifiers: [], moduleSpecifier: "vue" },
+      ]);
     });
   });
 
@@ -87,13 +89,13 @@ describe("convertImportDeclaration", () => {
   })
   </script>`;
 
-    it("returns blank", () => {
+    it("importSpecifiers returns blank", () => {
       const output = parseScript(source);
 
       expect(output).toEqual([
         {
           importSpecifiers: [],
-          moduleSpecifier: "",
+          moduleSpecifier: "#imports",
         },
       ]);
     });
