@@ -5,7 +5,16 @@ export default {
   title: "wattanx-converter",
   description: "wattanx-converter provides useful tools for Vue and Nuxt.",
   head: [
-    ["link", { rel: "icon", type: "image/png", href: "/cat_dot.png" }],
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        sizes: "any",
+        href: "/wattanx-converter-icon.svg",
+      },
+    ],
+    ["link", { rel: "apple-touch-icon", href: "/wattanx-converter-icon.png" }],
     ["meta", { property: "og:title", content: "wattanx-converter" }],
     [
       "meta",
