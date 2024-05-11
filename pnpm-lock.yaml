@@ -281,6 +281,9 @@ importers:
       '@wattanx/converter-utils':
         specifier: workspace:*
         version: link:../converter-utils
+      knitwork:
+        specifier: ^1.1.0
+        version: 1.1.0
       ts-morph:
         specifier: '>=17.0.1'
         version: 17.0.1
@@ -5625,6 +5628,10 @@ packages:
   /kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /knitwork@1.1.0:
+    resolution: {integrity: sha512-oHnmiBUVHz1V+URE77PNot2lv3QiYU2zQf1JjOVkMt3YDKGbu8NAFr+c4mcNOhdsGrB/VpVbRwPwhiXrPhxQbw==}
     dev: false
 
   /language-subtag-registry@0.3.22:

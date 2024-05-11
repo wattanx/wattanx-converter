@@ -1,39 +1,39 @@
-import type { ImportDeclaration, SourceFile } from "ts-morph";
-import { hasNamedImportIdentifier } from "../helpers/module";
+import type { SourceFile } from "ts-morph";
 
-export const convertImportDeclaration = (sourceFile: SourceFile) => {
-  let importDeclarationText = "";
-
-  sourceFile.getImportDeclarations().forEach((importDeclaration) => {
-    if (hasNamedImportIdentifier(importDeclaration, "defineComponent")) {
-      importDeclarationText = convertToImportDeclarationText(
-        importDeclaration,
-        "defineComponent"
-      );
-    }
-    if (hasNamedImportIdentifier(importDeclaration, "defineNuxtComponent")) {
-      importDeclarationText = convertToImportDeclarationText(
-        importDeclaration,
-        "defineNuxtComponent"
-      );
-    }
-  });
-
-  return importDeclarationText;
+type ImportMap = {
+  importSpecifiers: string[];
+  moduleSpecifier: string;
 };
 
-const convertToImportDeclarationText = (
-  importDeclaration: ImportDeclaration,
-  identifier: string
-) => {
-  const filteredNamedImports = importDeclaration
-    .getNamedImports()
-    .map((namedImport) => namedImport.getText())
-    .filter((text) => text !== identifier);
+export const convertImportDeclaration = (
+  sourceFile: SourceFile
+): ImportMap[] => {
+  const importDeclarations = sourceFile.getImportDeclarations();
 
-  if (filteredNamedImports.length === 0) return "";
+  const vueImportDeclarations = importDeclarations.filter(
+    (importDeclaration) => {
+      if (importDeclaration.isTypeOnly()) return false;
 
-  return `import { ${filteredNamedImports.join(
-    ", "
-  )} } from '${importDeclaration.getModuleSpecifierValue()}';`;
+      return ["vue", "#imports"].includes(
+        importDeclaration.getModuleSpecifierValue()
+      );
+    }
+  );
+
+  if (vueImportDeclarations.length === 0) return [];
+
+  return vueImportDeclarations.map((importDeclaration) => {
+    const namedImports = importDeclaration.getNamedImports();
+
+    const filteredNamedImports = namedImports
+      .map((namedImport) => namedImport.getText())
+      .filter(
+        (text) => !["defineComponent", "defineNuxtComponent"].includes(text)
+      );
+
+    return {
+      importSpecifiers: filteredNamedImports,
+      moduleSpecifier: importDeclaration.getModuleSpecifierValue(),
+    };
+  });
 };

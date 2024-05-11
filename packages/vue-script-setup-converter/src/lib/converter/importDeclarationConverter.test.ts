@@ -16,9 +16,7 @@ const parseScript = (input: string) => {
   });
 
   const sourceFile = project.createSourceFile("s.tsx", script?.content ?? "");
-  const convertedImportDeclarationText = convertImportDeclaration(sourceFile);
-
-  return convertedImportDeclarationText;
+  return convertImportDeclaration(sourceFile);
 };
 
 describe("convertImportDeclaration", () => {
@@ -34,7 +32,12 @@ describe("convertImportDeclaration", () => {
     it("returns import declaration text removed defineComponent", () => {
       const output = parseScript(source);
 
-      expect(output).toMatchInlineSnapshot(`"import { ref } from 'vue';"`);
+      expect(output).toEqual([
+        {
+          importSpecifiers: ["ref"],
+          moduleSpecifier: "vue",
+        },
+      ]);
     });
   });
 
@@ -47,10 +50,12 @@ describe("convertImportDeclaration", () => {
   })
   </script>`;
 
-    it("returns blank", () => {
+    it("importSpecifiers returns blank", () => {
       const output = parseScript(source);
 
-      expect(output).toBe("");
+      expect(output).toEqual([
+        { importSpecifiers: [], moduleSpecifier: "vue" },
+      ]);
     });
   });
 
@@ -66,7 +71,12 @@ describe("convertImportDeclaration", () => {
     it("returns import declaration text removed defineNuxtComponent", () => {
       const output = parseScript(source);
 
-      expect(output).toMatchInlineSnapshot(`"import { ref } from '#imports';"`);
+      expect(output).toEqual([
+        {
+          importSpecifiers: ["ref"],
+          moduleSpecifier: "#imports",
+        },
+      ]);
     });
   });
 
@@ -79,10 +89,15 @@ describe("convertImportDeclaration", () => {
   })
   </script>`;
 
-    it("returns blank", () => {
+    it("importSpecifiers returns blank", () => {
       const output = parseScript(source);
 
-      expect(output).toBe("");
+      expect(output).toEqual([
+        {
+          importSpecifiers: [],
+          moduleSpecifier: "#imports",
+        },
+      ]);
     });
   });
 });
