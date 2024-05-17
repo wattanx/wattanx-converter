@@ -20,13 +20,12 @@ const convertToDefinePageMeta = ({
   layoutNode: PropertyAssignment | undefined;
   middlewareNode: PropertyAssignment | undefined;
 }) => {
-  const nameProperty = nameNode ? nameNode.getText() : "";
-  const layoutProperty = layoutNode ? layoutNode.getText() : "";
-  const middlewareProperty = middlewareNode ? middlewareNode.getText() : "";
+  const nameProperty = nameNode ? nameNode.getFullText() : "";
+  const layoutProperty = layoutNode ? layoutNode.getFullText() : "";
+  const middlewareProperty = middlewareNode ? middlewareNode.getFullText() : "";
 
-  return `definePageMeta({
-    ${[nameProperty, layoutProperty, middlewareProperty]
-      .filter(Boolean)
-      .join(",")}
+  return `definePageMeta({${[nameProperty, layoutProperty, middlewareProperty]
+    .filter(Boolean)
+    .join(",")}
   });`;
 };

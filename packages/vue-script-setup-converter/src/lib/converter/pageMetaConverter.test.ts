@@ -33,6 +33,7 @@ describe("convertPageMeta", () => {
   export default defineNuxtComponent({
     name: 'HelloWorld',
     layout: 'test-layout',
+    // comment
     middleware: 'test-middleware',
   })
   </script>`;
@@ -42,7 +43,10 @@ describe("convertPageMeta", () => {
 
       expect(output).toMatchInlineSnapshot(`
         "definePageMeta({
-            name: 'HelloWorld',layout: 'test-layout',middleware: 'test-middleware'
+            name: 'HelloWorld',
+            layout: 'test-layout',
+            // comment
+            middleware: 'test-middleware'
           });"
       `);
     });
@@ -64,7 +68,9 @@ describe("convertPageMeta", () => {
 
       expect(output).toMatchInlineSnapshot(`
         "definePageMeta({
-            name: 'HelloWorld',layout: 'test-layout',middleware: ['test-middleware-1', 'test-middleware-2']
+            name: 'HelloWorld',
+            layout: 'test-layout',
+            middleware: ['test-middleware-1', 'test-middleware-2']
           });"
       `);
     });
