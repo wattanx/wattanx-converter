@@ -35,7 +35,8 @@ test("should be converted to defineAsyncComponent", () => {
     components: {
       HelloWorld,
       MyComp: () => import('./MyComp.vue'),
-      Foo: () => import('./Foo.vue'),
+      Foo: () =>
+        import('./Foo.vue'),
     }
   })
   `;
@@ -44,7 +45,8 @@ test("should be converted to defineAsyncComponent", () => {
   expect(output).toMatchInlineSnapshot(
     `
     "const MyComp = defineAsyncComponent(() => import('./MyComp.vue'))
-    const Foo = defineAsyncComponent(() => import('./Foo.vue'))"
+    const Foo = defineAsyncComponent(() =>
+            import('./Foo.vue'))"
   `
   );
 });
@@ -58,7 +60,8 @@ test("should be output as is", () => {
     components: {
       HelloWorld,
       MyComp: defineAsyncComponent(() => import('./MyComp.vue')),
-      Foo: defineAsyncComponent(() => import('./Foo.vue')),
+      Foo: defineAsyncComponent(() =>
+        import('./Foo.vue')),
     }
   })
   `;
@@ -66,6 +69,7 @@ test("should be output as is", () => {
 
   expect(output).toMatchInlineSnapshot(`
     "const MyComp = defineAsyncComponent(() => import('./MyComp.vue'))
-    const Foo = defineAsyncComponent(() => import('./Foo.vue'))"
+    const Foo = defineAsyncComponent(() =>
+            import('./Foo.vue'))"
   `);
 });
