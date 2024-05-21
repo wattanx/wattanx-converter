@@ -35,7 +35,8 @@ test("should be converted to defineAsyncComponent", () => {
     components: {
       HelloWorld,
       MyComp: () => import('./MyComp.vue'),
-      Foo: () => import('./Foo.vue'),
+      Foo: () =>
+        import('./Foo.vue'),
     }
   })
   `;
