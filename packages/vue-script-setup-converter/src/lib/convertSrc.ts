@@ -89,11 +89,11 @@ export const convertSrc = (input: string) => {
       })
   );
 
+  statements.addStatements(components);
+
   if (isDefineNuxtComponent(callexpression)) {
     statements.addStatements(pageMeta);
   }
-
-  statements.addStatements(components);
 
   statements.addStatements(props);
   statements.addStatements(emits);
