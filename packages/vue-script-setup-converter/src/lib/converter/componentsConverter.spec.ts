@@ -45,7 +45,8 @@ test("should be converted to defineAsyncComponent", () => {
   expect(output).toMatchInlineSnapshot(
     `
     "const MyComp = defineAsyncComponent(() => import('./MyComp.vue'))
-    const Foo = defineAsyncComponent(() => import('./Foo.vue'))"
+    const Foo = defineAsyncComponent(() =>
+            import('./Foo.vue'))"
   `
   );
 });

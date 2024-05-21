@@ -23,5 +23,5 @@ export const filterDynamicImport = (
 };
 
 export const hasDynamicImport = (node: ObjectLiteralElementLike) => {
-  return node.getText().includes("() => import(");
+  return node.getText().includes("import(");
 };
