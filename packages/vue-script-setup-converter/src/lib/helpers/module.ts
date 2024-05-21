@@ -3,7 +3,7 @@ import type {
   ObjectLiteralElementLike,
   PropertyAssignment,
 } from "ts-morph";
-import { Node } from "ts-morph";
+import { Node, SyntaxKind } from "ts-morph";
 
 export const hasNamedImportIdentifier = (
   importDeclaration: ImportDeclaration,
@@ -23,5 +23,7 @@ export const filterDynamicImport = (
 };
 
 export const hasDynamicImport = (node: ObjectLiteralElementLike) => {
-  return node.getText().includes("() => import(");
+  const arrowFunction = node.getFirstChildByKind(SyntaxKind.ArrowFunction);
+  if (!arrowFunction) return false;
+  return arrowFunction.getText().includes("() => import(");
 };
