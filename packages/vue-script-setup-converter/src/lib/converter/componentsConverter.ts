@@ -24,11 +24,11 @@ const convertToDefineAsyncComponent = (node: PropertyAssignment) => {
 
   const properties = child.getProperties();
 
-  const filterdProperties = properties.filter(filterDynamicImport);
+  const filteredProperties = properties.filter(filterDynamicImport);
 
-  if (filterdProperties.length === 0) return "";
+  if (filteredProperties.length === 0) return "";
 
-  const value = filterdProperties
+  const value = filteredProperties
     .map((x) => {
       const propertyName = x.getName();
       const initializer = x.getInitializer();
