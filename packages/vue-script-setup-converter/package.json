@@ -25,7 +25,7 @@
     "@types/prettier": "^2.7.1",
     "prettier": "^2.7.1",
     "unbuild": "^2.0.0",
-    "vitest": "1.5.3"
+    "vitest": "2.0.5"
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.2.40",
