@@ -1,6 +1,5 @@
 import { parse } from "@vue/compiler-sfc";
-import { green } from "colorette";
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { Project } from "ts-morph";
 import { generateProgressBar } from "../lib/generateProgressBar";
 import { insertEmitsOption } from "../lib/insertEmitsOption";
@@ -26,7 +25,7 @@ export const handleCommand = async (
 
   const targetFiles = allFiles.filter((file) => file.script !== "");
 
-  const progressBar = generateProgressBar(green);
+  const progressBar = generateProgressBar();
   progressBar.start(targetFiles.length, 0);
 
   const project = new Project({ tsConfigFilePath: tsconfigPath });

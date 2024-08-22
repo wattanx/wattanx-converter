@@ -1,8 +1,11 @@
 import cliProgress from "cli-progress";
-import { blue, Color } from "colorette";
+import type { ColorFunction } from "consola/utils";
+import { getColor } from "consola/utils";
+
+const defaultColorFunc = getColor("green");
 
 export const generateProgressBar = (
-  colorFunc: Color = blue
+  colorFunc: ColorFunction = defaultColorFunc
 ): cliProgress.SingleBar =>
   new cliProgress.SingleBar(
     {

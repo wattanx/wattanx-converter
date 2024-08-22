@@ -1,5 +1,5 @@
 import { handleCommand } from "./handlers";
-import { green } from "colorette";
+import { colorize } from "consola/utils";
 import { defineCommand } from "citty";
 import pkgJson from "../package.json";
 import { globby } from "globby";
@@ -28,6 +28,6 @@ export default defineCommand({
     const files = await globby(targetFilePaths);
     const { insertedCount } = await handleCommand(files, args.tsconfigPath);
     console.log("\nCompleted 🎉");
-    console.log(`${green(insertedCount)} files changed.`);
+    console.log(`${colorize("green", insertedCount)} files changed.`);
   },
 });
