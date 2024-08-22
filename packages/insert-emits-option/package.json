@@ -1,6 +1,6 @@
 {
   "name": "@wattanx/insert-emits-option",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Insert emits option into defineComponent.",
   "bin": {
     "insert-emits-option": "dist/cli.mjs"
