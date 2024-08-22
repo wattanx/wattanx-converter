@@ -2,16 +2,16 @@
   "name": "@wattanx/insert-emits-option",
   "version": "0.0.17",
   "description": "Insert emits option into defineComponent.",
-  "main": "index.js",
   "bin": {
-    "insert-emits-option": "dist/cli.js"
+    "insert-emits-option": "dist/cli.mjs"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "test:cli": "node dist/cli.js",
+    "build": "unbuild",
+    "build:stub": "unbuild --stub",
+    "test:cli": "node dist/cli.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -31,15 +31,16 @@
   "devDependencies": {
     "@types/cli-progress": "^3.11.0",
     "@types/node": "^18.11.9",
-    "@types/yargs": "^17.0.13",
     "typescript": "^4.9.3",
+    "unbuild": "^2.0.0",
     "vitest": "1.5.3"
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.2.45",
+    "citty": "^0.1.6",
     "cli-progress": "^3.11.2",
-    "colorette": "^2.0.19",
-    "ts-morph": "^16.0.0",
-    "yargs": "^17.6.2"
+    "consola": "^3.2.3",
+    "globby": "^14.0.2",
+    "ts-morph": "^16.0.0"
   }
 }

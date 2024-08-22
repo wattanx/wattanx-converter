@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 
-import yargs from "yargs";
-import { hideBin } from "yargs/helpers";
+import { runMain } from "citty";
+import main from "./main";
 
-yargs(hideBin(process.argv))
-  .commandDir("commands")
-  .strict()
-  .alias({ h: "help", v: "version" }).argv;
+runMain(main);
