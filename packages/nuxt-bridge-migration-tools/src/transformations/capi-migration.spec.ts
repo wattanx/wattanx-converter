@@ -12,7 +12,7 @@ export default defineComponent({
       title: "wattanx-converter",
     })
     const route = useRoute();
-    const path = route.value.path;
+    const params = route.params;
   }
 });
 `;
@@ -30,7 +30,7 @@ export default defineComponent({
       title: "wattanx-converter",
     })
     const route = useRoute();
-    const path = route.path;
+    const params = route.params;
   }
 });`;
 

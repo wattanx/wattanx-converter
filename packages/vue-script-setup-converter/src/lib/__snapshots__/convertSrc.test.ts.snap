@@ -1,8 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`defineNuxtComponent > convert 1`] = `
-"
-import { defineNuxtComponent, useNuxtApp } from '#imports';
+exports[`snapshot > defineNuxtComponent 1`] = `
+"import { useNuxtApp } from "#imports";
+definePageMeta({
+  name: 'HelloWorld',
+  layout: 'test-layout',
+  middleware: 'test-middleware'
+});
 
 const { $client } = useNuxtApp();
 
@@ -12,9 +16,8 @@ const onSubmit = () => {
 "
 `;
 
-exports[`lang=js > convert 1`] = `
-"
-import { defineComponent, toRefs, computed, ref } from 'vue';
+exports[`snapshot > lang=js 1`] = `
+"import { toRefs, computed, ref } from "vue";
 const props = defineProps({
   msg: {
     type: String,
@@ -33,9 +36,8 @@ const count = ref(0);
 "
 `;
 
-exports[`lang=ts > type-base declaration 1`] = `
-"
-import { defineComponent, toRefs, computed, ref } from 'vue';
+exports[`snapshot > lang=ts 1`] = `
+"import { toRefs, computed, ref } from "vue";
 type Props = {
   msg?: string;
   foo: string;
@@ -46,6 +48,6 @@ const { msg, foo } = toRefs(props);
 const newMsg = computed(() => msg.value + '- HelloWorld');
 
 const count = ref(0);
-emit(\\"change\\", 124);
+emit("change", 124);
 "
 `;

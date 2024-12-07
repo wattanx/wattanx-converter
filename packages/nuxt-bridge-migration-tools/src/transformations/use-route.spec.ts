@@ -1,7 +1,7 @@
 import { applyTransform } from "jscodeshift/src/testUtils";
 import transform from "./use-route";
 
-test("useContext", () => {
+test("useRoute", () => {
   const source = `export default defineComponent({
   setup() {
     const route = useRoute();

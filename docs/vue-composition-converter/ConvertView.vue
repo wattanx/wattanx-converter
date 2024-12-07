@@ -1,41 +1,42 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
-import hljs from "highlight.js/lib/core";
-import typescript from "highlight.js/lib/languages/typescript";
-import "highlight.js/styles/atom-one-dark.css";
-import { convertSrc } from "@wattanx/vue-composition-converter";
+import { ref, watch } from 'vue';
+import prettier from 'prettier';
+import parserTypeScript from 'prettier/parser-typescript';
+import hljs from 'highlight.js/lib/core';
+import typescript from 'highlight.js/lib/languages/typescript';
+import 'highlight.js/styles/atom-one-dark.css';
+import { convertSrc } from '@wattanx/vue-composition-converter';
 // @ts-ignore
-import optionsApi from "./options-api.txt?raw";
+import optionsApi from './options-api.txt?raw';
 
-hljs.registerLanguage("typescript", typescript);
+hljs.registerLanguage('typescript', typescript);
 
-const outputType = new Map([
-  ["vue2", "Vue 2 / Composition API"],
-  ["nuxt2", "Nuxt 2.x / Composition API"],
+const outputType = new Map<'vue3' | 'vue2' | 'nuxt2' | 'nuxt3', string>([
+  ['vue3', 'Vue 3'],
+  ['vue2', 'Vue 2 / Composition API'],
+  ['nuxt3', 'Nuxt 3 / Nuxt Bridge'],
+  ['nuxt2', 'Nuxt 2.x / Composition API'],
 ]);
 
 const outputTypeKeys = [...outputType.keys()];
 
 const input = ref(optionsApi);
-const output = ref("");
+const output = ref('');
 const selectedOutputType = ref(outputTypeKeys[0]);
 const hasError = ref(false);
 
 watch(
   [input, selectedOutputType],
   () => {
-    const useNuxt = selectedOutputType.value === "nuxt2";
     try {
       hasError.value = false;
       const outputText = convertSrc({
         input: input.value,
-        useNuxt,
+        version: selectedOutputType.value,
       });
       const prettifiedHtml = hljs.highlightAuto(
         prettier.format(outputText, {
-          parser: "typescript",
+          parser: 'typescript',
           plugins: [parserTypeScript],
         })
       ).value;

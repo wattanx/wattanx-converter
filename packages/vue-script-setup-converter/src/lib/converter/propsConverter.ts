@@ -10,7 +10,7 @@ import {
   AsExpression,
   ArrowFunction,
 } from "ts-morph";
-import { getOptionsNode } from "../helper";
+import { getNodeByKind, getOptionsNode } from "../helpers/node";
 
 export const convertProps = (node: CallExpression, lang: string = "js") => {
   const propsNode = getOptionsNode(node, "props");
@@ -40,7 +40,7 @@ const convertToDefineProps = (node: PropertyAssignment) => {
   return `const props = defineProps(${child.getFullText()});`;
 };
 
-// 以下 type-based declaration用
+// type-based declaration
 
 type PropType =
   | {
@@ -128,11 +128,13 @@ const convertToTypeDefineProps = (props: PropType[]) => {
 
   const defineProps = `const props = defineProps<Props>();`;
 
-  const hasDefault = props.find((x) => x.type === "object" && x.defaultValue);
+  const hasDefault = props.find(
+    (x) => x.type === "object" && x.defaultValue !== undefined
+  );
 
   const defaultValueParams = props
     .map((x) => {
-      if (x.type === "object" && x.defaultValue) {
+      if (x.type === "object" && x.defaultValue !== undefined) {
         return `${x.propertyName}: ${x.defaultValue}`;
       }
     })
@@ -255,6 +257,21 @@ const getPropTypeByDefault = (propsNode: MethodDeclaration) => {
 const getPropTypeByArrowFunction = (node: ArrowFunction) => {
   const body = node.getBody();
 
+  if (Node.isBlock(body)) {
+    const statement = body.getStatements()[0];
+
+    if (Node.isReturnStatement(statement)) {
+      const expression = statement.getExpression();
+
+      if (
+        Node.isObjectLiteralExpression(expression) ||
+        Node.isArrayLiteralExpression(expression)
+      ) {
+        return expression.getType().getText();
+      }
+    }
+  }
+
   if (Node.isArrayLiteralExpression(body)) {
     return body.getType().getText();
   }
@@ -311,6 +328,26 @@ const getPropsOption = (
     if (!initializer) {
       throw new Error("props property not found.");
     }
+
+    if (Node.isArrowFunction(initializer)) {
+      const returnStatement = getNodeByKind(
+        initializer,
+        SyntaxKind.ReturnStatement
+      ) as ReturnStatement;
+
+      if (!returnStatement) {
+        return initializer.getText();
+      }
+
+      const expression = returnStatement.getExpression();
+      if (
+        Node.isObjectLiteralExpression(expression) ||
+        Node.isArrayLiteralExpression(expression)
+      ) {
+        return `() => (${expression.getText()})`;
+      }
+    }
+
     if (
       isFalseKeyword(initializer.getKind()) ||
       isTrueKeyword(initializer.getKind())

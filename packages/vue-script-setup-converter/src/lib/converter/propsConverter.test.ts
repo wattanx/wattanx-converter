@@ -1,9 +1,7 @@
-import { expect, test } from "vitest";
+import { expect, describe, it } from "vitest";
 import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
-import prettier from "prettier";
-import parserTypeScript from "prettier/parser-typescript";
-import { getNodeByKind } from "../helper";
+import { getNodeByKind } from "../helpers/node";
 import { convertProps } from "./propsConverter";
 
 const parseScript = (input: string, lang: "js" | "ts" = "js") => {
@@ -24,12 +22,7 @@ const parseScript = (input: string, lang: "js" | "ts" = "js") => {
 
   const props = convertProps(callexpression as CallExpression, lang);
 
-  const formatedText = prettier.format(props, {
-    parser: "typescript",
-    plugins: [parserTypeScript],
-  });
-
-  return formatedText;
+  return props;
 };
 
 const source = `<script>
@@ -50,36 +43,71 @@ const source = `<script>
   })
   </script>`;
 
-test("defineProps", () => {
-  const output = parseScript(source);
+describe("basic", () => {
+  it("defineProps", () => {
+    const output = parseScript(source);
 
-  const expected = `const props = defineProps({
-  msg: {
-    type: String,
-    default: "HelloWorld",
-  },
-  foo: {
-    type: String,
-    required: true,
-  },
+    expect(output).toMatchInlineSnapshot(`
+      "const props = defineProps({msg: {
+              type: String,
+              default: 'HelloWorld'
+            },foo: {
+              type: String,
+              required: true
+            }});"
+    `);
+  });
+
+  it("type-based defineProps", () => {
+    const output = parseScript(source, "ts");
+
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg?: string;
+      foo: string;};const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });"
+    `);
+  });
+
+  it("custom validator", () => {
+    const source = `<script>
+  import { defineComponent, toRefs, computed, ref } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: {
+      msg: {
+        type: String,
+        default: 'HelloWorld'
+      },
+      foo: {
+        type: String,
+        required: true,
+        validator(value) {
+          return ["success", "warning", "danger"].includes(value)
+        }
+      }
+    }
+  })
+  </script>`;
+    const output = parseScript(source);
+
+    expect(output).toMatchInlineSnapshot(`
+      "const props = defineProps({msg: {
+              type: String,
+              default: 'HelloWorld'
+            },foo: {
+              type: String,
+              required: true,
+              validator(value) {
+                return ["success", "warning", "danger"].includes(value)
+              }
+            }});"
+    `);
+  });
 });
-`;
 
-  expect(output).toBe(expected);
-});
-
-test("type-based defineProps", () => {
-  const output = parseScript(source, "ts");
-
-  const expected = `type Props = { msg?: string; foo: string };
-const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
-`;
-
-  expect(output).toBe(expected);
-});
-
-test("type-based defineProps with require and default pattern", () => {
-  const source = `<script lang="ts">
+describe("type-based", () => {
+  it("require and default", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
   export default defineComponent({
@@ -97,17 +125,16 @@ test("type-based defineProps with require and default pattern", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { msg?: string; foo: string };
-const props = withDefaults(defineProps<Props>(), { msg: "HelloWorld" });
-`;
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg?: string;
+      foo: string;};const props = withDefaults(defineProps<Props>(), { msg: 'HelloWorld' });"
+    `);
+  });
 
-  expect(output).toBe(expected);
-});
-
-test("type-based defineProps with default function", () => {
-  const source = `<script lang="ts">
+  it("default function", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
   export default defineComponent({
@@ -128,20 +155,16 @@ test("type-based defineProps with default function", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
-const props = withDefaults(defineProps<Props>(), {
-  foo: () => ({ msg: "Hello World" }),
-  bar: () => ["foo", "bar"],
-});
-`;
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo?: { msg: string; };
+      bar?: string[];};const props = withDefaults(defineProps<Props>(), { foo: () => ({ msg: "Hello World" }),bar: () => (["foo", "bar"]) });"
+    `);
+  });
 
-  expect(output).toBe(expected);
-});
-
-test("type-based defineProps with default arrow function", () => {
-  const source = `<script lang="ts">
+  it("default arrow function", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
   export default defineComponent({
@@ -158,20 +181,46 @@ test("type-based defineProps with default arrow function", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { foo?: { msg: string }; bar?: string[] };
-const props = withDefaults(defineProps<Props>(), {
-  foo: () => ({ msg: "Hello World" }),
-  bar: () => ["foo", "bar"],
-});
-`;
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo?: { msg: string; };
+      bar?: string[];};const props = withDefaults(defineProps<Props>(), { foo: () => ({ msg: "Hello World" }),bar: () => ["foo", "bar"] });"
+    `);
+  });
 
-  expect(output).toBe(expected);
-});
+  it("default arrow function and return", () => {
+    const source = `<script lang="ts">
+  import { defineComponent, toRefs, computed, ref } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: {
+      foo: {
+        type: Object,
+        default: () => {
+          return { msg: "Hello World" }
+        }
+      },
+      bar: {
+        type: Array,
+        default: () => {
+          return ["foo", "bar"]
+        }
+      }
+    }
+  })
+  </script>`;
+    const output = parseScript(source, "ts");
 
-test("type-based defineProps with non primitive", () => {
-  const source = `<script lang="ts">
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo?: { msg: string; };
+      bar?: string[];};const props = withDefaults(defineProps<Props>(), { foo: () => ({ msg: "Hello World" }),bar: () => (["foo", "bar"]) });"
+    `);
+  });
+
+  it("non primitive", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref, PropType } from 'vue';
   import { Foo } from './Foo';
   
@@ -189,17 +238,16 @@ test("type-based defineProps with non primitive", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { foo: Foo; items: string[] };
-const props = defineProps<Props>();
-`;
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {foo: Foo;
+      items: string[];};const props = defineProps<Props>();"
+    `);
+  });
 
-  expect(output).toBe(expected);
-});
-
-test("type-based defineProps with non Object", () => {
-  const source = `<script lang="ts">
+  it("non Object style", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref, PropType } from 'vue';
   import { Foo } from './Foo';
   
@@ -211,17 +259,16 @@ test("type-based defineProps with non Object", () => {
     }
   })
   </script>`;
-  const output = parseScript(source, "ts");
+    const output = parseScript(source, "ts");
 
-  const expected = `type Props = { msg?: string; foo?: Foo };
-const props = defineProps<Props>();
-`;
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg?: string;
+      foo?: Foo;};const props = defineProps<Props>();"
+    `);
+  });
 
-  expect(output).toBe(expected);
-});
-
-test("custom validator", () => {
-  const source = `<script>
+  it("default value is boolean", () => {
+    const source = `<script lang="ts">
   import { defineComponent, toRefs, computed, ref } from 'vue';
   
   export default defineComponent({
@@ -229,34 +276,20 @@ test("custom validator", () => {
     props: {
       msg: {
         type: String,
-        default: 'HelloWorld'
+        required: true
       },
-      foo: {
-        type: String,
-        required: true,
-        validator(value) {
-          return ["success", "warning", "danger"].includes(value)
-        }
+      disabled: {
+        type: Boolean,
+        default: false
       }
     }
   })
   </script>`;
-  const output = parseScript(source);
+    const output = parseScript(source, "ts");
 
-  const expected = `const props = defineProps({
-  msg: {
-    type: String,
-    default: "HelloWorld",
-  },
-  foo: {
-    type: String,
-    required: true,
-    validator(value) {
-      return ["success", "warning", "danger"].includes(value);
-    },
-  },
-});
-`;
-
-  expect(output).toBe(expected);
+    expect(output).toMatchInlineSnapshot(`
+      "type Props = {msg: string;
+      disabled?: boolean;};const props = withDefaults(defineProps<Props>(), { disabled: false });"
+    `);
+  });
 });
