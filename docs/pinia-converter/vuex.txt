@@ -1,0 +1,31 @@
+import { logger } from './logger'
+
+export const state = () => ({
+  counter: 0
+})
+
+export const getters = {
+  getCounter(state) {
+    return state.counter
+  }
+}
+
+export const mutations = {
+  increment(state) {
+    logger.info("increment")
+    state.counter++
+  }
+}
+
+export const actions = {
+  increment({ commit }) {
+    console.log("increment action")
+    commit("increment")
+  },
+  async fetchCounter({ state }) {
+    // make request
+    const res = { data: 10 };
+    state.counter = res.data;
+    return res.data;
+  }
+}

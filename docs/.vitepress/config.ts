@@ -51,6 +51,10 @@ export default {
             text: "Vue Script Setup Converter",
             link: "/vue-script-setup-converter/index",
           },
+          {
+            text: "Vue Pinia Converter",
+            link: "/pinia-converter/index",
+          },
         ],
       },
       {
@@ -83,6 +87,10 @@ export default {
           {
             text: "Vue Script Setup Converter",
             link: "/vue-script-setup-converter/index",
+          },
+          {
+            text: "Vue Pinia Converter",
+            link: "/pinia-converter/index",
           },
         ],
       },
