@@ -7,13 +7,13 @@ import {
   SyntaxKind,
   StringLiteral,
 } from "ts-morph";
-import type { ConvertedExpression, ConverterMutation } from "./types";
-import { replaceState } from "../utils/replaceState";
+import type { ConvertedExpression, ConvertedMutation } from "./types";
+import { replaceState } from "../utils/replace-state";
 
 export const convertActions = (
   statements: Statement[],
-  mutations: ConverterMutation[]
-): ConvertedExpression[] => {
+  mutations: ConvertedMutation[]
+): ConvertedExpression[] | null => {
   const actionsStatement = statements.find((statement) => {
     if (Node.isVariableStatement(statement)) {
       const declaration = statement.getDeclarations()[0];
@@ -39,7 +39,7 @@ export const convertActions = (
 
 const replaceCommitStatement = (
   properties: ObjectLiteralElementLike[],
-  mutations: ConverterMutation[]
+  mutations: ConvertedMutation[]
 ) => {
   return properties.forEach((property) => {
     if (Node.isMethodDeclaration(property)) {
@@ -77,6 +77,7 @@ const replaceCommitStatement = (
           .filter(Boolean);
 
         block.removeStatements([0, block.getStatements().length]);
+        // @ts-expect-error
         block.addStatements(newStatements);
       }
     }
@@ -89,30 +90,32 @@ const getInitializer = (declaration: VariableDeclaration) => {
 
 const createActions = (
   properties: ObjectLiteralElementLike[]
-): ConvertedExpression[] => {
-  return properties.map((property) => {
-    if (Node.isMethodDeclaration(property)) {
-      const body = property.getBody()?.getFullText() || "{}";
-      const funcName = property.getName();
+): Omit<ConvertedExpression, "use">[] => {
+  return properties
+    .map((property) => {
+      if (Node.isMethodDeclaration(property)) {
+        const body = property.getBody()?.getFullText() || "{}";
+        const funcName = property.getName();
 
-      const type = property.getReturnTypeNode()
-        ? `: ${property.getReturnType().getText()}`
-        : "";
+        const type = property.getReturnTypeNode()
+          ? `: ${property.getReturnType().getText()}`
+          : "";
 
-      const parameters = property.getParameters()[1]?.getText() ?? "";
+        const parameters = property.getParameters()[1]?.getText() ?? "";
 
-      const async = property
-        .getModifiers()
-        .some((mod) => mod.getKind() === SyntaxKind.AsyncKeyword)
-        ? "async "
-        : "";
+        const async = property
+          .getModifiers()
+          .some((mod) => mod.getKind() === SyntaxKind.AsyncKeyword)
+          ? "async "
+          : "";
 
-      const fn = `${async}(${parameters})${type} =>${body}`;
+        const fn = `${async}(${parameters})${type} =>${body}`;
 
-      return {
-        statement: `const ${funcName} = ${fn}`,
-        returnName: funcName,
-      };
-    }
-  });
+        return {
+          statement: `const ${funcName} = ${fn};\n`,
+          returnName: funcName,
+        };
+      }
+    })
+    .filter(Boolean) as ConvertedExpression[];
 };

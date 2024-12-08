@@ -17,7 +17,7 @@ const parseScript = (input: string) => {
   const getters = convertGetters(sourceFile.getStatements());
 
   const defineStore = `export const useSampleStore = defineStore("sample", {
-    getters: ${getters.getText()}
+    getters: ${getters!.getText()}
   });`;
 
   const formatedText = prettier.format(defineStore, {

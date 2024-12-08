@@ -46,7 +46,7 @@ test("setup actions converter", () => {
       statement: `const increment = () => {
         console.log("increment")
         counter.value++
-  }`,
+  };\n`,
       returnName: "increment",
     },
     {
@@ -59,7 +59,7 @@ test("setup actions converter", () => {
           counter.value = res.data
 
           return res.data;
-  }`,
+  };\n`,
     },
   ];
 

@@ -4,7 +4,7 @@ export type ConvertedExpression = {
   statement: string;
 };
 
-export type ConverterMutation = {
+export type ConvertedMutation = {
   statements: string[];
   mutationName: string;
 };

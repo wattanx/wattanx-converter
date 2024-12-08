@@ -6,11 +6,11 @@ import {
   SyntaxKind,
   ObjectLiteralElementLike,
 } from "ts-morph";
-import type { ConverterMutation } from "./types";
+import type { ConvertedMutation } from "./types";
 
 export const convertMutations = (
   statements: Statement[]
-): ConverterMutation[] => {
+): ConvertedMutation[] => {
   const mutationsStatement = statements.find((statement) => {
     if (Node.isVariableStatement(statement)) {
       const declaration = statement.getDeclarations()[0];
@@ -39,24 +39,27 @@ const getInitializer = (declaration: VariableDeclaration) => {
 
 const createConvertedMutation = (
   properties: ObjectLiteralElementLike[]
-): ConverterMutation[] => {
-  return properties.map((property) => {
-    if (Node.isMethodDeclaration(property)) {
-      const parameters = property.getParameters();
-      const firstParamsText = parameters[0].getText();
+): ConvertedMutation[] => {
+  return properties
+    .map((property) => {
+      if (Node.isMethodDeclaration(property)) {
+        const parameters = property.getParameters();
+        const firstParamsText = parameters[0].getText();
 
-      const block = property.getBody();
+        const block = property.getBody();
 
-      if (Node.isBlock(block)) {
-        return {
-          mutationName: property.getName(),
-          statements: block
-            .getStatements()
-            .map((statement) => replaceState(statement, firstParamsText)),
-        };
+        if (Node.isBlock(block)) {
+          return {
+            mutationName: property.getName(),
+            statements: block
+              .getStatements()
+              .map((statement) => replaceState(statement, firstParamsText))
+              .filter(Boolean) as string[],
+          };
+        }
       }
-    }
-  });
+    })
+    .filter(Boolean) as ConvertedMutation[];
 };
 
 const replaceState = (statement: Statement, replaceText: string) => {
@@ -67,7 +70,10 @@ const replaceState = (statement: Statement, replaceText: string) => {
 
     const expression = statement.getExpression();
 
-    if (propertyAccessExpression.getExpression().getText() === replaceText) {
+    if (
+      propertyAccessExpression &&
+      propertyAccessExpression.getExpression().getText() === replaceText
+    ) {
       // (e.g.) state.count++ -> count.value++
       const regex = new RegExp(`${replaceText}\\.([\\w-]+)`, "g");
       return expression.getText().replace(regex, (_, p1) => `${p1}.value`);

@@ -5,7 +5,6 @@ import {
   VariableDeclaration,
   MethodDeclaration,
   SyntaxKind,
-  ObjectLiteralExpression,
 } from "ts-morph";
 
 export const convertGetters = (statements: Statement[]) => {

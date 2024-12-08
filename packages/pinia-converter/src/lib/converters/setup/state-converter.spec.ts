@@ -28,17 +28,17 @@ test("setup state converter", () => {
   const expected = [
     {
       use: "ref",
-      statement: "const counter = ref(0)",
+      statement: "const counter = ref(0);\n",
       returnName: "counter",
     },
     {
       use: "ref",
-      statement: 'const name = ref("John")',
+      statement: 'const name = ref("John");\n',
       returnName: "name",
     },
     {
       use: "ref",
-      statement: "const age = ref(20)",
+      statement: "const age = ref(20);\n",
       returnName: "age",
     },
   ];

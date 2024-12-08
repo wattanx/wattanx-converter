@@ -14,9 +14,7 @@ const parseScript = (input: string) => {
 
   const sourceFile = project.createSourceFile("s.tsx", input);
 
-  const store = convertSetupStore(sourceFile.getStatements());
-
-  const defineStore = `export const useSampleStore = defineStore("sample", ${store});`;
+  const defineStore = convertSetupStore(sourceFile.getStatements()).output;
 
   const formatedText = prettier.format(defineStore, {
     parser: "typescript",
@@ -38,11 +36,16 @@ export const getters = {
 
 export const mutations = {
   increment(state) {
+    console.log("increment")
     state.counter++
   }
 }
 
 export const actions = {
+  increment({ commit }) {
+    console.log("increment action")
+    commit("increment")
+  },
   async fetchCounter({ state }) {
     // make request
     const res = { data: 10 };
@@ -51,29 +54,32 @@ export const actions = {
   }
 }`;
 
-test.skip("options store converter", () => {
+test("options store converter", () => {
   const output = parseScript(source);
 
-  const expected = `import { ref } from 'vue';
+  expect(output).toMatchInlineSnapshot(`
+    "export const useSampleStore = defineStore("sample", () => {
+      const counter = ref(0);
+      const getCounter = computed(() => {
+        return counter.value;
+      });
+      const increment = () => {
+        console.log("increment action");
+        console.log("increment");
+        counter.value++;
+      };
 
-export const useSampleStore = defineStore("sample", () => {
-  const counter = ref(0);
-  const getCounter = computed(() => {
-    return counter.value;
-  })
-  const async fetchCounter = () => {
-    // make request
-    const res = { data: 10 };
-    counter.value = res.data;
-    return res.data;
-  };
+      const fetchCounter = async () => {
+        // make request
+        const res = { data: 10 };
 
-  return {
-    counter,
-    getCounter,
-    fetchCounter,
-  }
-});
-`;
-  expect(output).toBe(expected);
+        counter.value = res.data;
+
+        return res.data;
+      };
+
+      return { counter, getCounter, increment, fetchCounter };
+    });
+    "
+  `);
 });
