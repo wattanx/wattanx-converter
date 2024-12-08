@@ -17,10 +17,10 @@
     "changelog": "changelogen --release --no-tag --no-commit"
   },
   "dependencies": {
+    "@wattanx/pinia-converter": "workspace:*",
     "@wattanx/vue-composition-converter": "workspace:*",
     "@wattanx/vue-mixins-converter": "workspace:*",
-    "@wattanx/vue-script-setup-converter": "workspace:*",
-    "@wattanx/pinia-converter": "workspace:*"
+    "@wattanx/vue-script-setup-converter": "workspace:*"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.4.26",
