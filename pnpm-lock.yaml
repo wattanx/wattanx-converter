@@ -70,7 +70,7 @@ importers:
         version: 22.10.1
       '@types/prettier':
         specifier: ^2.6.0
-        version: 2.7.2
+        version: 2.7.3
       '@vue/compiler-sfc':
         specifier: ^3.2.45
         version: 3.2.47
@@ -82,10 +82,10 @@ importers:
         version: 8.7.1(eslint@8.30.0)
       prettier:
         specifier: ^2.6.2
-        version: 2.8.4
+        version: 2.8.8
       prettier-plugin-tailwindcss:
         specifier: ^0.1.11
-        version: 0.1.13(prettier@2.8.4)
+        version: 0.1.13(prettier@2.8.8)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -187,7 +187,7 @@ importers:
         version: 17.0.22
       prettier:
         specifier: ^2.8.3
-        version: 2.8.4
+        version: 2.8.8
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -206,7 +206,7 @@ importers:
     devDependencies:
       '@types/prettier':
         specifier: ^2.7.1
-        version: 2.7.2
+        version: 2.7.3
       '@vue/compiler-sfc':
         specifier: ^3.2.40
         version: 3.4.26
@@ -248,7 +248,7 @@ importers:
         version: 22.10.1
       '@types/prettier':
         specifier: ^2.6.0
-        version: 2.7.2
+        version: 2.7.3
       eslint:
         specifier: ^8.5.0
         version: 8.30.0
@@ -257,10 +257,10 @@ importers:
         version: 8.7.1(eslint@8.30.0)
       prettier:
         specifier: ^2.6.2
-        version: 2.8.4
+        version: 2.8.8
       prettier-plugin-tailwindcss:
         specifier: ^0.1.11
-        version: 0.1.13(prettier@2.8.4)
+        version: 0.1.13(prettier@2.8.8)
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -291,7 +291,7 @@ importers:
         version: 22.10.1
       '@types/prettier':
         specifier: ^2.6.0
-        version: 2.7.2
+        version: 2.7.3
       eslint:
         specifier: ^8.5.0
         version: 8.30.0
@@ -300,10 +300,10 @@ importers:
         version: 8.7.1(eslint@8.30.0)
       prettier:
         specifier: ^2.6.2
-        version: 2.8.4
+        version: 2.8.8
       prettier-plugin-tailwindcss:
         specifier: ^0.1.11
-        version: 0.1.13(prettier@2.8.4)
+        version: 0.1.13(prettier@2.8.8)
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -331,10 +331,10 @@ importers:
     devDependencies:
       '@types/prettier':
         specifier: ^2.7.1
-        version: 2.7.2
+        version: 2.7.3
       prettier:
         specifier: ^2.7.1
-        version: 2.8.4
+        version: 2.8.8
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -541,7 +541,7 @@ packages:
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
       js-tokens: 4.0.0
-      picocolors: 1.1.1
+      picocolors: 1.0.0
 
   /@babel/compat-data@7.24.4:
     resolution: {integrity: sha512-vg8Gih2MLK+kOkHJp4gBEIkyaIi00jgWot2D9QOmmfLC8jINSOzmCLta6Bvz/JSBCqnegV0L80jhxkol5GWNfQ==}
@@ -799,10 +799,6 @@ packages:
     resolution: {integrity: sha512-4A/SCr/2KLd5jrtOMFzaKjVtAei3+2r/NChoBNoZ3EyP/+GlhoaEGoWOZUmFmoITP7zOJyHIMm+DYRd8o3PvHA==}
     engines: {node: '>=6.9.0'}
 
-  /@babel/helper-validator-identifier@7.24.5:
-    resolution: {integrity: sha512-3q93SSKX2TWCG30M2G2kwaKeTYgEUp5Snjuj8qm729SObL6nbtUldAi37qbxkD5gg3xnBio+f9nqpSepGZMvxA==}
-    engines: {node: '>=6.9.0'}
-
   /@babel/helper-validator-identifier@7.25.9:
     resolution: {integrity: sha512-Ed61U6XJc3CVRfkERJWDz4dJwKe7iLmmJsbOGu9wSloNSFttHV0I8g6UAgb7qnK5ly5bGLPd4oXZlxCdANBOWQ==}
     engines: {node: '>=6.9.0'}
@@ -834,7 +830,7 @@ packages:
     resolution: {integrity: sha512-u7stbOuYjaPezCuLj29hNW1v64M2Md2qupEKP1fHc7WdOA3DgLh37suiSrZYY7haUB7iBeQZ9P1uiRF359do3g==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/helper-validator-identifier': 7.24.5
+      '@babel/helper-validator-identifier': 7.25.9
       chalk: 2.4.2
       js-tokens: 4.0.0
     dev: false
@@ -1102,7 +1098,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/helper-string-parser': 7.24.1
-      '@babel/helper-validator-identifier': 7.24.5
+      '@babel/helper-validator-identifier': 7.25.9
       to-fast-properties: 2.0.0
 
   /@babel/types@7.24.5:
@@ -2018,8 +2014,8 @@ packages:
       undici-types: 6.20.0
     dev: true
 
-  /@types/prettier@2.7.2:
-    resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
+  /@types/prettier@2.7.3:
+    resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
     dev: true
 
   /@types/resolve@1.20.2:
@@ -5687,19 +5683,13 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  /prettier-plugin-tailwindcss@0.1.13(prettier@2.8.4):
+  /prettier-plugin-tailwindcss@0.1.13(prettier@2.8.8):
     resolution: {integrity: sha512-/EKQURUrxLu66CMUg4+1LwGdxnz8of7IDvrSLqEtDqhLH61SAlNNUSr90UTvZaemujgl3OH/VHg+fyGltrNixw==}
     engines: {node: '>=12.17.0'}
     peerDependencies:
       prettier: '>=2.2.0'
     dependencies:
-      prettier: 2.8.4
-    dev: true
-
-  /prettier@2.8.4:
-    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
+      prettier: 2.8.8
     dev: true
 
   /prettier@2.8.8:
