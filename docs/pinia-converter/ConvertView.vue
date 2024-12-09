@@ -13,12 +13,24 @@ hljs.registerLanguage("typescript", typescript);
 const input = ref(optionsApi);
 const output = ref("");
 const hasError = ref(false);
+
+const outputType = new Map<"pinia" | "useState", string>([
+  ["pinia", "Pinia"],
+  ["useState", "Nuxt useState"],
+]);
+
+const outputTypeKeys = [...outputType.keys()];
+const selectedOutputType = ref(outputTypeKeys[0]);
+
 watch(
-  [input],
+  [input, selectedOutputType],
   () => {
     try {
       hasError.value = false;
-      const outputText = convertSrc({ input: input.value });
+      const outputText = convertSrc({
+        input: input.value,
+        outputType: selectedOutputType.value,
+      });
       const prettifiedHtml = hljs.highlightAuto(
         prettier.format(outputText, {
           parser: "typescript",
@@ -48,9 +60,19 @@ watch(
       ></textarea>
     </div>
     <div class="flex flex-1 flex-col">
-      <div class="flex flex-row py-4">
-        <label for="output-type" class="mr-2">Output: Pinia</label>
+      <div class="flex flex-row py-2">
+        <label for="output-type" class="mr-2">Output: </label>
+        <select
+          id="output-type"
+          v-model="selectedOutputType"
+          class="pl-2 h-6 outline-transparent rounded-md border-1 border-solid border-borderColor focus:outline-focused"
+        >
+          <option v-for="key in outputTypeKeys" :key="key" :value="key">
+            {{ outputType.get(key) }}
+          </option>
+        </select>
       </div>
+
       <pre
         class="output-container hljs text-md w-full flex-1 select-all whitespace-pre-wrap border p-2 leading-5"
         v-html="output"

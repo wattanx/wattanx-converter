@@ -13,7 +13,8 @@ type ReactiveState = {
 };
 
 export const convertState = (
-  statements: Statement[]
+  statements: Statement[],
+  useState?: boolean
 ): ConvertedExpression[] | null => {
   const stateStatement = statements.find((statement) => {
     if (Node.isVariableStatement(statement)) {
@@ -47,7 +48,7 @@ export const convertState = (
       .filter(Boolean);
 
     // @ts-expect-error
-    return convertReactiveState(reactiveState);
+    return convertReactiveState(reactiveState, useState);
   } else {
     return null;
   }
@@ -57,8 +58,17 @@ const getInitializer = (declaration: VariableDeclaration) => {
   return declaration.getInitializerOrThrow();
 };
 
-const convertReactiveState = (list: ReactiveState[]): ConvertedExpression[] => {
+const convertReactiveState = (
+  list: ReactiveState[],
+  useState?: boolean
+): ConvertedExpression[] => {
   return list.map((item) => {
+    if (useState) {
+      return {
+        statement: `const ${item.propertyName} = useState("${item.propertyName}", () => ${item.value});\n`,
+        returnName: item.propertyName,
+      };
+    }
     return {
       use: "ref",
       statement: `const ${item.propertyName} = ref(${item.value});\n`,
