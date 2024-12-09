@@ -1,16 +1,17 @@
-import { ScriptTarget, SyntaxKind, Project, Node, ts } from "ts-morph";
-import type { CallExpression } from "ts-morph";
+import { ScriptTarget, Project, ts } from "ts-morph";
 import { genImport } from "knitwork";
 import { convertSetupStore } from "./setup-store-converter";
 
 export type ConverterOptions = {
   input: string;
   version?: "vue" | "nuxt";
+  outputType?: "pinia" | "useState";
 };
 
 export function convertSrc({
   input,
   version = "nuxt",
+  outputType = "pinia",
 }: ConverterOptions): string {
   const project = new Project({
     compilerOptions: {
@@ -35,10 +36,19 @@ export function convertSrc({
   statements.addStatements(importStatements);
 
   const store =
-    version === "nuxt" ? convertSetupStore(sourceFile.getStatements()) : null;
+    version === "nuxt"
+      ? convertSetupStore(sourceFile.getStatements(), {
+          useState: outputType === "useState",
+        })
+      : null;
 
   if (store) {
-    statements.addStatements(genImport("vue", store.imports));
+    if (outputType === "useState") {
+      statements.addStatements(genImport("#imports", ["useState"]));
+    }
+    if (store.imports && store.imports.length > 0) {
+      statements.addStatements(genImport("vue", store.imports));
+    }
     statements.addStatements(store.output);
   }
 

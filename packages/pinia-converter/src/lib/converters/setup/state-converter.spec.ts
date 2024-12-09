@@ -2,7 +2,7 @@ import { test, expect } from "vitest";
 import { ScriptTarget, Project } from "ts-morph";
 import { convertState } from "./state-converter";
 
-const parseScript = (input: string) => {
+const parseScript = (input: string, useState?: boolean) => {
   const project = new Project({
     tsConfigFilePath: "tsconfig.json",
     compilerOptions: {
@@ -12,7 +12,7 @@ const parseScript = (input: string) => {
 
   const sourceFile = project.createSourceFile("s.tsx", input);
 
-  return convertState(sourceFile.getStatements());
+  return convertState(sourceFile.getStatements(), useState);
 };
 
 const source = `eexport const state = () => ({
@@ -40,6 +40,27 @@ test("setup state converter", () => {
       use: "ref",
       statement: "const age = ref(20);\n",
       returnName: "age",
+    },
+  ];
+
+  expect(output).toEqual(expected);
+});
+
+test("convert to useState", () => {
+  const output = parseScript(source, true);
+
+  const expected = [
+    {
+      returnName: "counter",
+      statement: `const counter = useState("counter", () => 0);\n`,
+    },
+    {
+      returnName: "name",
+      statement: `const name = useState("name", () => "John");\n`,
+    },
+    {
+      returnName: "age",
+      statement: `const age = useState("age", () => 20);\n`,
     },
   ];
 

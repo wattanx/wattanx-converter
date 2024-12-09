@@ -33,7 +33,7 @@ export const actions = {
   }
 }`;
 
-test("options store converter", () => {
+test("setup store converter", () => {
   const output = convertSrc({ input: source });
 
   expect(output).toMatchInlineSnapshot(`
@@ -63,6 +63,40 @@ test("options store converter", () => {
 
       return { counter, getCounter, increment, fetchCounter };
     });
+    "
+  `);
+});
+
+test("convert to useState", () => {
+  const output = convertSrc({ input: source, outputType: "useState" });
+
+  expect(output).toMatchInlineSnapshot(`
+    "import { logger } from './logger';
+    import { useState } from "#imports";
+    export const useSampleStore = () => {
+      const counter = useState("counter", () => 0);
+      const getCounter = computed(() => {
+        return counter.value;
+      });
+      const increment = () => {
+
+        console.log("increment action");
+        logger.info("increment");
+        counter.value++;
+      };
+
+      const fetchCounter = async () => {
+
+        // make request
+        const res = { data: 10 };
+
+        counter.value = res.data;
+
+        return res.data;
+      };
+
+      return { counter, getCounter, increment, fetchCounter };
+    };
     "
   `);
 });

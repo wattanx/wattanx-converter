@@ -54,7 +54,7 @@ export const actions = {
   }
 }`;
 
-test("options store converter", () => {
+test("setup store converter", () => {
   const output = parseScript(source);
 
   expect(output).toMatchInlineSnapshot(`

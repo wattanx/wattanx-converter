@@ -1,4 +1,3 @@
-import { genImport } from "knitwork";
 import type { Statement } from "ts-morph";
 import {
   convertState,
@@ -10,6 +9,7 @@ import {
 type ConvertSetupStoreOptions = {
   storeName?: string;
   functionName?: string;
+  useState?: boolean;
 };
 
 export const convertSetupStore = (
@@ -17,9 +17,10 @@ export const convertSetupStore = (
   {
     storeName = "sample",
     functionName = "useSampleStore",
+    useState,
   }: ConvertSetupStoreOptions = {}
 ) => {
-  const state = convertState(statements);
+  const state = convertState(statements, useState);
 
   const getters = convertGetters(statements);
 
@@ -50,6 +51,15 @@ export const convertSetupStore = (
   if (actions) {
     output += actions.map((x) => x.statement).join("\n");
     returnNames.push(...actions.map((x) => x.returnName).filter(Boolean));
+  }
+
+  if (useState) {
+    return {
+      output: `export const ${functionName} = () => {
+      ${output}
+      return { ${returnNames.join(", ")} };
+};`,
+    };
   }
 
   return {
