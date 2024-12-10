@@ -19,9 +19,16 @@ const source = `export const getters = {
   getCounter(state) {
     return state.counter
   },
-  plusOne(state) {
+  plusOne: (state) => {
     const plusOne = state.counter + 1;
     return plusOne;
+  },
+  // TODO: need to convert to 'counter.value'
+  spread: ({ counter }) => {
+    return counter;
+  },
+  computedFunc: (state) => (arg) => {
+    return state.counter + arg;
   }
 }`;
 
@@ -44,6 +51,22 @@ test("setup mutations converter", () => {
         const plusOne = counter.value + 1;
         return plusOne;
     });
+    ",
+        "use": "computed",
+      },
+      {
+        "returnName": "spread",
+        "statement": "const spread = computed(() => {
+        return counter;
+    });
+    ",
+        "use": "computed",
+      },
+      {
+        "returnName": "computedFunc",
+        "statement": "const computedFunc = computed(() =>  (arg) => {
+        return counter.value + arg;
+      });
     ",
         "use": "computed",
       },
