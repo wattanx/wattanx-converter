@@ -2,6 +2,7 @@ import type {
   Statement,
   VariableDeclaration,
   VariableStatement,
+  ParameterDeclaration,
 } from "ts-morph";
 import { Node } from "ts-morph";
 import type { ConvertedExpression } from "./types";
@@ -29,23 +30,49 @@ export const convertGetters = (
 
     const list = properties
       .map((property) => {
+        let parameters: ParameterDeclaration[] = [];
+        let block;
+        let propertyName = "";
+
+        if (Node.isPropertyAssignment(property)) {
+          const initializer = property.getInitializer();
+          if (!initializer || !Node.isArrowFunction(initializer)) return;
+
+          parameters = initializer.getParameters();
+          block = initializer.getBody();
+          propertyName = property.getName();
+        }
+
         if (Node.isMethodDeclaration(property)) {
-          const parameters = property.getParameters();
-          const firstParamsText = parameters[0].getText();
+          parameters = property.getParameters();
+          block = property.getBody();
+          propertyName = property.getName();
+        }
 
-          const block = property.getBody();
+        const firstParamsText = parameters[0].getText();
 
-          if (Node.isBlock(block)) {
-            const newStatements = block
-              .getStatements()
-              .map((statement) => replaceState(statement, firstParamsText))
-              .filter(Boolean) as string[];
+        if (Node.isArrowFunction(block)) {
+          const regex = new RegExp(`${firstParamsText}\\.([\\w-]+)`, "g");
 
-            return {
-              propertyName: property.getName(),
-              statement: newStatements.join(""),
-            };
-          }
+          return {
+            propertyName,
+            statement: `${block
+              .getFullText()
+              .replaceAll(regex, (_, p1) => `${p1}.value`)}`,
+            isArrowFunction: true,
+          };
+        }
+
+        if (Node.isBlock(block)) {
+          const newStatements = block
+            .getStatements()
+            .map((statement) => replaceState(statement, firstParamsText))
+            .filter(Boolean) as string[];
+
+          return {
+            propertyName,
+            statement: newStatements.join(""),
+          };
         }
       })
       .filter(Boolean) as { propertyName: string; statement: string }[];
@@ -61,9 +88,16 @@ const getInitializer = (declaration: VariableDeclaration) => {
 };
 
 const convertToComputed = (
-  list: { propertyName: string; statement: string }[]
+  list: { propertyName: string; statement: string; isArrowFunction?: boolean }[]
 ): ConvertedExpression[] => {
-  return list.map(({ propertyName, statement }) => {
+  return list.map(({ propertyName, statement, isArrowFunction }) => {
+    if (isArrowFunction) {
+      return {
+        returnName: propertyName,
+        statement: `const ${propertyName} = computed(() => ${statement});\n`,
+        use: "computed",
+      };
+    }
     return {
       returnName: propertyName,
       statement: `const ${propertyName} = computed(() => {${statement}
