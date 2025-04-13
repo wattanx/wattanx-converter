@@ -33,7 +33,7 @@
     "vitest": "2.1.9"
   },
   "dependencies": {
-    "@vue/compiler-sfc": "^3.4.26",
+    "@vue/compiler-sfc": "3.4.26",
     "@wattanx/converter-utils": "workspace:*",
     "@wattanx/vue-composition-converter": "workspace:*"
   }
