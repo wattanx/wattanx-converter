@@ -23,7 +23,7 @@
     "@wattanx/vue-script-setup-converter": "workspace:*"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.4.26",
+    "@vue/compiler-sfc": "3.4.26",
     "autoprefixer": "^10.4.13",
     "changelogen": "^0.5.3",
     "eslint-config-custom": "*",
@@ -37,7 +37,7 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@8.6.5",
+  "packageManager": "pnpm@10.8.0",
   "resolutions": {
     "@wattanx/vue-composition-converter": "workspace:*",
     "@wattanx/vue-mixins-converter": "workspace:*",
