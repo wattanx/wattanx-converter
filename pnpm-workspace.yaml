@@ -1,6 +1,9 @@
 packages:
   - packages/*
 
+catalog:
+  vitest: ^3.1.1
+
 onlyBuiltDependencies:
   - esbuild
   - vue-demi
