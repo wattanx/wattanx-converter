@@ -1,5 +1,5 @@
 {
-  "name": "@wattanx/mcp-server",
+  "name": "@wattanx/converter-mcp",
   "version": "0.0.1",
   "description": "mcp server for wattanx-converter",
   "type": "module",

@@ -6,7 +6,7 @@ import { version } from "../package.json";
 
 export const server = new McpServer({
   name: "wattanx-converter MCP Server",
-  description: "A server for wattanx-converter",
+  description: "mcp server for wattanx-converter",
   version,
 });
 
