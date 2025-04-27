@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "wattanx-mcp-server",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-04-20",
+  "compatibility_flags": ["nodejs_compat_v2"],
+  "migrations": [
+    {
+      "new_sqlite_classes": ["WattanxConverterMcp"],
+      "tag": "v1"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "WattanxConverterMcp",
+        "name": "WATTANX_CONVERTER_MCP"
+      }
+    ]
+  },
+  "observability": {
+    "enabled": true
+  }
+}
