@@ -1,6 +1,6 @@
 {
   "name": "@wattanx/converter-mcp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "mcp server for wattanx-converter",
   "type": "module",
   "exports": {
@@ -35,7 +35,6 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.10.1",
     "@vue/compiler-sfc": "^3.5.13",
-    "agents": "^0.0.60",
     "knitwork": "^1.1.0",
     "ts-morph": "25.0.1",
     "typescript": "5.8.3",
