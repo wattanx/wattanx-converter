@@ -169,9 +169,6 @@ importers:
       '@vue/compiler-sfc':
         specifier: ^3.5.13
         version: 3.5.13
-      '@wattanx/vue-mixins-converter':
-        specifier: workspace:*
-        version: link:../vue-mixins-converter
       agents:
         specifier: ^0.0.60
         version: 0.0.60(@cloudflare/workers-types@4.20250420.0)
