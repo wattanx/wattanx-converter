@@ -1,6 +1,6 @@
 {
   "name": "@wattanx/converter-mcp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "mcp server for wattanx-converter",
   "type": "module",
   "exports": {
