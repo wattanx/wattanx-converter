@@ -17,7 +17,7 @@
     "wattanx-converter-mcp": "./bin/index.mjs"
   },
   "scripts": {
-    "prepack": "unbuild",
+    "build": "unbuild",
     "test": "vitest run",
     "test:watch": "vitest"
   },
