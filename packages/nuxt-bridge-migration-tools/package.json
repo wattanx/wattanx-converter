@@ -27,7 +27,7 @@
   "homepage": "https://github.com/wattanx/nuxt-bridge-migration-tools#readme",
   "devDependencies": {
     "@types/cli-progress": "^3.11.0",
-    "@types/jscodeshift": "^0.11.6",
+    "@types/jscodeshift": "^0.12.0",
     "@types/node": "^18.11.18",
     "@types/yargs": "^17.0.20",
     "prettier": "^2.8.3",
