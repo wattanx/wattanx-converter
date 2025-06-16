@@ -1,4 +1,5 @@
-import { SyntaxKind, Node, PropertyAssignment, CallExpression } from "ts-morph";
+import { SyntaxKind, Node } from "ts-morph";
+import type { PropertyAssignment, CallExpression } from "ts-morph";
 
 export const getNodeByKind = (
   node: Node,

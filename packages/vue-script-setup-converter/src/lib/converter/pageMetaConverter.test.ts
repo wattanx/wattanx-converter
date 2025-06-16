@@ -1,5 +1,6 @@
 import { expect, describe, it } from "vitest";
-import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
+import { ScriptTarget, SyntaxKind, Project } from "ts-morph";
+import type { CallExpression } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import { getNodeByKind } from "../helpers/node";
 import { convertPageMeta } from "./pageMetaConverter";
