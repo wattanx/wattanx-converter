@@ -23,7 +23,7 @@
     "@wattanx/vue-script-setup-converter": "workspace:*"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "3.4.26",
+    "@vue/compiler-sfc": "3.5.16",
     "autoprefixer": "^10.4.13",
     "changelogen": "^0.5.3",
     "eslint-config-custom": "*",
