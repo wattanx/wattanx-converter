@@ -35,5 +35,8 @@
     "typescript": "5.7.2",
     "unbuild": "^2.0.0",
     "vitest": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
