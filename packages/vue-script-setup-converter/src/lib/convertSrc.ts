@@ -1,11 +1,5 @@
-import {
-  CallExpression,
-  ScriptTarget,
-  SyntaxKind,
-  Project,
-  Node,
-  ts,
-} from "ts-morph";
+import { ScriptTarget, SyntaxKind, Project, Node, ts } from "ts-morph";
+import type { CallExpression } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import { getNodeByKind } from "./helpers/node";
 import { hasNamedImportIdentifier } from "./helpers/module";
@@ -17,6 +11,11 @@ import { convertEmits } from "./converter/emitsConverter";
 import { convertComponents } from "./converter/componentsConverter";
 import { genImport } from "knitwork";
 
+/**
+ * Converts Vue Composition API code written in <script> blocks to <script setup> syntax.
+ * @param input The Vue SFC code as a string, typically from a `.vue` file.
+ * @returns A string containing the converted code in <script setup> syntax.
+ */
 export const convertSrc = (input: string) => {
   const {
     descriptor: { script },
