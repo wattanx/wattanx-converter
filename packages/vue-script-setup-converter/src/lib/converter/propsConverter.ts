@@ -1,10 +1,9 @@
-import {
+import { SyntaxKind, Node } from "ts-morph";
+import type {
   CallExpression,
   ObjectLiteralElementLike,
   ObjectLiteralExpression,
   PropertyAssignment,
-  SyntaxKind,
-  Node,
   ReturnStatement,
   MethodDeclaration,
   AsExpression,

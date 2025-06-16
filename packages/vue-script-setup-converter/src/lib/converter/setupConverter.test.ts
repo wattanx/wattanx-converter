@@ -1,6 +1,7 @@
 import { convertSetup } from "./setupConverter";
 import { expect, test } from "vitest";
-import { CallExpression, ScriptTarget, SyntaxKind, Project } from "ts-morph";
+import { ScriptTarget, SyntaxKind, Project } from "ts-morph";
+import type { CallExpression } from "ts-morph";
 import { parse } from "@vue/compiler-sfc";
 import optionsApi from "../../samples/composition-api.txt?raw";
 import { getNodeByKind } from "../helpers/node";

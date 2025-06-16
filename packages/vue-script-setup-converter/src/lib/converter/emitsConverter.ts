@@ -1,8 +1,7 @@
-import {
+import { Node, SyntaxKind } from "ts-morph";
+import type {
   CallExpression,
   PropertyAssignment,
-  Node,
-  SyntaxKind,
   ArrowFunction,
 } from "ts-morph";
 import { getOptionsNode } from "../helpers/node";

@@ -1,5 +1,6 @@
 import { getNodeByKind } from "../helpers/node";
-import { CallExpression, SyntaxKind, MethodDeclaration } from "ts-morph";
+import { SyntaxKind } from "ts-morph";
+import type { CallExpression, MethodDeclaration } from "ts-morph";
 import { replaceEmit } from "./emitsConverter";
 
 export const convertSetup = (node: CallExpression) => {
