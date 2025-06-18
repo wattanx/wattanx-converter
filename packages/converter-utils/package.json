@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/node": "^22.10.1",
     "@types/prettier": "^2.6.0",
-    "@vue/compiler-sfc": "3.2.45",
+    "@vue/compiler-sfc": "3.5.17",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^8.2.0",
     "prettier": "^2.6.2",

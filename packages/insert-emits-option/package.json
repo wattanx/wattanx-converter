@@ -36,7 +36,7 @@
     "vitest": "catalog:"
   },
   "dependencies": {
-    "@vue/compiler-sfc": "3.2.45",
+    "@vue/compiler-sfc": "3.5.17",
     "citty": "^0.1.6",
     "cli-progress": "^3.11.2",
     "consola": "^3.2.3",
