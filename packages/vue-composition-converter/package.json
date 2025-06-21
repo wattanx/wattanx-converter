@@ -33,7 +33,7 @@
     "vitest": "catalog:"
   },
   "dependencies": {
-    "@vue/compiler-sfc": "3.2.45",
+    "@vue/compiler-sfc": "3.5.16",
     "@wattanx/converter-utils": "*"
   }
 }

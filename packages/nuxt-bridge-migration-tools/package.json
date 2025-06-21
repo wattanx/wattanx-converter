@@ -35,7 +35,7 @@
     "vitest": "catalog:"
   },
   "dependencies": {
-    "@vue/compiler-sfc": "3.2.45",
+    "@vue/compiler-sfc": "3.5.16",
     "cli-progress": "^3.11.2",
     "colorette": "^2.0.19",
     "jscodeshift": "17.1.1",

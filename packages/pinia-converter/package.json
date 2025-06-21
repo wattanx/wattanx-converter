@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/prettier": "^2.7.1",
-    "@vue/compiler-sfc": "3.2.40",
+    "@vue/compiler-sfc": "3.5.16",
     "@wattanx/converter-utils": "*",
     "concurrently": "^7.6.0",
     "prettier": "^2.7.1",
