@@ -115,7 +115,7 @@ importers:
         version: 8.10.0(eslint@7.32.0)
       eslint-config-turbo:
         specifier: latest
-        version: 2.8.17(eslint@7.32.0)(turbo@2.5.0)
+        version: 2.8.18(eslint@7.32.0)(turbo@2.5.0)
       eslint-plugin-react:
         specifier: 7.37.5
         version: 7.37.5(eslint@7.32.0)
@@ -171,7 +171,7 @@ importers:
         version: 3.5.13
       knitwork:
         specifier: ^1.1.0
-        version: 1.2.0
+        version: 1.3.0
       ts-morph:
         specifier: 25.0.1
         version: 25.0.1
@@ -248,7 +248,7 @@ importers:
     dependencies:
       knitwork:
         specifier: ^1.1.0
-        version: 1.2.0
+        version: 1.3.0
       ts-morph:
         specifier: '>=17.0.1'
         version: 25.0.1
@@ -373,7 +373,7 @@ importers:
         version: link:../converter-utils
       knitwork:
         specifier: ^1.1.0
-        version: 1.2.0
+        version: 1.3.0
       ts-morph:
         specifier: '>=17.0.1'
         version: 25.0.1
@@ -2927,8 +2927,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.8.17:
-    resolution: {integrity: sha512-sLjl8LT+NHy825rWW5W5whiJDh2mncf+i1RMgw52mioSy+1kithfKpVsZ68Ah/4nnE2rhGQGlrhCZXcmWM/duw==}
+  eslint-config-turbo@2.8.18:
+    resolution: {integrity: sha512-sfyBAy/Dx1fdpR0k3e9xJHR/fDoXisl6BelCnpSv7OFP7WS1se3GMfQPXazBFOg2QbBr98S7ANRgyvzwStAygQ==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -2998,8 +2998,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
-  eslint-plugin-turbo@2.8.17:
-    resolution: {integrity: sha512-ueZdnMyqZ6Q8dntbG98Ylyu6dqYt3MgoRELKGfDQDhPmwtxWwtimas0BDx8x/Ex4nnfg1pvr9HKxew/rHdvHIw==}
+  eslint-plugin-turbo@2.8.18:
+    resolution: {integrity: sha512-FxllB4af8WTmvrCpR1HA6hkto/B2/XE6VpU/P1MBv4DX9Cu9KZO3D5aYj2yhDqfrcSLlG/PtBN6qu2D5ykQFFA==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -3643,8 +3643,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  knitwork@1.2.0:
-    resolution: {integrity: sha512-xYSH7AvuQ6nXkq42x0v5S8/Iry+cfulBz/DJQzhIyESdLD7425jXsPy4vn5cCXU+HhRN2kVw51Vd1K6/By4BQg==}
+  knitwork@1.3.0:
+    resolution: {integrity: sha512-4LqMNoONzR43B1W0ek0fhXMsDNW/zxa1NdFAVMY+k28pgZLovR4G3PB5MrpTxCy1QaZCqNoiaKPr5w5qZHfSNw==}
 
   language-subtag-registry@0.3.23:
     resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
@@ -7925,10 +7925,10 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-config-turbo@2.8.17(eslint@7.32.0)(turbo@2.5.0):
+  eslint-config-turbo@2.8.18(eslint@7.32.0)(turbo@2.5.0):
     dependencies:
       eslint: 7.32.0
-      eslint-plugin-turbo: 2.8.17(eslint@7.32.0)(turbo@2.5.0)
+      eslint-plugin-turbo: 2.8.18(eslint@7.32.0)(turbo@2.5.0)
       turbo: 2.5.0
 
   eslint-import-resolver-node@0.3.9:
@@ -8151,7 +8151,7 @@ snapshots:
       string.prototype.matchall: 4.0.12
       string.prototype.repeat: 1.0.0
 
-  eslint-plugin-turbo@2.8.17(eslint@7.32.0)(turbo@2.5.0):
+  eslint-plugin-turbo@2.8.18(eslint@7.32.0)(turbo@2.5.0):
     dependencies:
       dotenv: 16.0.3
       eslint: 7.32.0
@@ -8926,7 +8926,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  knitwork@1.2.0: {}
+  knitwork@1.3.0: {}
 
   language-subtag-registry@0.3.23: {}
 
@@ -10481,7 +10481,7 @@ snapshots:
       citty: 0.1.6
       defu: 6.1.4
       jiti: 2.4.2
-      knitwork: 1.2.0
+      knitwork: 1.3.0
       scule: 1.3.0
     transitivePeerDependencies:
       - supports-color
@@ -10491,7 +10491,7 @@ snapshots:
       citty: 0.1.6
       defu: 6.1.4
       jiti: 2.4.2
-      knitwork: 1.2.0
+      knitwork: 1.3.0
       scule: 1.3.0
 
   update-browserslist-db@1.1.3(browserslist@4.24.4):
