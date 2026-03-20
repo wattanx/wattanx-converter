@@ -33,12 +33,12 @@
   "author": "wattanx",
   "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.10.1",
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "@vue/compiler-sfc": "^3.5.13",
     "knitwork": "^1.1.0",
     "ts-morph": "25.0.1",
     "typescript": "5.8.3",
-    "zod": "^3.24.3"
+    "zod": "^4.3.6"
   },
   "publishConfig": {
     "access": "public"
