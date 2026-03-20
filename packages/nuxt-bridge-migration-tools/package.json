@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/cli-progress": "^3.11.0",
     "@types/jscodeshift": "^0.12.0",
-    "@types/node": "^18.11.18",
+    "@types/node": "^25.5.0",
     "@types/yargs": "^17.0.20",
     "prettier": "^2.8.3",
     "typescript": "^5.7.2",
