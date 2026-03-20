@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@vue/compiler-sfc": "3.2.45",
-    "citty": "^0.1.6",
+    "citty": "^0.2.0",
     "cli-progress": "^3.11.2",
     "consola": "^3.2.3",
     "globby": "^14.0.2",
