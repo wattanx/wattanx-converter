@@ -115,7 +115,7 @@ importers:
         version: 8.10.0(eslint@7.32.0)
       eslint-config-turbo:
         specifier: latest
-        version: 2.8.18(eslint@7.32.0)(turbo@2.5.0)
+        version: 2.8.20(eslint@7.32.0)(turbo@2.5.0)
       eslint-plugin-react:
         specifier: 7.37.5
         version: 7.37.5(eslint@7.32.0)
@@ -130,8 +130,8 @@ importers:
         specifier: 3.2.45
         version: 3.2.45
       citty:
-        specifier: ^0.1.6
-        version: 0.1.6
+        specifier: ^0.2.0
+        version: 0.2.1
       cli-progress:
         specifier: ^3.11.2
         version: 3.12.0
@@ -2516,6 +2516,9 @@ packages:
   citty@0.1.6:
     resolution: {integrity: sha512-tskPPKEs8D2KPafUypv2gxwJP8h/OaJmC82QQGGDQcHvXX43xF2VDACcJVmZ0EuSxkpO9Kc4MlrA3q0+FG58AQ==}
 
+  citty@0.2.1:
+    resolution: {integrity: sha512-kEV95lFBhQgtogAPlQfJJ0WGVSokvLr/UEoFPiKKOXF7pl98HfUVUD0ejsuTCld/9xH9vogSywZ5KqHzXrZpqg==}
+
   cli-progress@3.12.0:
     resolution: {integrity: sha512-tRkV3HJ1ASwm19THiiLIXLO7Im7wlTuKnvkYaTkyoAPefqjNg7W7DHKUlGRxy9vxDvbyCYQkQozvptuMkGCg8A==}
     engines: {node: '>=4'}
@@ -2953,8 +2956,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.8.18:
-    resolution: {integrity: sha512-sfyBAy/Dx1fdpR0k3e9xJHR/fDoXisl6BelCnpSv7OFP7WS1se3GMfQPXazBFOg2QbBr98S7ANRgyvzwStAygQ==}
+  eslint-config-turbo@2.8.20:
+    resolution: {integrity: sha512-zT17KSqM4gTrChIocN+WfSdjg21QZTCDrcssylFab/wxu6S1EHDbt0JOna9b8rH5OKafZxDuFxKMV8BkulWShg==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -3024,8 +3027,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
-  eslint-plugin-turbo@2.8.18:
-    resolution: {integrity: sha512-FxllB4af8WTmvrCpR1HA6hkto/B2/XE6VpU/P1MBv4DX9Cu9KZO3D5aYj2yhDqfrcSLlG/PtBN6qu2D5ykQFFA==}
+  eslint-plugin-turbo@2.8.20:
+    resolution: {integrity: sha512-sMDremg73XbX+Imh7iDRS3TAro5jIf7CdzSqrT50wCGhClbiUvmWcLomnX+ldUbfTy+OvtqOeePvTivJMR87eQ==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -7324,6 +7327,8 @@ snapshots:
     dependencies:
       consola: 3.4.2
 
+  citty@0.2.1: {}
+
   cli-progress@3.12.0:
     dependencies:
       string-width: 4.2.3
@@ -7979,7 +7984,7 @@ snapshots:
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.31.0(eslint@7.32.0))(eslint@7.32.0)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@7.32.0)
       eslint-plugin-react: 7.37.5(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@7.32.0)
@@ -7997,10 +8002,10 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-config-turbo@2.8.18(eslint@7.32.0)(turbo@2.5.0):
+  eslint-config-turbo@2.8.20(eslint@7.32.0)(turbo@2.5.0):
     dependencies:
       eslint: 7.32.0
-      eslint-plugin-turbo: 2.8.18(eslint@7.32.0)(turbo@2.5.0)
+      eslint-plugin-turbo: 2.8.20(eslint@7.32.0)(turbo@2.5.0)
       turbo: 2.5.0
 
   eslint-import-resolver-node@0.3.9:
@@ -8015,7 +8020,7 @@ snapshots:
     dependencies:
       debug: 4.4.0
       eslint: 7.32.0
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0)
       glob: 7.2.3
       is-glob: 4.0.3
       resolve: 1.22.10
@@ -8057,7 +8062,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -8223,7 +8228,7 @@ snapshots:
       string.prototype.matchall: 4.0.12
       string.prototype.repeat: 1.0.0
 
-  eslint-plugin-turbo@2.8.18(eslint@7.32.0)(turbo@2.5.0):
+  eslint-plugin-turbo@2.8.20(eslint@7.32.0)(turbo@2.5.0):
     dependencies:
       dotenv: 16.0.3
       eslint: 7.32.0
