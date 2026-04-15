@@ -53,8 +53,8 @@ importers:
         specifier: ^8.4.38
         version: 8.5.8
       prettier:
-        specifier: 2.8.8
-        version: 2.8.8
+        specifier: 3.8.3
+        version: 3.8.3
       tailwindcss:
         specifier: ^3.4.3
         version: 3.4.19(yaml@2.7.1)
@@ -75,8 +75,8 @@ importers:
         specifier: ^25.5.0
         version: 25.5.0
       '@types/prettier':
-        specifier: ^2.6.0
-        version: 2.7.3
+        specifier: ^3.0.0
+        version: 3.0.0
       '@vue/compiler-sfc':
         specifier: 3.2.45
         version: 3.2.45
@@ -87,11 +87,11 @@ importers:
         specifier: ^8.2.0
         version: 8.7.1(eslint@8.57.1)
       prettier:
-        specifier: ^2.6.2
-        version: 2.8.8
+        specifier: ^3.0.0
+        version: 3.8.3
       prettier-plugin-tailwindcss:
         specifier: ^0.7.0
-        version: 0.7.2(prettier@2.8.8)
+        version: 0.7.2(prettier@3.8.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -170,8 +170,8 @@ importers:
         specifier: workspace:*
         version: link:../vue-script-setup-converter
       prettier:
-        specifier: ^2.7.1
-        version: 2.8.8
+        specifier: ^3.0.0
+        version: 3.8.3
       unbuild:
         specifier: 3.5.0
         version: 3.5.0(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
@@ -213,8 +213,8 @@ importers:
         specifier: ^17.0.20
         version: 17.0.35
       prettier:
-        specifier: ^2.8.3
-        version: 2.8.8
+        specifier: ^3.0.0
+        version: 3.8.3
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -232,8 +232,8 @@ importers:
         version: 25.0.1
     devDependencies:
       '@types/prettier':
-        specifier: ^2.7.1
-        version: 2.7.3
+        specifier: ^3.0.0
+        version: 3.0.0
       '@vue/compiler-sfc':
         specifier: 3.2.40
         version: 3.2.40
@@ -244,8 +244,8 @@ importers:
         specifier: ^9.0.0
         version: 9.2.1
       prettier:
-        specifier: ^2.7.1
-        version: 2.8.8
+        specifier: ^3.0.0
+        version: 3.8.3
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -274,8 +274,8 @@ importers:
         specifier: ^25.5.0
         version: 25.5.0
       '@types/prettier':
-        specifier: ^2.6.0
-        version: 2.7.3
+        specifier: ^3.0.0
+        version: 3.0.0
       eslint:
         specifier: ^8.5.0
         version: 8.57.1
@@ -283,11 +283,11 @@ importers:
         specifier: ^8.2.0
         version: 8.7.1(eslint@8.57.1)
       prettier:
-        specifier: ^2.6.2
-        version: 2.8.8
+        specifier: ^3.0.0
+        version: 3.8.3
       prettier-plugin-tailwindcss:
         specifier: ^0.7.0
-        version: 0.7.2(prettier@2.8.8)
+        version: 0.7.2(prettier@3.8.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -317,8 +317,8 @@ importers:
         specifier: ^25.5.0
         version: 25.5.0
       '@types/prettier':
-        specifier: ^2.6.0
-        version: 2.7.3
+        specifier: ^3.0.0
+        version: 3.0.0
       eslint:
         specifier: ^8.5.0
         version: 8.57.1
@@ -326,11 +326,11 @@ importers:
         specifier: ^8.2.0
         version: 8.7.1(eslint@8.57.1)
       prettier:
-        specifier: ^2.6.2
-        version: 2.8.8
+        specifier: ^3.0.0
+        version: 3.8.3
       prettier-plugin-tailwindcss:
         specifier: ^0.7.0
-        version: 0.7.2(prettier@2.8.8)
+        version: 0.7.2(prettier@3.8.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -357,11 +357,11 @@ importers:
         version: 25.0.1
     devDependencies:
       '@types/prettier':
-        specifier: ^2.7.1
-        version: 2.7.3
+        specifier: ^3.0.0
+        version: 3.0.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.8.8
+        specifier: ^3.0.0
+        version: 3.8.3
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -2264,8 +2264,9 @@ packages:
   '@types/node@25.5.0':
     resolution: {integrity: sha512-jp2P3tQMSxWugkCUKLRPVUpGaL5MVFwF8RDuSRztfwgN1wmqJeMSbKlnEtQqU8UrhTmzEmZdu2I6v2dpp7XIxw==}
 
-  '@types/prettier@2.7.3':
-    resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
+  '@types/prettier@3.0.0':
+    resolution: {integrity: sha512-mFMBfMOz8QxhYVbuINtswBp9VL2b4Y0QqYHwqLz3YbgtfAcat2Dl6Y1o4e22S/OVE6Ebl9m7wWiMT2lSbAs1wA==}
+    deprecated: This is a stub types definition. prettier provides its own type definitions, so you do not need this installed.
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -4580,9 +4581,9 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@2.8.8:
-    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
-    engines: {node: '>=10.13.0'}
+  prettier@3.8.3:
+    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
+    engines: {node: '>=14'}
     hasBin: true
 
   pretty-bytes@6.1.1:
@@ -6871,7 +6872,9 @@ snapshots:
     dependencies:
       undici-types: 7.18.2
 
-  '@types/prettier@2.7.3': {}
+  '@types/prettier@3.0.0':
+    dependencies:
+      prettier: 3.8.3
 
   '@types/resolve@1.20.2': {}
 
@@ -9654,11 +9657,11 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.7.2(prettier@2.8.8):
+  prettier-plugin-tailwindcss@0.7.2(prettier@3.8.3):
     dependencies:
-      prettier: 2.8.8
+      prettier: 3.8.3
 
-  prettier@2.8.8: {}
+  prettier@3.8.3: {}
 
   pretty-bytes@6.1.1: {}
 
