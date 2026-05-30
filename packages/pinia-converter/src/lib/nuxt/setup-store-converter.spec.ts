@@ -24,6 +24,19 @@ const parseScript = (input: string) => {
   return formatedText;
 };
 
+const convertScript = (input: string) => {
+  const project = new Project({
+    tsConfigFilePath: "tsconfig.json",
+    compilerOptions: {
+      target: ScriptTarget.Latest,
+    },
+  });
+
+  const sourceFile = project.createSourceFile("s.tsx", input);
+
+  return convertSetupStore(sourceFile.getStatements());
+};
+
 const source = `export const state = () => ({
   counter: 0
 })
@@ -82,4 +95,22 @@ test("setup store converter", () => {
     });
     "
   `);
+});
+
+test("deduplicates vue imports", () => {
+  const output = convertScript(`export const state = () => ({
+  counter: 0,
+  name: "John",
+})
+
+export const getters = {
+  getCounter(state) {
+    return state.counter
+  },
+  getName(state) {
+    return state.name
+  }
+}`);
+
+  expect(output.imports).toEqual(["ref", "computed"]);
 });

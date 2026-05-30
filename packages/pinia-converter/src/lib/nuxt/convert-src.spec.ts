@@ -38,7 +38,8 @@ test("setup store converter", () => {
 
   expect(output).toMatchInlineSnapshot(`
     "import { logger } from './logger';
-    import { ref } from "vue";
+    import { defineStore } from "pinia";
+    import { ref, computed } from "vue";
     export const useSampleStore = defineStore("sample", () => {
       const counter = ref(0);
       const getCounter = computed(() => {
@@ -73,6 +74,7 @@ test("convert to useState", () => {
   expect(output).toMatchInlineSnapshot(`
     "import { logger } from './logger';
     import { useState } from "#imports";
+    import { computed } from "vue";
     export const useSampleStore = () => {
       const counter = useState("counter", () => 0);
       const getCounter = computed(() => {

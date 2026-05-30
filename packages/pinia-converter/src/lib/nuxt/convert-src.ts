@@ -43,6 +43,9 @@ export function convertSrc({
       : null;
 
   if (store) {
+    if (outputType === "pinia") {
+      statements.addStatements(genImport("pinia", ["defineStore"]));
+    }
     if (outputType === "useState") {
       statements.addStatements(genImport("#imports", ["useState"]));
     }

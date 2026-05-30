@@ -45,6 +45,12 @@ export const convertSetupStore = (
 
   if (getters) {
     output += getters.map((x) => x.statement).join("\n");
+    imports.push(
+      ...(getters
+        .map((x) => x.use)
+        .filter(Boolean)
+        .flat() as string[])
+    );
     returnNames.push(...getters.map((x) => x.returnName).filter(Boolean));
   }
 
@@ -53,12 +59,15 @@ export const convertSetupStore = (
     returnNames.push(...actions.map((x) => x.returnName).filter(Boolean));
   }
 
+  const vueImports = [...new Set(imports)];
+
   if (useState) {
     return {
       output: `export const ${functionName} = () => {
       ${output}
       return { ${returnNames.join(", ")} };
 };`,
+      imports: vueImports,
     };
   }
 
@@ -67,6 +76,6 @@ export const convertSetupStore = (
   ${output}
   return { ${returnNames.join(", ")} };
 });`,
-    imports,
+    imports: vueImports,
   };
 };
