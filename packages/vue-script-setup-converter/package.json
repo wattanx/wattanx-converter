@@ -24,7 +24,7 @@
     "@types/prettier": "^2.7.1",
     "prettier": "^2.7.1",
     "typescript": "^5.7.2",
-    "unbuild": "^2.0.0",
+    "unbuild": "^3.0.0",
     "vitest": "catalog:"
   },
   "dependencies": {
