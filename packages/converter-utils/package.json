@@ -29,7 +29,7 @@
     "@types/prettier": "^2.6.0",
     "@vue/compiler-sfc": "3.2.45",
     "eslint": "^8.5.0",
-    "eslint-plugin-vue": "^8.2.0",
+    "eslint-plugin-vue": "^10.0.0",
     "prettier": "^2.6.2",
     "prettier-plugin-tailwindcss": "^0.7.0",
     "typescript": "5.7.2",
