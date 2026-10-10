@@ -25,7 +25,7 @@
     "@wattanx/converter-utils": "workspace:*",
     "@wattanx/vue-composition-converter": "workspace:*",
     "@wattanx/vue-script-setup-converter": "workspace:*",
-    "prettier": "^2.7.1",
+    "prettier": "^3.0.0",
     "unbuild": "3.5.0",
     "vitest": "catalog:",
     "wrangler": "^4.12.0"
